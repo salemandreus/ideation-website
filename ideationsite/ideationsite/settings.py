@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'ideationsite.wsgi.application'
 
 DATABASES = {
     "default": {          #https://docs.djangoproject.com/en/4.2/ref/databases/#postgresql-notes
-        "ENGINE": "django.db.backends.postgresql_psycopg", #"django.db.backends.postgresql", # https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-22-04
+        "ENGINE": "django.db.backends.postgresql",#Note this is more up-to-date than the article and is also recommended by Django as postgresql_psycopg2 is deprecated. # https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-22-04
         "NAME": env("DATABASE_NAME"),
         "USER": env("DATABASE_USER"),
         "PASSWORD": env("DATABASE_PASSWORD"),
