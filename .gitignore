@@ -2,6 +2,7 @@
 ToDo.txt
 python-markdown.py
 *.env
+ideationsite/static/admin/*
 requirements-new-*
 venv-new-attempt
 
