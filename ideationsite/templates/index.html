@@ -6,5 +6,16 @@
 {% endblock %}
 
 {% block content %}
-<p>Welcome to our ideation website.</p>
+    {% if user.is_authenticated %}
+        <h5>Your Latest Posts:</h5>
+        {% for a in latest_posts %}             <!-- Todo: make these display in reverse order -->
+            <li> {{a}} </li>
+        {% endfor %}
+    {% else %}
+        <!-- Todo: add a link to "sign up" and more explanation of the site's purpose -->
+        <p>Welcome to our ideation website.</p>
+        <p> You can learn more here.</p                     <!--Todo: link to page-->
+        <p> You can create an account here.</p>             <!-- Todo: link -->
+        <p> Or if you'd like to browse a bit, learn more about us, or read our story that's fine too!</p> <!-- Todo: link to about and story -->
+    {% endif %}
 {% endblock %}

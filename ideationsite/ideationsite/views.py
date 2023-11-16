@@ -4,7 +4,13 @@ from django.template.loader import get_template
 
 
 def index(request):
-    return render(request, "index.html",{"title":"Welcome"})
+    """Main Page, also the redirected to page after login"""
+    if request.user.is_authenticated:
+        context = {"title": "Welcome back, {username}!".format(username=request.user),
+                   "latest_posts": [1, 2, 3, 4, 5]}  # Todo: replace with links pulled from DB and their dates
+    else:
+        context = {"title": "Welcome!"}
+    return render(request, "index.html", context)
 
 
 def about(request):
