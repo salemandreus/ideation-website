@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block title %}
+    <h1>{{ title }}</h1>
+    <h4>{{ subtitle }}</h4>
+{% endblock %}
+
 {% block content %}
 <p>This is our story.</p>
 {{ story }}

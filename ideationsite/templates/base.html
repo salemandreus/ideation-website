@@ -11,8 +11,12 @@
   <div class="container text-center">
     <div class="row">
       <div class="col">
-          <h1>{{ title }}</h1>
-        <h4>{{ subtitle }}</h4>
+        <br>
+        {% block title %}
+          Page Headings Could Not Be Loaded
+        {% endblock %}
+        <br>
+
           {% block content %}
             Page Template Could Not Be Loaded
           {% endblock %}
