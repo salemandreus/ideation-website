@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+# from posts.views import (post_detail_page)
+
 from . import views
+from posts import views as posts_views
+
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("post/", posts_views.post_detail_page, name="post_detail_page"),
     path("about/", views.about, name="about"),
     path("story/", views.story, name="story"),
     path("contact/", views.contact, name="contact"),
