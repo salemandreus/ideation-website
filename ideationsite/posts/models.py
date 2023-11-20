@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
+
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -20,4 +22,6 @@ class Post(models.Model):                                                       
     content = models.TextField(null=True, blank=True)   # Todo: add markdown support (incl for title)
     pub_date = models.DateTimeField(default=timezone.now, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
                                                             # Todo: add storage for user images etc?
+    def get_absolute_url(self):
+        return f"{reverse('posts_index')}{self.slug}"
 
