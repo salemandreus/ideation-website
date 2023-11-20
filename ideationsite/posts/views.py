@@ -36,6 +36,8 @@ def posts_list_view(request):
 @staff_member_required
 def post_create_view(request):
     """ Create Post via a form. """
+    # if not request.user.is_authenticated:     #Todo? if we implement users beyond the admin page
+    #     return render(request, "not-a-user.html",{})
     form = PostModelForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
