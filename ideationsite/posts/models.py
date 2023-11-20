@@ -25,3 +25,8 @@ class Post(models.Model):                                                       
     def get_absolute_url(self):
         return f"{reverse('posts_index')}{self.slug}"
 
+    def get_edit_url(self):
+        return f"{self.get_absolute_url}/edit"
+
+    def get_delete_url(self):
+        return f"{self.get_absolute_url}/delete"
