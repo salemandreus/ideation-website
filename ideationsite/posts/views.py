@@ -45,7 +45,7 @@ def post_create_view(request):
         obj.save()
         form = PostModelForm()
     template_name = "form.html"
-    context = {"form": form}
+    context = {"title": "Create A New Post", "form": form}
 
     return render(request, template_name, context)
 
