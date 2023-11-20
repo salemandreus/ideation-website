@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+
 
 from .forms import PostModelForm
 from .models import Post
@@ -57,10 +59,16 @@ def post_detail_view(request, slug):
     context = {"object": obj}
     return render(request, template_name, context)
 
+@staff_member_required
 def post_update_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
-    template_name = "blog/update.html"
-    context = {"object": obj,"form": None}
+    form = PostModelForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect(reverse(posts_list_view))
+        # return redirect(reverse(post_detail_view, args=slug))
+    template_name = "form.html"
+    context = {"title": f"Update {obj.title}", "form": form}
     return render(request, template_name, context)
 
 def post_delete_view(request, slug):
