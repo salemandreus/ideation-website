@@ -12,7 +12,7 @@ class PostModelForm(forms.ModelForm):
         model = Post
         fields = ['title', 'slug', 'content']
 
-    def clean_title(self, *args, **kwargs ):
+    def clean_title(self, *args, **kwargs):
         title = self.cleaned_data.get('title')
         qs = Post.objects.filter(title__iexact=title)   # Todo: use this for emails when signing up
         if qs.exists():
