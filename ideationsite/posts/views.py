@@ -73,9 +73,13 @@ def post_update_view(request, slug):
     context = {"title": f"Update {obj.title}", "form": form}
     return render(request, template_name, context)
 
+@staff_member_required
 def post_delete_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
     template_name = "posts/delete.html"
+    if request.method == "POST":
+        obj.delete()
+        return redirect(reverse(posts_list_view))
     context = {"object": obj}
     return render(request, template_name, context)
 
