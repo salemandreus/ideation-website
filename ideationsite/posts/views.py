@@ -58,13 +58,13 @@ def post_detail_view(request, slug):
     context = {"object": obj}
     return render(request, template_name, context)
 
-def post_update_view(request):
+def post_update_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
     template_name = "blog/update.html"
     context = {"object": obj,"form": None}
     return render(request, template_name, context)
 
-def post_delete_view(request):
+def post_delete_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
     template_name = "blog/delete.html"
     context = {"object": obj}
