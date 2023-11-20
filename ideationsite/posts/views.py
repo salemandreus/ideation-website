@@ -4,7 +4,6 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 from .forms import PostModelForm
-
 from .models import Post
 
 
@@ -26,7 +25,7 @@ from .models import Post
 
 def posts_list_view(request):
     """" Return List of Posts. """
-
+    # Todo : allow specify how many to show, then use this view in main page to show latest X posts
     qs = Post.objects.all()
     template_name = "posts/list.html"
     context = {"object_list": qs}
