@@ -28,7 +28,7 @@ def posts_list_view(request):
     """" Return List of Posts. """
 
     qs = Post.objects.all()
-    template_name = "blog/list.html"
+    template_name = "posts/list.html"
     context = {"object_list": qs}
     return render(request, template_name, context)
 
