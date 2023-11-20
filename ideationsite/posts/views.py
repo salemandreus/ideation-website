@@ -54,7 +54,7 @@ def post_detail_view(request, slug):
     """Retrieve a single post via a slug"""
 
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
-    template_name = "blog/detail.html"
+    template_name = "posts/detail.html"
     context = {"object": obj}
     return render(request, template_name, context)
 
@@ -66,7 +66,7 @@ def post_update_view(request, slug):
 
 def post_delete_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
-    template_name = "blog/delete.html"
+    template_name = "posts/delete.html"
     context = {"object": obj}
     return render(request, template_name, context)
 
