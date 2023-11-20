@@ -41,6 +41,7 @@ def post_create_view(request):
     form = PostModelForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
+        obj.user = request.user
         #obj.title= form.cleaned_data.get("title") + "0"
         obj.save()
         form = PostModelForm()
