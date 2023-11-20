@@ -46,6 +46,8 @@ def post_create_view(request):
         #obj.title= form.cleaned_data.get("title") + "0"
         obj.save()
         form = PostModelForm()
+        #return redirect(reverse(posts_list_view)) #or redirect to here
+        # return redirect(reverse(post_detail_view, args=slug)) # or here
     template_name = "form.html"
     context = {"title": "Create A New Post", "form": form}
 
