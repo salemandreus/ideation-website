@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 # class Author(models.Model):
@@ -11,7 +13,7 @@ from django.utils import timezone
 #     #number_of_posts = models.IntegerField(Post.id.latest) #Todo: Foo.objects.latest('id')
 
 class Post(models.Model):
-    # author = models.ForeignKey(Author, on_delete=models.CASCADE) # Todo: add a warning that deleting an account deletes all posts and recommend to export them first - make this a "delete my account, posts and all my data" option)
+    user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL) # Todo: add a warning that deleting an account deletes all posts and recommend to export them first - make this a "delete my account, posts and all my data" option)
     title = models.CharField()
     slug = models.SlugField(unique=True)
     content = models.TextField(null=True, blank=True)   # Todo: add markdown support (incl for title)

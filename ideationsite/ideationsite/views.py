@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
 
+from .forms import ContactForm
+
 
 def index(request):
     """Main Page, also the redirected to page after login"""
@@ -18,7 +20,16 @@ def about(request):
 
 
 def contact(request):
-    return render(request, "contact.html",{"title":"Contact Us"})
+    print(request.POST)
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        form = ContactForm()
+    context = {
+        "title": "Contact Us",
+        "form": form
+    }
+    return render(request, "form.html", context)
 
 
 def story(request):

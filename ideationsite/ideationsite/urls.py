@@ -20,15 +20,19 @@ from django.urls import include, path
 # from posts.views import (post_detail_page)
 
 from . import views
-from posts import views as posts_views
+
+from posts.views import (
+        post_create_view,
+)
 
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("post/", posts_views.post_detail_page, name="post_detail_page"),
+    path("post-new/", post_create_view),
+    path("post/", include("posts.urls")),
     path("about/", views.about, name="about"),
     path("story/", views.story, name="story"),
     path("contact/", views.contact, name="contact"),
-    path("posts/", include("posts.urls")),
+    # path("posts/", include("posts.urls")),
     path("admin/", admin.site.urls),
 ]
