@@ -8,7 +8,6 @@
 </head>
 
 <body>
-
 {% include 'navbar.html' %}
   <div class="container text-center">
 
@@ -25,26 +24,22 @@
       </div>
       <div class="col order-first">
       </div>
-    </div> <!-- end of Top Row -->
-
-  <!-- Title Block -->
-  <div class="row">
-    <div class="col">
-      <br>
-      {% block title %}
-
-      {% endblock %}
-      <br>
-  <!-- end of Title Block -->
-
-    <!-- Content Block -->
-        {% block content %}
-          Page Template Was Not Loaded
-        {% endblock %}
-    <!-- End of content Block -->
-
-      </div>
     </div>
+  </div> <!-- end of Top Row -->
+
+  <div class="container-fluid">
+  <!-- Title Block -->
+        {% block title %}
+        {% endblock %}
+        <br>
+    <!-- end of Title Block -->
+
+      <!-- Content Block -->
+          {% block content %}
+            Page Template Was Not Loaded
+          {% endblock %}
+      <!-- End of content Block -->
+
   </div>
 
 <!-- Scripts -->

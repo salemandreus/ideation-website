@@ -3,15 +3,17 @@ from django.shortcuts import render
 from django.template.loader import get_template
 
 from .forms import ContactForm
+from posts.models import Post
 
 
 def index(request):
     """Main Page, also the redirected to page after login"""
+    qs = reversed(Post.objects.all()[5:])
     if request.user.is_authenticated:
-        context = {"title": "Welcome back, {username}!".format(username=request.user),
-                   "latest_posts": [1, 2, 3, 4, 5]}  # Todo: replace with links pulled from DB and their dates
+        context = {"title": "Welcome back, {username}!".format(username=request.user)}
     else:
         context = {"title": "Welcome!"}
+    context["latest_posts"] = qs
     return render(request, "index.html", context)
 
 
@@ -29,7 +31,7 @@ def contact(request):
         "title": "Contact Us",
         "form": form
     }
-    return render(request, "form.html", context)
+    return render(request, "e-mail-form.html", context)
 
 
 def story(request):

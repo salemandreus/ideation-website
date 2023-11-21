@@ -28,7 +28,7 @@ from .models import Post
 def posts_list_view(request):
     """" Return List of Posts. """
     # Todo : allow specify how many to show, then use this view in main page to show latest X posts
-    qs = Post.objects.all()
+    qs = reversed(Post.objects.all())
     template_name = "posts/list.html"
     context = {"object_list": qs}
     return render(request, template_name, context)
@@ -57,7 +57,7 @@ def post_detail_view(request, slug):
     """Retrieve a single post via a slug"""
 
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
-    template_name = "posts/detail.html"
+    template_name = "posts/detail-page.html"
     context = {"object": obj}
     return render(request, template_name, context)
 

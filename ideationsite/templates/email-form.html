@@ -11,10 +11,7 @@
 
 <form method='POST' action='.' > {% csrf_token %}
     {{ form.as_p }}
-<!--    <button type="btn">Cancel</button>-->
-<!--    <button class="btn btn-danger">Delete</button>--> <!--Todo: delete button only on Edit form-->
     <button type="submit">Send</button>
 
 </form>
-
 {% endblock %}

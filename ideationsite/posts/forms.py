@@ -12,6 +12,7 @@ class PostModelForm(forms.ModelForm):
         model = Post
         fields = ['title', 'slug', 'content']
 
+
     def clean_title(self, *args, **kwargs):
         instance=self.instance
         print(instance)

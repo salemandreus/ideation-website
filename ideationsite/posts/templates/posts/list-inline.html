@@ -1,0 +1,25 @@
+<!--<a href = "{{post.get_absolute_url }}">{{ post.title }}"</a>-->
+
+<div class="col-12 col-md-10 mb-3 mx-auto">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{post.title}}</h5><h6>Published {{post.pub_date}}</h6>
+            <p class="card-text">
+
+                {% if not detail %}
+                    {{post.content|linebreaks|truncatewords:30}}
+                    <a href = "{{post.get_absolute_url}}">View</a>
+                {% else %}
+                    {{ post.content|linebreaks}}
+                {% endif %}
+                <!--show edit-->
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_staff %}
+                    <a href="{{ post.get_edit_url }}">Edit</a>
+                    <a href="{{ post.get_delete_url }}">Delete</a>
+                    {% endif %}
+                {% endif %}
+                </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+{% extends "base.html" %}}
+{% block content %}
+<!--A single detailed page reachable by a slug-->
+<row>
+    {% include 'posts/list-inline.html' with post=object detail=True %}
+</row>
+{% endblock %}
