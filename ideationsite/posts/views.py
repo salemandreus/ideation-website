@@ -24,11 +24,15 @@ from .models import Post
 #     context = {"object_list" : qs}
 #     return render(request, template_name, context)
 
-
+#and post.created != post.updated
 def posts_list_view(request):
     """" Return List of Posts. """
     # Todo : allow specify how many to show, then use this view in main page to show latest X posts
-    qs = reversed(Post.objects.all())
+    # qs = reversed(Post.objects.published())
+    qs = Post.objects.all().published()
+    if request.user.is_authenticated:
+        my_qs = Post.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
     template_name = "posts/list.html"
     context = {"object_list": qs}
     return render(request, template_name, context)

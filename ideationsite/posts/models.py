@@ -14,6 +14,19 @@ User = settings.AUTH_USER_MODEL
 #     first_post_date = models.DateTimeField("been posting since") #Todo: "been posting since" or "first posted on" or "date of first post" date? maybe in view
 #     #number_of_posts = models.IntegerField(Post.id.latest) #Todo: Foo.objects.latest('id')
 
+class PostQuerySet(models.QuerySet):
+    def published(self):
+        now=timezone.now()
+        return self.filter(publish_date__lte=now)
+
+class PostManager(models.Manager):
+    def get_queryset(self):
+        return PostQuerySet(self.model, using=self._db)
+
+    def published(self):
+        return self.get_queryset().published()
+
+
 class Post(models.Model):                                                           # Todo: a different on-delete or different user? set a tag?
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL) # Todo: add a warning that deleting an account deletes all posts and recommend to export them first - make this a "delete my account, posts and all my data" option)
     # Todo: add an author which defaults to the user creating the post - if someone leaves they can still be credited as author/we can still search it even if they delete their user or hide their contributions or attribution
@@ -25,9 +38,10 @@ class Post(models.Model):                                                       
     created = models.DateTimeField(auto_now_add=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     updated = models.DateTimeField(auto_now=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
                                                             # Todo: add storage for user images etc?
+    objects=PostManager()
 
     class Meta:
-        ordering = ['-publish_date','-updated','-timestamp']
+        ordering = ['-updated','-publish_date','-created']
     def get_absolute_url(self):
         return f"{reverse('posts_index')}{self.slug}"
 

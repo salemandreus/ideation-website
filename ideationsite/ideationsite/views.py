@@ -8,7 +8,8 @@ from posts.models import Post
 
 def index(request):
     """Main Page, also the redirected to page after login"""
-    qs = reversed(Post.objects.all()[5:])
+    #qs = reversed(Post.objects.all()[5:])
+    qs = Post.objects.all()[:8]
     if request.user.is_authenticated:
         context = {"title": "Welcome back, {username}!".format(username=request.user)}
     else:
