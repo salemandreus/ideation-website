@@ -1,10 +1,10 @@
 #This Project
-ToDo.txt
+Todo*.txt
 python-markdown.py
 *.env
 ideationsite/static/admin/*
 requirements-new-*
-venv-new-attempt
+venv*/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
