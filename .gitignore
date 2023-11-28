@@ -4,6 +4,10 @@ python-markdown.py
 *.env
 ideationsite/static/admin/*
 venv*/
+.idea/ideation-website-insecure-django-configuration.iml
+# experimental insecure version of ideation-website.iml using django-admin and unsecured environment variables not to be committed
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
