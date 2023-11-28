@@ -3,7 +3,6 @@ Todo*.txt
 python-markdown.py
 *.env
 ideationsite/static/admin/*
-requirements-new-*
 venv*/
 
 # Byte-compiled / optimized / DLL files
