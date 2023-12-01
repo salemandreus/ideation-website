@@ -1,5 +1,6 @@
 #This Project
 Todo*.txt
+Todo*/
 *.env
 ideationsite/static/admin/*
 venv*/
