@@ -1,6 +1,5 @@
 #This Project
 Todo*.txt
-python-markdown.py
 *.env
 ideationsite/static/admin/*
 venv*/
