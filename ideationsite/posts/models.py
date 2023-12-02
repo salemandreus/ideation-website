@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
+from datetime import datetime as dt
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -18,6 +18,8 @@ class PostQuerySet(models.QuerySet):
     def published(self):
         now=timezone.now()
         return self.filter(publish_date__lte=now)
+
+    #datetimes(field_name, kind, order='ASC', tzinfo=None, is_dst=None)¶
 
 class PostManager(models.Manager):
     def get_queryset(self):
@@ -37,6 +39,23 @@ class Post(models.Model):                                                       
     publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     created = models.DateTimeField(auto_now_add=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     updated = models.DateTimeField(auto_now=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
+
+    @property
+    def updated_to_minute(self):
+        return self.updated.replace(second=0, microsecond=0)
+
+    @property
+    def created_to_minute(self):
+        return self.created.replace(second=0, microsecond=0)
+
+    @property
+    def published_to_minute(self):
+        return self.publish_date.replace(second=0, microsecond=0)
+
+    # updated_to_minute = models.DateTimeField(default=updated.replace(second=0, microsecond=0))
+    # created_to_minute = models.DateTimeField(default=created.replace(second=0, microsecond=0))
+    # published_to_minute = models.DateTimeField(default=publish_date.replace(second=0, microsecond=0))
+
                                                             # Todo: add storage for user images etc?
     objects=PostManager()
 
