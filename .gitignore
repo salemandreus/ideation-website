@@ -1,7 +1,7 @@
 #This Project
 Todo*.txt
 Todo*/
-*.env
+*.env*
 ideationsite/static/admin/*
 venv*/
 .idea/ideation-website.iml
