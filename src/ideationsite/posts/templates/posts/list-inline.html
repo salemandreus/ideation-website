@@ -4,25 +4,38 @@
         <div class="{% if not post.publish_date %} card-body text-secondary bg-light {% else %} card-body bg-white {% endif %}">
             <h5 class="card-title">{{post.title}}</h5>
 
+
+                <!-- PUBLISHED STATUS:-->
+                    <!-- Draft or published -->
                 {% if not post.publish_date %}
                     <h6><i> ─ Draft</i></h6>
                 {% else %}
+
+
+                <!-- DATES:-->
+                    <!-- Published -->
                     <small class="text-muted"><strong>Published </strong>{{post.publish_date}}&emsp;&emsp;</small>
                     <br>
                 {% endif %}
 
+                    <!--Updated (Optional - only if different to other dates) -->
                  {% if post.created_to_minute != post.updated_to_minute %}
                      {% if not post.publish_date or post.published_to_minute != post.updated_to_minute %}
                          <small class="text-muted"><strong>Updated </strong>{{post.updated}}&emsp;&emsp;</small>
                      {%  endif %}
                 {% endif %}
 
+                    <!--Scheduled/Countdown-->
                 <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date --> <!--Todo: allow scheduling publish - if past date show "scheduled:" and the future publish date-->
-                <!--<small class="text-muted"><strong>Scheduled </strong>{{post.publish_date}}&emsp;&emsp;</small>-->
+                <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>--> <!-- Todo: make sure this only shows to staff -->
+                <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>--> <!-- Todo: Or make a fun countdown viewable (rename "countdown_to_publish" or "time_remaining_until_publish" to viewers maybe with the teaser title of blog post - countdown should include seconds and be in a different colour eg red -->
 
+                    <!--Created --> <!-- Todo: an option to not show this date if published - set as an environment variable or user-specific or admin-specific option to disable it -->
                 <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>
                 <p class="card-text">
 
+
+                <!-- TEXT -->
                 {% if not detail %}
                     {{post.content|linebreaks|truncatewords:30}}
                     <a href = "{{post.get_absolute_url}}">View Page</a>
@@ -30,7 +43,8 @@
                     {{ post.content|linebreaks}}
                 {% endif %}
 
-                <!--show edit-->
+
+                <!-- EDIT/DELETE -->
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_staff %}
                     <a href="{{ post.get_edit_url }}">Edit</a>
