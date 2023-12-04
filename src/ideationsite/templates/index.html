@@ -9,7 +9,7 @@
     {% if user.is_authenticated %}
         <h5>Your Latest Posts:</h5>
         {% for a in latest_posts %}             <!-- Todo: make these display in reverse order -->
-            {% include 'posts/../posts/templates/posts/list-inline.html' with post=a truncate=True detail=False %}
+            {% include 'posts/../templates/../posts/list-inline.html' with post=a truncate=True detail=False %}
         {% endfor %}
     {% else %}
         <!-- Todo: add a link to "sign up" and more explanation of the site's purpose -->

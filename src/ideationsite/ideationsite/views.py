@@ -32,7 +32,7 @@ def contact(request):
         "title": "Contact Us",
         "form": form
     }
-    return render(request, "e-mail-form.html", context)
+    return render(request, "../templates/email-form.html", context)
 
 
 def story(request):
