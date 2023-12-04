@@ -15,11 +15,11 @@ def index(request):
     else:
         context = {"title": "Welcome!"}
     context["latest_posts"] = qs
-    return render(request, "index.html", context)
+    return render(request, "../templates/index.html", context)
 
 
 def about(request):
-    return render(request, "about.html",{"title":"About Us"})
+    return render(request, "../templates/about.html", {"title": "About Us"})
 
 
 def contact(request):
@@ -42,4 +42,4 @@ def story(request):
     context = {"story": template_obj}
     rendered_text = template_obj.render(context)
 
-    return render(request, "story.html", {"title": "Our Story", "subtitle": "Read Our Story", "story": rendered_text})
+    return render(request, "../templates/story.html", {"title": "Our Story", "subtitle": "Read Our Story", "story": rendered_text})

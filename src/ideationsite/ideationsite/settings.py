@@ -69,7 +69,7 @@ INTERNAL_IPS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,"templates")],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,15 +134,24 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+LOCAL_STATIC_CDN_PATH = os.path.join(os.path.dirname(BASE_DIR), '../../../static_cdn_test')
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/') #todo: change from local    # live CDN eg AWS S3
+STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, '../../../static_cdn_test/static/') #todo: change from local    # live CDN eg AWS S3
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'staticfiles')
+]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, '../../../static_cdn_test/media/')
+MEDIA_URL = '/media/'
