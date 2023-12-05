@@ -32,6 +32,7 @@ class PostManager(models.Manager):
 class Post(models.Model):                                                           # Todo: a different on-delete or different user? set a tag?
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL) # Todo: add a warning that deleting an account deletes all posts and recommend to export them first - make this a "delete my account, posts and all my data" option)
     # Todo: add an author which defaults to the user creating the post - if someone leaves they can still be credited as author/we can still search it even if they delete their user or hide their contributions or attribution
+    image = models.ImageField(upload_to='image/', blank=True, null=True)
     title = models.CharField()
     slug = models.SlugField(unique=True)
     content = models.TextField(null=True, blank=True)   # Todo: add markdown support (incl for title)

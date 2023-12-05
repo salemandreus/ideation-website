@@ -43,7 +43,7 @@ def post_create_view(request):
     """ Create Post via a form. """
     # if not request.user.is_authenticated:     #Todo? if we implement users beyond the admin page
     #     return render(request, "not-a-user.html",{})
-    form = PostModelForm(request.POST or None)
+    form = PostModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
@@ -68,7 +68,7 @@ def post_detail_view(request, slug):
 @staff_member_required
 def post_update_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
-    form = PostModelForm(request.POST or None, instance=obj)
+    form = PostModelForm(request.POST or None, request.FILES or None, instance=obj)
     if form.is_valid():
         form.save()
         return redirect(reverse(posts_list_view))

@@ -9,7 +9,7 @@
 {% block content %}
 
 
-<form method='POST' action='' > {% csrf_token %}
+<form method='POST' action='' enctype="multipart/form-data"> {% csrf_token %}
     {{ form.as_p }}
 <!--    <button type="btn">Cancel</button>-->
 <!--    <button class="btn btn-danger">Delete</button>--> <!--Todo: delete button only on Edit form-->
