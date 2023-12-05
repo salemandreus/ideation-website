@@ -15,7 +15,6 @@
                 <!-- DATES:-->
                     <!-- Published -->
                     <small class="text-muted"><strong>Published </strong>{{post.publish_date}}&emsp;&emsp;</small>
-                    <br>
                 {% endif %}
 
                     <!--Updated (Optional - only if different to other dates) -->
@@ -36,9 +35,9 @@
 
                 <!-- CONTENT -->
                 {%  if post.image %}
-
+                                                                <!-- Todo: put in a figure/div with fixed max height so it can fit container using img-fluid? FIX RESPONSIVENESS ON IMAGES WITH BOOTSTRAP on truncated version-->
                         <!--IMAGE (THUMBNAIL OR FULL-SIZED)-->   <!-- Todo: enable clicking images to magnify/view the image at url -->
-                            <img src="{{ post.image.url }}" class="mt-{% if not detail %}5 rounded" style="width: 20%; {%  else %}4 rounded" style="width: 50%; {%  endif %} float:right; margin: 0 0 2% 2%" /> <!--Todo: 1 - make compress, Todo: 2 - make a default size something like this -->
+                            <img src="{{ post.image.url }}" class="img-fluid mt-{% if not detail %}5 rounded" style="max-width:20em; {%  else %}4 rounded" style="{%  endif %} float:right; margin: 0 0 2% 2%" /> <!--Todo: 1 - make compress, Todo: 2 - make a default size something like this -->
                 {%  endif %}
 
 
@@ -46,7 +45,7 @@
 
                 <!--TEXT (TRUNCATED)-->
                {% if not detail %}
-                    {{post.content|linebreaks|truncatewords:100}}
+                    {{post.content|linebreaks|truncatewords:150}}
 
                <!--TEXT (ALL)-->
                {%  else %}
