@@ -57,11 +57,15 @@ class Post(models.Model):                                                       
     content_rendered = RenderedMarkdownField()
     # Todo: Markdown 1) add visual editor library/tool, 2) enable iframes etc with custom markdown - does this require using a custom validator?
 
-    # pub_date = models.DateTimeField(default=timezone.now, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
-    publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
-    created = models.DateTimeField(auto_now_add=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
-    updated = models.DateTimeField(auto_now=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
-
+    # pub_date = models.DateTimeField(default=timezone.now, blank=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
+    publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
+    created = models.DateTimeField(auto_now_add=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
+    updated = models.DateTimeField(auto_now=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
+                                             # Todo: Make on-delete behaviours configurable in post-app template
+    parent_post = models.ForeignKey("Post", null=True, blank=True, on_delete=models.PROTECT) # Todo: potentially allow child post to relate to more than one parent post ie linking them rather than responding to them? Should "linking post" or "sibling post" or "paralel post" be a thing? is that what tags are for? I'd see them as more for grouping ie more loosely related, less direct or explicit, more divergent not convergent
+    is_deleted = models.BooleanField(default=False)
+    # sibling_post/back_link_post  # Todo: make these, probably something other than "back-link" as a name
+                                            # Todo: also make a tree map to visually represent these
     @property
     def updated_to_minute(self):
         return self.updated.replace(second=0, microsecond=0)
@@ -73,12 +77,7 @@ class Post(models.Model):                                                       
     @property
     def published_to_minute(self):
         return self.publish_date.replace(second=0, microsecond=0)
-
-    # updated_to_minute = models.DateTimeField(default=updated.replace(second=0, microsecond=0))
-    # created_to_minute = models.DateTimeField(default=created.replace(second=0, microsecond=0))
-    # published_to_minute = models.DateTimeField(default=publish_date.replace(second=0, microsecond=0))
-
-                                                            # Todo: add storage for user images etc?
+                                                                                                          # Todo: add storage for user images etc?
     objects=PostManager()
 
     class Meta:
