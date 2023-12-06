@@ -1,10 +1,10 @@
 from django import forms
 
 from .models import Post
-
-class PostForm(forms.Form):
-    title = forms.CharField()
-    slug = forms.SlugField()
+                                    # Todo s for slugs on form:
+class PostForm(forms.Form):     # Todo: treat all slugs in url as lowercase
+    title = forms.CharField()   # todo: slugify needs to convert visually on form to lowercase
+    slug = forms.SlugField() #todo: auto-populate with a slug of the title, if already in use append it with a number
     content = forms.CharField(widget=forms.Textarea)
 
 class PostModelForm(forms.ModelForm):
