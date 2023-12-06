@@ -53,7 +53,7 @@ class Post(models.Model):                                                       
     image = models.ImageField(upload_to='image/', blank=True, null=True)
     title = models.CharField()
     slug = models.SlugField(unique=True)
-    content = MarkdownField(rendered_field='content_rendered', validator=VALIDATOR_CLASSY, use_editor=True, use_admin_editor=True, null=False, blank=False)
+    content = MarkdownField(rendered_field='content_rendered', validator=VALIDATOR_CLASSY, use_editor=True, use_admin_editor=True, null=True, blank=True)
     content_rendered = RenderedMarkdownField()
     # Todo: Markdown 1) add visual editor library/tool, 2) enable iframes etc with custom markdown - does this require using a custom validator?
 

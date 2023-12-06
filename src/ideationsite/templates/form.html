@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{%  block head %}
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+{% endblock %}
+
 {% block title %}
 {% if title %}
 <h1> {{title}} </h1>
@@ -16,5 +21,5 @@
     <button type="submit">Send</button>
 
 </form>
-
+<script>new EasyMDE({element: document.getElementById('id_content')});</script>
 {% endblock %}
