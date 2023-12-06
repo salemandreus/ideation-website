@@ -4,6 +4,8 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from datetime import datetime as dt
+from markdownfield.models import MarkdownField, RenderedMarkdownField
+from markdownfield.validators import VALIDATOR_CLASSY
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -20,7 +22,7 @@ class PostQuerySet(models.QuerySet):
         now=timezone.now()
         return self.filter(publish_date__lte=now)
 
-    def search(self, query):
+    def search(self, query):        # Todo: check works with markdown addition
         lookup = (
                     Q(title__icontains=query) |
                     Q(content__icontains=query) |
@@ -51,7 +53,10 @@ class Post(models.Model):                                                       
     image = models.ImageField(upload_to='image/', blank=True, null=True)
     title = models.CharField()
     slug = models.SlugField(unique=True)
-    content = models.TextField(null=False, blank=False)   # Todo: add markdown support (incl for title)
+    content = MarkdownField(rendered_field='content_rendered', validator=VALIDATOR_CLASSY, use_editor=True, use_admin_editor=True, null=False, blank=False)
+    content_rendered = RenderedMarkdownField()
+    # Todo: Markdown 1) add visual editor library/tool, 2) enable iframes etc with custom markdown - does this require using a custom validator?
+
     # pub_date = models.DateTimeField(default=timezone.now, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     created = models.DateTimeField(auto_now_add=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'markdownfield',
     'django.contrib.staticfiles',
     # 'posts.apps.PostsConfig',
     'posts',
@@ -156,3 +157,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, '../static_cdn_test/media/')
 MEDIA_URL = 'media/'
+
+
+# For Markdownfield
+SITE_URL = env("SITE_URL")

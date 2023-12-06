@@ -45,11 +45,11 @@
 
                 <!--TEXT (TRUNCATED)-->
                {% if not detail %}
-                    {{post.content|linebreaks|truncatewords:150}}
+                    {{post.content_rendered|safe|linebreaks|truncatewords:150}}
 
                <!--TEXT (ALL)-->
                {%  else %}
-                    {{ post.content|linebreaks}}
+                    {{ post.content_rendered|safe|linebreaks}}
                {%  endif %}
                 </p>
 
