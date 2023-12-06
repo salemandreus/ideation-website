@@ -51,7 +51,7 @@ class Post(models.Model):                                                       
     image = models.ImageField(upload_to='image/', blank=True, null=True)
     title = models.CharField()
     slug = models.SlugField(unique=True)
-    content = models.TextField(null=True, blank=True)   # Todo: add markdown support (incl for title)
+    content = models.TextField(null=False, blank=False)   # Todo: add markdown support (incl for title)
     # pub_date = models.DateTimeField(default=timezone.now, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     created = models.DateTimeField(auto_now_add=True) #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
