@@ -6,6 +6,7 @@ from django.utils import timezone
 from datetime import datetime as dt
 from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_CLASSY
+from autoslug import AutoSlugField
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -52,7 +53,7 @@ class Post(models.Model):                                                       
     # Todo: add an author which defaults to the user creating the post - if someone leaves they can still be credited as author/we can still search it even if they delete their user or hide their contributions or attribution
     image = models.ImageField(upload_to='image/', blank=True, null=True)
     title = models.CharField()
-    slug = models.SlugField(unique=True, max_length=255)
+    slug = AutoSlugField(populate_from='title', editable=True, unique=True, max_length=255)
     content = MarkdownField(rendered_field='content_rendered', validator=VALIDATOR_CLASSY, use_editor=True, use_admin_editor=True, null=True, blank=True)
     content_rendered = RenderedMarkdownField()
     # Todo: Markdown 1) add visual editor library/tool, 2) enable iframes etc with custom markdown - does this require using a custom validator?
