@@ -10,7 +10,7 @@ class PostForm(forms.Form):     # Todo: treat all slugs in url as lowercase
 class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post    #Todo: add note on form explaining how publish date works and can be blank
-        fields = ['title', 'image', 'slug', 'publish_date', 'content']
+        fields = ['title', 'image', 'slug', 'publish_date', 'content']  # Todo calendar widget , status note of when it's scheduled for - now or future or how past applies depending what's specified relative to now
 
 
     def clean_title(self, *args, **kwargs):
