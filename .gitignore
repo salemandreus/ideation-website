@@ -8,6 +8,7 @@ static_cdn_test/
 venv*/
 .idea/ideation-website.iml
 # insecure original version of ideation-website.iml using django-admin and unsecured environment variables not to be committed
+info.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
