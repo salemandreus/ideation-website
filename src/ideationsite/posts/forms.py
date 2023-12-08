@@ -9,8 +9,8 @@ class PostForm(forms.Form):     # Todo: treat all slugs in url as lowercase
 
 class PostModelForm(forms.ModelForm):
     class Meta:
-        model = Post
-        fields = ['title', 'image', 'slug', 'content', 'publish_date']
+        model = Post    #Todo: add note on form explaining how publish date works and can be blank
+        fields = ['title', 'image', 'slug', 'publish_date', 'content']
 
 
     def clean_title(self, *args, **kwargs):

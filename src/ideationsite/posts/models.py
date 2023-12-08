@@ -58,7 +58,7 @@ class Post(models.Model):                                                       
     # Todo: Markdown 1) add visual editor library/tool, 2) enable iframes etc with custom markdown - does this require using a custom validator?
     # Todo: dropdown or calendar for publish date and time
     # pub_date = models.DateTimeField(default=timezone.now, blank=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
-    publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
+    publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now, null=True, blank=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     created = models.DateTimeField(auto_now_add=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
     updated = models.DateTimeField(auto_now=True)  #(auto_now_add=True, blank=True) Todo: this seems preferred - would like it to be uneditable in admin, maybe
                                              # Todo: Make on-delete behaviours configurable in post-app template
