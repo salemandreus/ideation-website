@@ -32,7 +32,7 @@
                  {% if not post.is_deleted and post.created_to_minute != post.updated_to_minute %}
                      {% if not post.publish_date or post.published_to_minute != post.updated_to_minute %}
                          <small class="text-muted"><strong>Updated </strong>{{post.updated}}&emsp;&emsp;</small>
-                     {%  endif %}
+                     {%  endif %}                           <!-- Todo: allow "view edits" and a diff - configurable or disableable by post for author depending if it helps their idea post or was an error-->
                 {% endif %}
 
                     <!--Scheduled/Countdown-->
@@ -57,21 +57,27 @@
                 <!--TEXT (TRUNCATED)-->
                {% if not detail %}
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
+               <!-- "VIEW" LINK-->
+                <p class="card-text" style="clear:both"> <!--Todo feature: as per view Todo this will only show if comments exist otherwise add "hide" first time -->
+                    <a href="{{post.get_absolute_url}}"
+                            {% if post.is_deleted %} class="text-light">View Responses
+                            {% elif not post.publish_date %}>View Draft
+                            {% elif post.publish_date <= utc_now %}>View Discussion
+                            {% else %}> View Scheduled<!--class="text-info" -->
+                            {% endif %}
+                   </a>&nbsp;<!--or "Upcoming"-->
+
+                                                                                    <!--Todo: "View Post" if no responses -->
 
                <!--TEXT (ALL)-->
                {%  else %}
                     {{ post.content_rendered|safe|linebreaks}}
                {%  endif %}
-                </p>
 
-                <!-- VIEW -->
-                <p class="card-text" style="clear:both">
-                    <a href="{{post.get_absolute_url}}" {% if post.is_deleted %} class="text-light" {% endif %}>View Page</a>
-
-               <!-- EDIT/DELETE -->
+               <!-- "EDIT" AND "DELETE" LINKS -->
                 {% if request.user.is_authenticated %}
                     {% if not post.is_deleted and request.user.is_staff %}
-                    <a href="{{ post.get_edit_url }}">Edit</a>
+                    <a href="{{ post.get_edit_url }}">Edit</a>&nbsp;
                     <a href="{{ post.get_delete_url }}">Delete</a>
                     {% endif %}
                 {% endif %}
