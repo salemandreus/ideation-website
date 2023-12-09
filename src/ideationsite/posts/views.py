@@ -4,7 +4,6 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-
 from .forms import PostModelForm
 from .models import Post
 
@@ -104,4 +103,3 @@ def post_delete_view(request, slug):
         return redirect(reverse(posts_list_view))
     context = {"object": obj}
     return render(request, template_name, context)
-
