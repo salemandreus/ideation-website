@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{%  block head %}
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+{% endblock %}
+
+{% block title %}
+{% if title %}
+<h1> {{title}} </h1>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+<form method='POST' action='' enctype="multipart/form-data"> {% csrf_token %}
+    {{ form.as_p }}
+<!--    <button type="btn">Cancel</button>-->
+<!--    <button class="btn btn-danger">Delete</button>--> <!--Todo: delete button only on Edit form-->
+    <button type="submit">Send</button>
+
+</form>
+
+<!-- Todo: Move into scripts -->
+<!-- if creating new, generate slug from the title-->
+{% if request.path == '/post-new/' %}
+<script>
+const titleInput = document.querySelector('input[name=title');
+const slugInput = document.querySelector('input[name=slug]');
+
+const slugify = (val) => {
+    return val.toString().toLowerCase().trim()
+        .replace(/&/g, '-and-') // replacing & with '-and-'
+        .replace(/[\s\W-]+/g, '-') //replcaing spaces, non-word chars and dashes with a single '-'
+};
+
+titleInput.addEventListener('keyup', (e) => {
+    slugInput.setAttribute('value', slugify(titleInput.value));
+});
+</script>
+{%  endif %}
+
+<!-- Add Markdown Widget -->
+<!-- todo: fix this not working again -->
+<script>new EasyMDE({element: document.getElementById('id_content')});</script>
+
+{%  endblock %}

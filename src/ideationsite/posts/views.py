@@ -52,7 +52,7 @@ def post_create_view(request):
         # return redirect(reverse(posts_list_view)) #or redirect to here # Todo: Add a validation that says posted successfully after post is sent
         return redirect(post_detail_view, obj.slug)
         #return redirect(reverse(post_detail_view, args=obj.slug)) # or here   # Todo: nicer, prettier form design (theme and visual aesthetics)
-    template_name = "form.html"
+    template_name = "posts/post-form.html"
     context = {"title": "Create A New Post", "form": form}
 
     return render(request, template_name, context)
@@ -76,7 +76,7 @@ def post_update_view(request, slug):
         form.save()
         #return redirect(reverse(posts_list_view)) return redirect(post_detail_view, obj.slug)
         return redirect(post_detail_view,obj.slug )#args=form.fields.slug))
-    template_name = "form.html"
+    template_name = "posts/post-form.html"
     context = {"title": f"Update {obj.title}", "form": form}
     return render(request, template_name, context)
 

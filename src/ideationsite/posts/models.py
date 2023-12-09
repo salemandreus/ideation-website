@@ -6,7 +6,8 @@ from django.utils import timezone
 from datetime import datetime as dt
 from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_CLASSY
-from autoslug import AutoSlugField
+#from autoslug import AutoSlugField
+#from django.utils.text import slugify
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -52,8 +53,8 @@ class Post(models.Model):                                                       
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL) # Todo: add a warning that deleting an account deletes all posts and recommend to export them first - make this a "delete my account, posts and all my data" option)
     # Todo: add an author which defaults to the user creating the post - if someone leaves they can still be credited as author/we can still search it even if they delete their user or hide their contributions or attribution
     image = models.ImageField(upload_to='image/', blank=True, null=True)
-    title = models.CharField()
-    slug = AutoSlugField(populate_from='title', editable=True, unique=True, max_length=255)
+    title = models.CharField()  # Todo: the "populate" doesn't seem to be working, not sure if the "unique" is either, it's all the template JS converting the title
+    slug = models.SlugField(unique=True, max_length=255) #AutoSlugField(populate_from='title', editable=True, unique=True, max_length=255)#default=create_slug(self.title)) # default=slugify(title)
     content = MarkdownField(rendered_field='content_rendered', validator=VALIDATOR_CLASSY, use_editor=True, use_admin_editor=True, null=True, blank=True)
     content_rendered = RenderedMarkdownField()
     # Todo: Markdown 1) add visual editor library/tool, 2) enable iframes etc with custom markdown - does this require using a custom validator?
