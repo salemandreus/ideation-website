@@ -64,7 +64,15 @@ def post_detail_view(request, slug): # Todo: when I do this - display a status n
 
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
     template_name = "posts/detail-page.html"
-    context = {"object": obj}
+
+    # Get whole discussion for post including drafts # todo make sure users can only see their own drafts
+    qs = Post.objects.all().published().filter(parent_post=obj.pk) # Todo: get the order correct by time published
+    if request.user.is_authenticated:
+        my_qs = Post.objects.filter(user=request.user, parent_post=obj.pk)
+        qs = (qs | my_qs).distinct()
+                # parent        # responses
+    context = {"object": obj, "object_list": qs}
+
     return render(request, template_name, context)
 
 @staff_member_required

@@ -4,4 +4,10 @@
 <row>
     {% include 'posts/list-inline.html' with post=object detail=True %}
 </row>
+
+        <div class="row">
+        {% for object in object_list %}
+            {% include 'posts/list-inline.html' with post=object truncate=False detail=False %}
+        {% endfor %}
+        </div>
 {% endblock %}
