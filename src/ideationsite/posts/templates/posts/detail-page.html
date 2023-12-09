@@ -6,7 +6,7 @@
 </row>
 
         <div class="row">
-        {% for object in object_list %}
+        {% for object in object_list %}                             <!--Todo: comment title ids based on slugs for linking to a section of a page (also own pages or not?)-->
             {% include 'posts/list-inline.html' with post=object truncate=False detail=False %}
         {% endfor %}
         </div>
