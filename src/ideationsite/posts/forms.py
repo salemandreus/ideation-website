@@ -6,6 +6,7 @@ class PostForm(forms.Form):     # Todo: treat all slugs in url as lowercase
     title = forms.CharField()   # todo: slugify needs to convert visually on form to lowercase
     slug = forms.SlugField() #todo: auto-populate with a slug of the title, if already in use append it with a number
     content = forms.CharField(widget=forms.Textarea)
+    # publish_date = forms.DateTimeField(widget=datetime)  #(help_text="") # Todo: potentially add calendar and time (split?) widget
 
 class PostModelForm(forms.ModelForm):
     class Meta:
