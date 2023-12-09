@@ -58,8 +58,9 @@ def post_create_view(request):
 
     return render(request, template_name, context)
 
-def post_detail_view(request, slug):
-    """Retrieve a single post via a slug"""
+                                                # todo: hide deleted posts from unauthorized unless they have children
+def post_detail_view(request, slug): # Todo: when I do this - display a status notice or info (i) on whether deleted OR to-publish is visible to others (mention they can check it on private mode to see what is visible or give them a link to a _blank private mode to show them)
+    """Retrieve a single post via a slug"""     #todo: should listing be one view or sub-view incl on Home?
 
     obj = get_object_or_404(Post, slug=slug)  # Todo: reduce duplicate slugs include author name in slug??
     template_name = "posts/detail-page.html"
