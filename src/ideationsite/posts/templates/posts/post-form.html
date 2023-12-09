@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {%  block head %}
+<!--Download/install markdown widget from CDN-->
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 {% endblock %}
@@ -19,17 +20,15 @@
 <!--    <button type="btn">Cancel</button>-->
 <!--    <button class="btn btn-danger">Delete</button>--> <!--Todo: delete button only on Edit form-->
     <button type="submit">Send</button>
-
 </form>
 
 <!-- Todo: Move into scripts -->
-<!-- if creating new, generate slug from the title-->
+<!-- if creating new, generate slug from the title - when updating, don't automatically update slug/link-->
 {% if request.path == '/post-new/' %}
 <script src="../../static/posts/createslugfromtitle.js"></script>
 {%  endif %}
 
-<!-- Add Markdown Widget -->
-<!-- todo: fix this not working again -->
+<!-- Add Markdown Widget to content TextArea -->
 <script>new EasyMDE({element: document.getElementById('id_content')});</script>
 
 {%  endblock %}
