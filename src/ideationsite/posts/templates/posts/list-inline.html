@@ -1,7 +1,7 @@
 <!--<a href = "{{post.get_absolute_url }}">{{ post.title }}"</a>-->
 <div class="col-12 col-md-10 mb-3 mx-auto">
-    <div class="card {% if obj.is_deleted %} text-white {% elif not post.publish_date %} border card border-light mb-3 {% else %} mb-3 mb-3 text-dark {% endif %}">
-        <div class="{% if post.is_deleted %} card bg-secondary mb-3 {% elif not post.publish_date %} card-body text-secondary bg-light {% else %} card-body bg-white {% endif %}">
+    <div class="card {% if obj.is_deleted %} text-white" {% elif not post.publish_date %} border card border-light {%  elif post.publish_date <= utc_now %} text-dark {%  else %} border-primary {% endif %}">
+        <div class="{% if post.is_deleted %} card text-light fst-italic card-body bg-secondary {% elif not post.publish_date %} card-body text-secondary fst-italic bg-light {% elif post.publish_date <= utc_now %} card-body bg-white {%  else %} card-body bg-white  {% endif %}">
             <h5 class="card-title">{{post.title}}</h5>
 
             <!-- DATES:-->
@@ -9,7 +9,7 @@
                 <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
                     <!-- Deleted date -->
                 {%  if post.is_deleted %}
-                    <small class="text-muted"><strong>Deleted </strong>{{post.updated}}&emsp;&emsp;</small>
+                    <small class="text-light"><strong>Deleted </strong>{{post.updated}}&emsp;&emsp;</small>
                     <!-- Published date -->
                 {%  elif post.publish_date %}
                         <!-- show published date-->
@@ -17,7 +17,7 @@
                         <small class="text-muted"><strong>Published </strong>{{post.publish_date}}&emsp;&emsp;</small>
                     {% else %}
                         <!-- show scheduled to publish date --> <!-- todo: check this only shows to people with permission -->
-                        <small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small> <!-- Todo: make sure this only shows to staff -->
+                        <small class="text-primary"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small> <!-- Todo: make sure this only shows to staff -->
                         <!-- todo: configurable whether to show title and nothing else while still counting down?-->
                         <!-- show countdown and optionally title or a custom teaser title-->
                         <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>--> <!-- Todo: Or make a fun countdown viewable (rename "countdown_to_publish" or "time_remaining_until_publish" to viewers maybe with the teaser title of blog post - countdown should include seconds and be in a different colour eg red -->
@@ -66,7 +66,7 @@
 
                 <!-- VIEW -->
                 <p class="card-text" style="clear:both">
-                    <a href = "{{post.get_absolute_url}}">View Page</a>
+                    <a href="{{post.get_absolute_url}}" {% if post.is_deleted %} class="text-light" {% endif %}>View Page</a>
 
                <!-- EDIT/DELETE -->
                 {% if request.user.is_authenticated %}
