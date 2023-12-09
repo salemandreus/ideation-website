@@ -13,7 +13,7 @@
             {%  endif %}
 <!-- Todo: is it searching, should it be returning nothing or everything if nothing entered in search box? investigate what's going on here -->
             {%  for post_item in posts_list %}
-                {% include 'posts/list-inline.html' with post=post_item truncate=True detail=False %}
+                {% include 'posts/list-inline.html' with post=post_item detail=False %}
             {%  endfor %}
 
         </div>

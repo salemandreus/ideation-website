@@ -4,7 +4,7 @@
 
     <div class="row">
         {% for object in object_list %}
-            {% include 'posts/list-inline.html' with post=object truncate=False detail=False %}
+            {% include 'posts/list-inline.html' with post=object detail=False %}
         {% endfor %}
     </div>
 
