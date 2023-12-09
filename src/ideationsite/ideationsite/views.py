@@ -4,6 +4,7 @@ from django.template.loader import get_template
 
 from .forms import ContactForm
 from posts.models import Post
+from datetime import datetime, timezone
 
 
 def index(request):
@@ -15,6 +16,7 @@ def index(request):
     else:
         context = {"title": "Welcome!"}
     context["latest_posts"] = qs
+    context["utc_now" ] = datetime.now(timezone.utc)
     return render(request, "../templates/index.html", context)
 
 

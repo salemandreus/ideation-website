@@ -3,6 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from datetime import datetime, timezone
 
 from .forms import PostModelForm
 from .models import Post
@@ -33,7 +34,7 @@ def posts_list_view(request):
         my_qs = Post.objects.filter(user=request.user)
         qs = (qs | my_qs).distinct()
     template_name = "posts/list.html"
-    context = {"object_list": qs}
+    context = {"object_list": qs, "utc_now": datetime.now(timezone.utc)}
     return render(request, template_name, context)
 
 # @login_required

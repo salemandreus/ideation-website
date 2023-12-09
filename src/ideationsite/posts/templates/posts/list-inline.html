@@ -4,20 +4,30 @@
         <div class="{% if post.is_deleted %} card bg-secondary mb-3 {% elif not post.publish_date %} card-body text-secondary bg-light {% else %} card-body bg-white {% endif %}">
             <h5 class="card-title">{{post.title}}</h5>
 
+            <!-- DATES:-->
 
-                <!-- PUBLISHED STATUS:-->
-                    <!-- Draft or published -->
-                {% if not post.is_deleted and not post.publish_date %} <!--todo rearrange for optimality and clarity? -->
-                    <h6><i> ─ Draft</i></h6>
-
-                <!-- DATES:-->
-                {%  elif post.is_deleted %}
+                <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
+                    <!-- Deleted date -->
+                {%  if post.is_deleted %}
                     <small class="text-muted"><strong>Deleted </strong>{{post.updated}}&emsp;&emsp;</small>
-                    <!-- Published -->
-                {%  else %}
-                    <small class="text-muted"><strong>Published </strong>{{post.publish_date}}&emsp;&emsp;</small>
-                {% endif %}
+                    <!-- Published date -->
+                {%  elif post.publish_date %}
+                        <!-- show published date-->
+                    {%  if post.publish_date <= utc_now %}
+                        <small class="text-muted"><strong>Published </strong>{{post.publish_date}}&emsp;&emsp;</small>
+                    {% else %}
+                        <!-- show scheduled to publish date --> <!-- todo: check this only shows to people with permission -->
+                        <small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small> <!-- Todo: make sure this only shows to staff -->
+                        <!-- todo: configurable whether to show title and nothing else while still counting down?-->
+                        <!-- show countdown and optionally title or a custom teaser title-->
+                        <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>--> <!-- Todo: Or make a fun countdown viewable (rename "countdown_to_publish" or "time_remaining_until_publish" to viewers maybe with the teaser title of blog post - countdown should include seconds and be in a different colour eg red -->
+                    {%  endif %}
+                    <!-- Draft -->
+                {% else %}
+                    <h6><i> ─ Draft date: </i></h6>
+                {%  endif %}
 
+                <!-- CREATED AND (OPTIONAL) UPDATED -->
                     <!--Updated (Optional - only if different to other dates) -->
                  {% if not post.is_deleted and post.created_to_minute != post.updated_to_minute %}
                      {% if not post.publish_date or post.published_to_minute != post.updated_to_minute %}
@@ -28,7 +38,7 @@
                     <!--Scheduled/Countdown-->
                 <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date --> <!--Todo: allow scheduling publish - if past date show "scheduled:" and the future publish date-->
                 <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>--> <!-- Todo: make sure this only shows to staff -->
-                <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>--> <!-- Todo: Or make a fun countdown viewable (rename "countdown_to_publish" or "time_remaining_until_publish" to viewers maybe with the teaser title of blog post - countdown should include seconds and be in a different colour eg red -->
+
 
                  {%  if not post.is_deleted %}   <!--Created --> <!-- Todo: an option to not show this date if published - set as an environment variable or user-specific or admin-specific option to disable it -->
                     <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>  <!-- Todo: show updated first if it's after published? show published elsewhere? just show "last edited"?-->
