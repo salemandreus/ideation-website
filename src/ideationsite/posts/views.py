@@ -78,7 +78,7 @@ def post_detail_view(request, slug): # Todo: when I do this - display a status n
         my_qs = Post.objects.filter(user=request.user, parent_post=obj.pk)
         qs = (qs | my_qs).distinct()
                 # parent        # responses
-    context = {"object": obj, "object_list": qs}
+    context = {"object": obj, "object_list": qs, "card_width_percentage": 100}
 
     return render(request, template_name, context)
 

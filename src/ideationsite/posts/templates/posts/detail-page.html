@@ -6,8 +6,10 @@
 </row>
 <!--Todo: add intdented/nested comments, recurse this for comments on comments-->
         <div class="row">
-        {% for object in object_list %}                             <!--Todo: comment title ids based on slugs for linking to a section of a page (also own pages or not?)-->
-            {% include 'posts/list-inline.html' with post=object detail=True %}
-        {% endfor %}
+        {% with card_width_percentage=95 %}
+            {% for object in object_list %}                             <!--Todo: comment title ids based on slugs for linking to a section of a page (also own pages or not?)-->
+                {% include 'posts/list-inline.html' with post=object detail=True %}        <!-- Todo max depth of recursion? Make it configurable? -->
+            {% endfor %}
+        {% endwith %}
         </div>
 {% endblock %}
