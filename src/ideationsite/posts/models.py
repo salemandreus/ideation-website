@@ -34,6 +34,9 @@ class PostQuerySet(models.QuerySet):
         )
         return self.filter(lookup)                                                          #datetimes(field_name, kind, order='ASC', tzinfo=None, is_dst=None)¶
 
+# Topic (Root) posts only
+    def topic_posts(self):
+        return self.filter(parent_post=None)
 
 class PostManager(models.Manager):
     def get_queryset(self):
@@ -47,6 +50,8 @@ class PostManager(models.Manager):
             return self.get_queryset().none()
         return self.get_queryset().published().search(query)    #only search published
 
+    def topic_posts(self):
+        return self.get_queryset()
 
 
 # Todo: get children for topic post and count
