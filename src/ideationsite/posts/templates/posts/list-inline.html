@@ -58,14 +58,23 @@
                {% if not detail %}
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
                <!-- "VIEW" LINK-->
-                <p class="card-text" style="clear:both"> <!--Todo feature: as per view Todo this will only show if comments exist otherwise add "hide" first time -->
-                    <a href="{{post.get_absolute_url}}"><img src ="../../static/posts/comments.png">
-                            {% if post.is_deleted %} View Responses<!--class="text-light">-->
-                            {% elif not post.publish_date %}View Draft
-                            {% elif post.publish_date <= utc_now %}View Discussion
-                            {% else %}View Scheduled<!--class="text-info" -->   <!--Todo: fix this for child posts somehow copying parent as "scheduled" formatting-->
-                            {% endif %}
+                <p class="card-text" style="clear:both">
+
+                   <!--Todo feature: as per view Todo - only show if comments exist-->                    <!-- Todo: otherwise add "hide" first time -->
+                    <a href="{{post.get_absolute_url}}">
+                    <!-- Todo: if: has response threads -->
+                        <img src ="../../static/posts/comments.png">
+                            View Post and Threads<!--class="text-light">--> <!-- Todo: count number of direct children and say as number of threads -->
+
                    </a>&nbsp;<!--or "Upcoming"-->
+                   <!-- Todo: else if no children-->
+{#                       {% if post.is_deleted %} View Responses<!--class="text-light">-->#}    <!-- Todo: filter deleted w no comments out at view level-->
+{#                       {% elif not post.publish_date %}View Draft#}
+{#                       {% elif post.publish_date <= utc_now %}View Discussion#}
+{#                       {% else %}View Scheduled<!--class="text-info" -->   <!--Todo: fix this for child posts somehow copying parent as "scheduled" formatting-->#}
+{#                       {% endif %}#}
+
+                   <!-- Todo: else if is child - this one last for efficiency  -->
 
                                                                                     <!--Todo: "View Post" if no responses -->
                                                         <!-- Todo: Fix "scheduled to publish wrongly showing on all searches and (all?) child comments-->
