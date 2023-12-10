@@ -65,3 +65,5 @@ https://www.flaticon.com/
 <a href="https://www.flaticon.com/free-icons/clock-in" title="clock in icons">Clock in icons created by itim2101 - Flaticon</a>
 
 <a href="https://www.flaticon.com/free-icons/pin" title="pin icons">Pin icons created by Pixel perfect - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/planner" title="planner icons">Planner icons created by juicy_fish - Flaticon</a>
