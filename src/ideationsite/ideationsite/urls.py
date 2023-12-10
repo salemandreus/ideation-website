@@ -31,7 +31,7 @@ from posts.views import (
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("post-new/", post_create_view),
+    path("post-new/", post_create_view, name="post_create_view"),
     path("post/", include("posts.urls")),
     path("search/", search_view),
     path("about/", views.about, name="about"),
