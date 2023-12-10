@@ -32,9 +32,8 @@ class PostQuerySet(models.QuerySet):
                     Q(user__first_name__icontains=query) |
                     Q(user__username__icontains=query)
         )
-        return self.filter(lookup)
+        return self.filter(lookup)                                                          #datetimes(field_name, kind, order='ASC', tzinfo=None, is_dst=None)¶
 
-    #datetimes(field_name, kind, order='ASC', tzinfo=None, is_dst=None)¶
 
 class PostManager(models.Manager):
     def get_queryset(self):
@@ -48,6 +47,9 @@ class PostManager(models.Manager):
             return self.get_queryset().none()
         return self.get_queryset().published().search(query)    #only search published
 
+
+
+# Todo: get children for topic post and count
 
 class Post(models.Model):                                                           # Todo: a different on-delete or different user? set a tag?
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL) # Todo: add a warning that deleting an account deletes all posts and recommend to export them first - make this a "delete my account, posts and all my data" option)
