@@ -93,5 +93,5 @@ class Post(models.Model):                                                       
     def get_delete_url(self):
         return f"{self.get_absolute_url()}/delete"
 
-    def get_post_response_url(self):
+    def get_post_response_create_url(self):
         return f"{self.get_absolute_url()}/post-new/"

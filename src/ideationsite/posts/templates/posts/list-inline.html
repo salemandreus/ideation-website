@@ -72,7 +72,7 @@
                <!--TEXT (ALL)-->
                {%  else %}
                     {{ post.content_rendered|safe|linebreaks}}
-                    <a href="{{ post.get_post_response_url }}"><img src ="../../static/posts/add.png">Add Response</a>     <!-- Todo: "add comment"/ "add new subpost/note" if you're the OP-->
+                    <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>     <!-- Todo: "add comment"/ "add new subpost/note" if you're the OP-->
                {%  endif %}
 
                <!-- "EDIT" AND "DELETE" LINKS -->
