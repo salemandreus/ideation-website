@@ -59,26 +59,29 @@
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
                <!-- "VIEW" LINK-->
                 <p class="card-text" style="clear:both"> <!--Todo feature: as per view Todo this will only show if comments exist otherwise add "hide" first time -->
-                    <a href="{{post.get_absolute_url}}"
-                            {% if post.is_deleted %} class="text-light">View Responses
-                            {% elif not post.publish_date %}>View Draft
-                            {% elif post.publish_date <= utc_now %}>View Discussion
-                            {% else %}> View Scheduled<!--class="text-info" -->
+                    <a href="{{post.get_absolute_url}}"><img src ="../../static/posts/comments.png">
+                            {% if post.is_deleted %} View Responses<!--class="text-light">-->
+                            {% elif not post.publish_date %}View Draft
+                            {% elif post.publish_date <= utc_now %}View Discussion
+                            {% else %}View Scheduled<!--class="text-info" -->   <!--Todo: fix this for child posts somehow copying parent as "scheduled" formatting-->
                             {% endif %}
                    </a>&nbsp;<!--or "Upcoming"-->
 
                                                                                     <!--Todo: "View Post" if no responses -->
-
+                                                        <!-- Todo: Fix "scheduled to publish wrongly showing on all searches and (all?) child comments-->
                <!--TEXT (ALL)-->
                {%  else %}
                     {{ post.content_rendered|safe|linebreaks}}
+                    <a href="{% url 'post_create_view' %}"><img src ="../../static/posts/add.png">Add Response</a>     <!-- Todo: "add comment"/ "add new subpost/note" if you're the OP-->
+{#                    <a href="{% url 'post_response_create_view' post.parent_post.pk %}"><img src ="../../static/posts/add.png">Add Response</a>     <!-- Todo: "add comment"/ "add new subpost/note" if you're the OP-->#}
+                   {#                        request.POST.get('parent_post')#}
                {%  endif %}
 
                <!-- "EDIT" AND "DELETE" LINKS -->
                 {% if request.user.is_authenticated %}
                     {% if not post.is_deleted and request.user.is_staff %}
-                    <a href="{{ post.get_edit_url }}">Edit</a>&nbsp;
-                    <a href="{{ post.get_delete_url }}">Delete</a>
+                    <a href="{{ post.get_edit_url }}"><img src ="../../static/posts/edit-pencil.png">Edit</a>&nbsp;
+                    <a href="{{ post.get_delete_url }}"><img src ="../../static/posts/delete.png">Delete</a>
                     {% endif %}
                 {% endif %}
                 </p>
