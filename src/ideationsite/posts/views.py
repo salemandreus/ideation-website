@@ -39,7 +39,7 @@ def posts_list_view(request):
 
 # @login_required
 @staff_member_required
-def post_create_view(request, slug=None):
+def post_create_view(request, parent_slug=None):
     """ Create Post via a form. """
     # if not request.user.is_authenticated:     #Todo? if we implement users beyond the admin page
     #     return render(request, "not-a-user.html",{})
@@ -48,9 +48,8 @@ def post_create_view(request, slug=None):
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
-        if slug:
-            print("Slug: " + slug)
-            parent_post = Post.objects.all().filter(slug=slug)
+        if parent_slug:
+            parent_post = Post.objects.all().filter(slug=parent_slug)
             obj.parent_post = parent_post[0]    # Todo: cleanup/testing: assert only one is returned and use ".first()"
         #obj.title= form.cleaned_data.get("title") + "0"
         obj.save()
