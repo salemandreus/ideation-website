@@ -55,8 +55,11 @@ def post_create_view(request, parent_slug=None):
         obj.save()
         #form = PostModelForm()  # If not redirecting but posting multiple in succession
         # return redirect(reverse(posts_list_view)) #or redirect to here # Todo: Add a validation that says posted successfully after post is sent
-        return redirect(post_detail_view, obj.slug)
-        #return redirect(reverse(post_detail_view, args=obj.slug)) # or here   # Todo: nicer, prettier form design (theme and visual aesthetics)
+        if parent_slug:
+            return redirect(post_detail_view, parent_slug) #todo: generate elem id and append f"#id_{slug}"
+        else:                                                           # todo: place form at bottom of page
+            return redirect(post_detail_view, obj.slug)
+        #return redirect(reverse(post_detail_view, args=obj.slug)) # or here
     template_name = "posts/post-form.html"
     context = {"title": "Create A New Post", "form": form}
 
