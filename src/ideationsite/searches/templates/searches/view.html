@@ -1,17 +1,17 @@
 {% extends "ideationsite/../base.html" %}
-<!--todo somehow seaching for keywords in titles and content and slugs ain't working-->
+
 {% block content %}
     <div class='row'>
         <div class="col-12 col-8 mx-auto">
             {%  if query %}
                 <p class="lead">Search results for "{{ query }}"</p>
             {%  else %}
-                 <form class="d-flex" role="search" action="/search/"> <!--Todo: url route -->
+                 <form class="d-flex" role="search" action="/search/">
                     <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                   </form>
             {%  endif %}
-<!-- Todo: is it searching, should it be returning nothing or everything if nothing entered in search box? investigate what's going on here -->
+
             {%  for post_item in posts_list %}
                 {% include 'posts/list-inline.html' with post=post_item detail=False %}
             {%  endfor %}

@@ -16,11 +16,10 @@
                     {%  if post.publish_date <= utc_now %}
                         <small class="text-muted"><strong>Published </strong>{{post.publish_date}}&emsp;&emsp;</small>
                     {% else %}
-                        <!-- show scheduled to publish date --> <!-- todo: check this only shows to people with permission -->
-                        <small class="text-primary"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small> <!-- Todo: make sure this only shows to staff -->
-                        <!-- todo: configurable whether to show title and nothing else while still counting down?-->
+                        <!-- show scheduled to publish date -->
+                        <small class="text-primary"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>
                         <!-- show countdown and optionally title or a custom teaser title-->
-                        <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>--> <!-- Todo: Or make a fun countdown viewable (rename "countdown_to_publish" or "time_remaining_until_publish" to viewers maybe with the teaser title of blog post - countdown should include seconds and be in a different colour eg red -->
+                        <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>-->
                     {%  endif %}
                     <!-- Draft -->
                 {% else %}
@@ -32,23 +31,23 @@
                  {% if not post.is_deleted and post.created_to_minute != post.updated_to_minute %}
                      {% if not post.publish_date or post.published_to_minute != post.updated_to_minute %}
                          <small class="text-muted"><strong>Updated </strong>{{post.updated}}&emsp;&emsp;</small>
-                     {%  endif %}                           <!-- Todo: allow "view edits" and a diff - configurable or disableable by post for author depending if it helps their idea post or was an error-->
+                     {%  endif %}
                 {% endif %}
 
                     <!--Scheduled/Countdown-->
-                <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date --> <!--Todo: allow scheduling publish - if past date show "scheduled:" and the future publish date-->
-                <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>--> <!-- Todo: make sure this only shows to staff -->
+                <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date -->
+                <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>-->
 
 
-                 {%  if not post.is_deleted %}   <!--Created --> <!-- Todo: an option to not show this date if published - set as an environment variable or user-specific or admin-specific option to disable it -->
-                    <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>  <!-- Todo: show updated first if it's after published? show published elsewhere? just show "last edited"?-->
+                 {%  if not post.is_deleted %}   <!--Created -->
+                    <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>
                 {% endif %}
 
                 <!-- CONTENT -->
                 {%  if post.image %}
-                                                                <!-- Todo: put in a figure/div with fixed max height so it can fit container using img-fluid? FIX RESPONSIVENESS ON IMAGES WITH BOOTSTRAP on truncated version-->
-                        <!--IMAGE (THUMBNAIL OR FULL-SIZED)-->   <!-- Todo: enable clicking images to magnify/view the image at url -->
-                            <img src="{{ post.image.url }}" class="img-fluid mt-{% if not detail %}5 rounded" style="max-width:20em; {%  else %}4 rounded" style="{%  endif %} float:right; margin: 0 0 2% 2%" /> <!--Todo: 1 - make compress, Todo: 2 - make a default size something like this -->
+
+                        <!--IMAGE (THUMBNAIL OR FULL-SIZED)-->
+                            <img src="{{ post.image.url }}" class="img-fluid mt-{% if not detail %}5 rounded" style="max-width:20em; {%  else %}4 rounded" style="{%  endif %} float:right; margin: 0 0 2% 2%" />
                 {%  endif %}
 
 
@@ -60,28 +59,25 @@
                <!-- "VIEW" LINK-->
                 <p class="card-text" style="clear:both">
 
-                   <!--Todo feature: as per view Todo - only show if comments exist-->                    <!-- Todo: otherwise add "hide" first time -->
                     <a href="{{post.get_absolute_url}}">
                     <!-- Todo: if: has response threads -->
                         <img src ="../../static/posts/comments.png">
-                            View Post and Threads<!--class="text-light">--> <!-- Todo: count number of direct children and say as number of threads -->
+                            View Post and Response Threads<!--class="text-light">-->
 
                    </a>&nbsp;<!--or "Upcoming"-->
                    <!-- Todo: else if no children-->
-{#                       {% if post.is_deleted %} View Responses<!--class="text-light">-->#}    <!-- Todo: filter deleted w no comments out at view level-->
+{#                       {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
 {#                       {% elif not post.publish_date %}View Draft#}
-{#                       {% elif post.publish_date <= utc_now %}View Discussion#}
-{#                       {% else %}View Scheduled<!--class="text-info" -->   <!--Todo: fix this for child posts somehow copying parent as "scheduled" formatting-->#}
+{#                       {% elif post.publish_date <= utc_now %}View Post#}
+{#                       {% else %} View Scheduled<!--class="text-info" -->#}
 {#                       {% endif %}#}
 
-                   <!-- Todo: else if is child - this one last for efficiency  -->
+                   <!-- Todo: else if is response post  -->
 
-                                                                                    <!--Todo: "View Post" if no responses -->
-                                                        <!-- Todo: Fix "scheduled to publish wrongly showing on all searches and (all?) child comments-->
                <!--TEXT (ALL)-->
                {%  else %}
                     {{ post.content_rendered|safe|linebreaks}}
-                    <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>     <!-- Todo: "add comment"/ "add new subpost/note" if you're the OP-->
+                    <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>
                {%  endif %}
 
                <!-- "EDIT" AND "DELETE" LINKS -->
@@ -93,7 +89,6 @@
                 {% endif %}
                 </p>
 
-                <!-- Todo: add "unpublish" "archive" and/or "unlist" options available from here and Edit screen for staff/authorized -->
         </div>
     </div>
 </div>

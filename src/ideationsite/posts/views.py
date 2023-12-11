@@ -27,7 +27,6 @@ from .models import Post
 #and post.created != post.updated
 def posts_list_view(request):
     """" Return List of Posts. """
-    # Todo : allow specify how many to show, then use this view in main page to show latest X posts
     # qs = reversed(Post.objects.published())
     qs = Post.objects.all().topic_posts().published()
     if request.user.is_authenticated:

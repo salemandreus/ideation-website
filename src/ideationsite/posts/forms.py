@@ -2,24 +2,24 @@ from django import forms
 
 from .models import Post
 #from django.utils.text import slugify
-                                    # Todo s for slugs on form:
-class PostForm(forms.Form):     # Todo: treat all slugs in url as lowercase
-    title = forms.CharField()   # todo: slugify needs to convert visually on form to lowercase
-    slug = forms.SlugField() #(empty_value=slugify(title)) #todo: auto-populate with a slug of the title, if already in use append it with a number
+
+class PostForm(forms.Form):
+    title = forms.CharField()
+    slug = forms.SlugField() #(empty_value=slugify(title))
     content = forms.CharField(widget=forms.Textarea)
-    # publish_date = forms.DateTimeField(widget=datetime)  #(help_text="") # Todo: potentially add calendar and time (split?) widget
+    # publish_date = forms.DateTimeField(widget=datetime)  #(help_text="")
 
 class PostModelForm(forms.ModelForm):
     class Meta:
-        model = Post    #Todo: add note on form explaining how publish date works and can be blank
-        fields = ['title', 'image', 'slug', 'publish_date', 'content']  # Todo calendar widget , status note of when it's scheduled for - now or future or how past applies depending what's specified relative to now
+        model = Post
+        fields = ['title', 'image', 'slug', 'publish_date', 'content']
 
 
     def clean_title(self, *args, **kwargs):
         instance=self.instance
         print(instance)
         title = self.cleaned_data.get('title')
-        qs = Post.objects.filter(title__iexact=title)   # Todo: use this for emails when signing up
+        qs = Post.objects.filter(title__iexact=title)
         if instance is not None:
             qs = qs.exclude(pk=instance.pk) #id=instance.id # exclude comparisons against itself
         if qs.exists():
