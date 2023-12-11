@@ -2,12 +2,14 @@
 
 {% block title %}
     <h1>{{ title }}</h1>
-    <h4>{{ subtitle }}</h4>
+    {% if user.is_authenticated %}
+        <h5>Your Latest Posts:</h5>
+    {%  endif %}
+{#    <h4>{{ subtitle }}</h4>#}
 {% endblock %}
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h5>Your Latest Posts:</h5>
         {% for a in latest_posts %}
             {% include 'posts/../templates/../posts/list-inline.html' with post=a detail=False %}
         {% endfor %}

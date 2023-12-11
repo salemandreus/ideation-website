@@ -1,5 +1,5 @@
 <!--<a href = "{{post.get_absolute_url }}">{{ post.title }}"</a>-->
-<div class="col-12 col-md-10 mb-3 mx-auto" style="width:{{card_width_percentage}}%;">
+<div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percentage}}%;">
     <div class="card {% if obj.is_deleted %} text-white" {% elif not post.publish_date %} border card border-light {%  elif post.publish_date <= utc_now %} text-dark {%  else %} border-primary {% endif %}">
         <div class="{% if post.is_deleted %} card text-light fst-italic card-body bg-secondary {% elif not post.publish_date %} card-body text-secondary fst-italic bg-light {% elif post.publish_date <= utc_now %} card-body bg-white {%  else %} card-body bg-white  {% endif %}">
             <h5 class="card-title">{{post.title}}</h5>
