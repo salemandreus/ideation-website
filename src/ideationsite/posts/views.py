@@ -49,7 +49,7 @@ def post_create_view(request, parent_slug=None):
         obj.user = request.user
         if parent_slug:
             parent_post = Post.objects.all().filter(slug=parent_slug)
-            obj.parent_post = parent_post[0]    # Todo: cleanup/testing: assert only one is returned and use ".first()"
+            [obj.parent_post] = parent_post
         #obj.title= form.cleaned_data.get("title") + "0"
         obj.save()
         #form = PostModelForm()  # If not redirecting but posting multiple in succession
