@@ -36,8 +36,7 @@ urlpatterns = [
     path("search/", search_view),
     path("about/", views.about, name="about"),
     path("story/", views.story, name="story"),
-    path("contact/", views.contact, name="contact"),
-    # path("posts/", include("posts.urls")),
+    # path("contact/", views.contact, name="contact"),
     path("admin/", admin.site.urls),
 ]
 
