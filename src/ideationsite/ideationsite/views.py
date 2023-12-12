@@ -24,17 +24,18 @@ def about(request):
     return render(request, "../templates/about.html", {"title": "About Us"})
 
 
-def contact(request):
-    print(request.POST)
-    form = ContactForm(request.POST or None)
-    if form.is_valid():
-        print(form.cleaned_data)
-        form = ContactForm()
-    context = {
-        "title": "Contact Us",
-        "form": form
-    }
-    return render(request, "../templates/email-form.html", context)
+
+# def contact(request): <!--Todo: sending emails and email markdown rendering on back-end-->
+#     print(request.POST)
+#     form = ContactForm(request.POST or None)
+#     if form.is_valid():
+#         print(form.cleaned_data)
+#         form = ContactForm()
+#     context = {
+#         "title": "Contact Us",
+#         "form": form
+#     }
+#     return render(request, "../templates/email-form.html", context)
 
 
 def story(request):
