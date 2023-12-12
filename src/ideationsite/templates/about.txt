@@ -1,0 +1,1 @@
+This website is based around posting and responding to those posts in a recursive and markdown-supportive format.

@@ -21,8 +21,13 @@ def index(request):
 
 
 def about(request):
-    return render(request, "../templates/about.html", {"title": "About Us"})
+    """A text file is imported and rendered into this view along with the template."""
+    about_file = "about.txt"
+    template_obj = get_template(about_file)
+    context = {"about": template_obj}
+    rendered_text = template_obj.render(context)
 
+    return render(request, "../templates/about.html", {"title": "About Us", "subtitle": "Our Mission and Goal", "about": rendered_text})
 
 
 # def contact(request): <!--Todo: sending emails and email markdown rendering on back-end-->
