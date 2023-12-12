@@ -1,12 +1,13 @@
+<!-- CARD UI AND STYLE -->
 <!--<a href = "{{post.get_absolute_url }}">{{ post.title }}"</a>-->
 <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percentage}}%;">
     <div class="card {% if obj.is_deleted %} text-white" {% elif not post.publish_date %} border card border-light {%  elif post.publish_date <= utc_now %} text-dark {%  else %} border-primary {% endif %}">
         <div class="{% if post.is_deleted %} card text-light fst-italic card-body bg-secondary {% elif not post.publish_date %} card-body text-secondary fst-italic bg-light {% elif post.publish_date <= utc_now %} card-body bg-white {%  else %} card-body bg-white  {% endif %}">
+<!--TITLE-->
             <h5 class="card-title">{{post.title}}</h5>
 
-            <!-- DATES:-->
-
-                <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
+<!-- DATES:-->
+        <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
                     <!-- Deleted date -->
                 {%  if post.is_deleted %}
                     <small class="text-light"><strong>Deleted </strong>{{post.updated}}&emsp;&emsp;</small>
@@ -38,25 +39,22 @@
                 <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date -->
                 <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>-->
 
-
                  {%  if not post.is_deleted %}   <!--Created -->
                     <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>
                 {% endif %}
 
-                <!-- CONTENT -->
+<!-- CONTENT: -->
+        <!--IMAGE (THUMBNAIL OR FULL-SIZED)-->
                 {%  if post.image %}
-
-                        <!--IMAGE (THUMBNAIL OR FULL-SIZED)-->
                             <img src="{{ post.image.url }}" class="img-fluid mt-{% if not detail %}5 rounded" style="max-width:20em; {%  else %}4 rounded" style="{%  endif %} float:right; margin: 0 0 2% 2%" />
                 {%  endif %}
-
-
                 <p class="card-text" style="clear:left">
 
-                <!--TEXT (TRUNCATED)-->
+<!--TEXT/LINKS (TRUNCATED LIST)-->
                {% if not detail %}
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
-               <!-- "VIEW" LINK-->
+
+        <!-- "VIEW" LINK-->
                 <p class="card-text" style="clear:both">
 
                     <a href="{{post.get_absolute_url}}">
@@ -74,13 +72,15 @@
 
                    <!-- Todo: else if is response post  -->
 
-               <!--TEXT (ALL)-->
+<!--TEXT/LINKS - (DETAILED VIEW)-->
                {%  else %}
                     {{ post.content_rendered|safe|linebreaks}}
+
+        <!-- "ADD RESPONSE" LINK-->
                     <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>
                {%  endif %}
 
-               <!-- "EDIT" AND "DELETE" LINKS -->
+        <!-- "EDIT" AND "DELETE" LINKS -->
                 {% if request.user.is_authenticated %}
                     {% if not post.is_deleted and request.user.is_staff %}
                     <a href="{{ post.get_edit_url }}"><img src ="../../static/posts/edit-pencil.png">Edit</a>&nbsp;
