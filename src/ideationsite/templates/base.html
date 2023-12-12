@@ -17,9 +17,9 @@
     <div class="row">
       <div class="col order-last">
         {% if user.is_authenticated %}
-        👤 {{ user }}  |   Log Out
+        👤 {{ user }} is logged in
         {% else %}
-        Create Account | Log In
+        You are logged out
         {% endif %}
       </div>
       <div class="col">
