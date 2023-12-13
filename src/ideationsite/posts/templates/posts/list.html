@@ -4,7 +4,9 @@
 
     <div class="row">
         {% for object in object_list %}
-            {% include 'posts/list-inline.html' with post=object detail=False %}
+            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_parent_width_percent}}%;">
+                {% include 'posts/list-inline.html' with post=object detail=False %}
+            </div>
         {% endfor %}
     </div>
 
