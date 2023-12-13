@@ -72,8 +72,9 @@ def post_detail_view(request, slug):
     if request.user.is_authenticated:
         my_qs = Post.objects.filter(user=request.user, parent_post=obj.pk)
         qs = (qs | my_qs).distinct()
+
                 # parent        # responses
-    context = {"object": obj, "object_list": qs, "card_width_percentage": 100}
+    context = {"object": obj, "object_list": qs, "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
     return render(request, template_name, context)
 

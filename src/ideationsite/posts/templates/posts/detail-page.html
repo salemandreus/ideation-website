@@ -5,10 +5,8 @@
     {% include 'posts/list-inline.html' with post=object detail=True %}
 </row>
         <div class="row">
-        {% with card_width_percentage=95 %}
             {% for object in object_list %}
-                {% include 'posts/list-inline.html' with post=object detail=True %}
+                {% include 'posts/list-inline.html' with post=object detail=True card_width_percent=card_parent_width_percent|add:"-2" %}
             {% endfor %}
-        {% endwith %}
         </div>
 {% endblock %}
