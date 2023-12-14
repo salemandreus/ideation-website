@@ -21,11 +21,15 @@
 <!--    <button class="btn btn-danger">Delete</button>-->
     <button type="submit">Send</button>
 </form>
-
-<!-- if creating new, generate slug from the title - when updating, don't automatically update slug/link-->
-{% if request.path == '/post-new/' %}
-    <script src="../../static/posts/createslugfromtitle.js"></script>
+<!-- CREATE SLUG FROM TITLE (if creating new) -->
+{% if '/post-new/' in request.path %}
+    {% if '/post/' in request.path %} <!-- a response post-->
+        <script src="../../../static/posts/createslugfromtitle.js"></script>
+    {% elif request.path == '/post-new/' %}<!-- an original post -->
+        <script src="../../static/posts/createslugfromtitle.js"></script>
+    {%  endif %}
 {%  endif %}
+<!-- Ignores if updating existing post: https://www.w3.org/Provider/Style/URI -->
 
 <!-- Add Markdown Widget to content TextArea -->
 <script>new EasyMDE({element: document.getElementById('id_content')});</script>
