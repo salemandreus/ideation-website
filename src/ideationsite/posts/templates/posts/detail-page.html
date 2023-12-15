@@ -1,12 +1,14 @@
 {% extends "ideationsite/../base.html" %}}
 {% block content %}
 <!--A single detailed page reachable by a slug-->
+<!-- PARENT POST -->
 <row>
     <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_parent_width_percent}}%;">
         {% include 'posts/list-inline.html' with post=object detail=True %}
     </div>
 </row>
 
+<!-- RESPONSE POSTS -->
         <div class="row" style="padding-left: 1.5%">
             {% for object in object_list %}
                 <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_parent_width_percent|add:"-1"}}%;">
