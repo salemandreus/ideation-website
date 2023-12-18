@@ -22,7 +22,12 @@
     </div>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'post_create_view' %}"><img src ="../../static/posts/new-document.png">New</a>
+          <a class="nav-link" href="{% url 'post_create_view' %}">
+              <img src =
+                    {% if '/post/' in request.path and '/post-new/' in request.path  %}"../../../static/posts/new-document.png"> <!-- response post --> <!-- quick, albeit hacky fix for this problem using a relative url that I may try to fix more elegantly later -->
+                    {% else %}"../../static/posts/new-document.png"> <!-- an original post or any other single or double-level url -->
+                    {%  endif %}
+              New</a>
         </li>
       </ul>
       <form class="d-flex" role="search" action="/search/">
