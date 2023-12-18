@@ -5,7 +5,9 @@
     <div class="row">
         {% for object in object_list %}
             <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_parent_width_percent}}%;">
-                {% include 'posts/list-inline.html' with post=object detail=False %}
+{#            {% with loop_iter=forloop.counter0 %}#}
+                {% include 'posts/list-inline.html' with post=object.0 threads_count=object.1 detail=False %}
+{#            {% endwith %}#}
             </div>
         {% endfor %}
     </div>
