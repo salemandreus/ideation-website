@@ -32,8 +32,15 @@ def posts_list_view(request):
     if request.user.is_authenticated:
         my_qs = Post.objects.filter(user=request.user).topic_posts()
         qs = (qs | my_qs).distinct()
+
+    # Add to new list with threads (children) counts of each
+    posts_and_threads_counts = []
+    for post_object in qs:
+        post_and_threads_count = [post_object, Post.objects.filter(parent_post=post_object.pk).count()]
+        posts_and_threads_counts.append(post_and_threads_count)
+
     template_name = "posts/list.html"
-    context = {"object_list": qs, "utc_now": datetime.now(timezone.utc)}
+    context = {"object_list": posts_and_threads_counts, "utc_now": datetime.now(timezone.utc)}
     return render(request, template_name, context)
 
 # @login_required

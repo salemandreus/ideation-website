@@ -59,8 +59,11 @@
                     <a href="{{post.get_absolute_url}}">
                     <!-- Todo: if: has response threads -->
                         <img src ="../../static/posts/comments.png">
-                            View Post and Response Threads<!--class="text-light">-->
-
+                            {% if threads_count > 0 %}
+                                View Post and {{threads_count}} Response Threads<!--class="text-light">-->
+                            {% else %}
+                                View Post
+                            {%  endif %}
                    </a>&nbsp;<!--or "Upcoming"-->
                    <!-- Todo: else if no children-->
 {#                       {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
