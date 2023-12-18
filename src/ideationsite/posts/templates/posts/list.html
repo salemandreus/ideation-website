@@ -1,6 +1,6 @@
     <div class="row" style="padding-left:{{padding_left}};">
         {% for object in object_list %}
-            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percent}}%;">
+            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percent}}%;"> <!-- defaults to 100% if empty -->
 {#            {% with loop_iter=forloop.counter0 %}#}
                 {% include 'posts/list-inline.html' with post=object.0 threads_count=object.1 detail=False %}
 {#            {% endwith %}#}
