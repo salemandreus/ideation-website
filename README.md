@@ -67,3 +67,19 @@ https://www.flaticon.com/
 <a href="https://www.flaticon.com/free-icons/pin" title="pin icons">Pin icons created by Pixel perfect - Flaticon</a>
 
 <a href="https://www.flaticon.com/free-icons/planner" title="planner icons">Planner icons created by juicy_fish - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/share-post" title="share post icons">Share post icons created by Freepik - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/phone" title="phone icons">Phone icons created by Freepik - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/post" title="post icons">Post icons created by Freepik - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/post" title="post icons">Post icons created by Freepik - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/save-instagram" title="save instagram icons">Save instagram icons created by Muhammad Atif - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/share-post" title="share post icons">Share post icons created by Pixel perfect - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/caption" title="caption icons">Caption icons created by Yogi Aprelliyanto - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/comment" title="comment icons">Comment icons created by Freepik - Flaticon</a>
