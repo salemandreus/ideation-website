@@ -1,5 +1,6 @@
 #This Project
 Todo*.txt
+Todo*.md
 Todo*/
 *.env*
 src/ideationsite/static/
