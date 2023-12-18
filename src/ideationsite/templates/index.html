@@ -10,9 +10,9 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        {% for a in latest_posts %}
+        {% for a in latest_posts_and_threads %}
             <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_parent_width_percent}}%;">
-                {% include 'posts/../templates/../posts/list-inline.html' with post=a detail=False %}
+                {% include 'posts/../templates/../posts/list-inline.html' with post=a.0 threads_count=a.1 detail=False %}
             </div>
         {% endfor %}
     {% else %}
