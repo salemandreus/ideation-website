@@ -10,11 +10,9 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        {% for a in latest_posts %}
-            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_parent_width_percent}}%;">
-                {% include 'posts/../templates/../posts/list-inline.html' with post=a detail=False %}
-            </div>
-        {% endfor %}
+
+        {% include 'posts/../templates/../posts/list.html' with object_list=latest_posts_and_threads %}
+
     {% else %}
         <p>Welcome to our website!</p>
         <p> You can read published <a href="{% url 'posts_index' %}">posts and threads</a>, but in order to write your own posts or respond to posts you need to create an account.</p>

@@ -1,15 +1,7 @@
-{% extends "ideationsite/../base.html" %}
-
-{% block content %}
-
-    <div class="row">
+    <div class="row" style="padding-left:{{padding_left}};">
         {% for object in object_list %}
-            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_parent_width_percent}}%;">
-{#            {% with loop_iter=forloop.counter0 %}#}
+            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percent}}%;"> <!-- defaults to 100% if empty -->
                 {% include 'posts/list-inline.html' with post=object.0 threads_count=object.1 detail=False %}
-{#            {% endwith %}#}
             </div>
         {% endfor %}
     </div>
-
-{% endblock %}

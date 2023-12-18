@@ -15,7 +15,15 @@ def index(request):
         context = {"title": "Welcome back, {username}!".format(username=request.user)}
     else:
         context = {"title": "Welcome!"}
-    context["latest_posts"] = qs
+
+    # Add to new list with threads (children) counts of each
+    posts_and_threads_counts = []
+    for post_object in qs:
+        post_and_threads_count = [post_object, Post.objects.filter(parent_post=post_object.pk).count()]
+        posts_and_threads_counts.append(post_and_threads_count)
+
+    context["latest_posts_and_threads"] = posts_and_threads_counts
+
     context["utc_now" ] = datetime.now(timezone.utc)
     return render(request, "../templates/index.html", context)
 
