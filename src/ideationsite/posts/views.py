@@ -39,7 +39,7 @@ def posts_list_view(request):
         post_and_threads_count = [post_object, Post.objects.filter(parent_post=post_object.pk).count()]
         posts_and_threads_counts.append(post_and_threads_count)
 
-    template_name = "posts/list.html"
+    template_name = "posts/posts.html"
     context = {"object_list": posts_and_threads_counts, "utc_now": datetime.now(timezone.utc)}
     return render(request, template_name, context)
 
@@ -80,8 +80,14 @@ def post_detail_view(request, slug):
         my_qs = Post.objects.filter(user=request.user, parent_post=obj.pk)
         qs = (qs | my_qs).distinct()
 
+    # Add to new list with response posts/threads (i.e. children) counts of each response post
+        posts_and_threads_counts = []
+        for post_object in qs:
+            post_and_threads_count = [post_object, Post.objects.filter(parent_post=post_object.pk).count()]
+            posts_and_threads_counts.append(post_and_threads_count)
+
                 # parent        # responses
-    context = {"object": obj, "object_list": qs, "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
+    context = {"object": obj, "object_list": posts_and_threads_counts} #"card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
     return render(request, template_name, context)
 
