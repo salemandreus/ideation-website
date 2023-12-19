@@ -10,8 +10,13 @@
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% if request.path == '/search/' %}   <!-- if search, append the query as well as page number -->
+                <a href="?q={{query}}&page=1">&laquo; first</a>
+                <a href="?q={{query}}&page={{ page_obj.previous_page_number }}">previous</a>
+            {% else %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
         {% endif %}
 
         <span class="current">
@@ -19,8 +24,13 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% if request.path == '/search/' %} <!-- if search, append the query as well as page number-->
+                <a href="?q={{query}}&page={{ page_obj.next_page_number }}">next</a>
+                <a href="?q={{query}}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {%  else %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
         {% endif %}
     </span>
 </div>

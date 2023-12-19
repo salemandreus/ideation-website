@@ -4,7 +4,7 @@
     <div class='row'>
         <div class="col-12 col-8 mx-auto">
             {%  if query %}
-                <p class="lead">Search results for "{{ query }}"</p>
+                <p class="lead">Found <strong>{{ results_count }}</strong> search results for "<strong>{{ query }}</strong>"</p>
             {%  else %}
                  <form class="d-flex" role="search" action="/search/">
                     <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
@@ -12,9 +12,7 @@
                   </form>
             {%  endif %}
 
-            {%  for post_item in posts_list %}
-                {% include 'posts/list-inline.html' with post=post_item detail=False %}
-            {%  endfor %}
+            {% include 'posts/list.html' %}
 
         </div>
     </div>
