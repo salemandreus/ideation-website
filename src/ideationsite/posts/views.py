@@ -4,6 +4,8 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from datetime import datetime, timezone
+from django.core.paginator import Paginator
+
 
 from .forms import PostModelForm
 from .models import Post
@@ -33,13 +35,18 @@ def posts_list_view(request):
         my_qs = Post.objects.filter(user=request.user).topic_posts()
         qs = (qs | my_qs).distinct()
 
-    # Add to new list with threads (children) counts of each
+    # Append to new list with response/thread (children) counts of each
     posts_and_threads_counts = []
     for post_object in qs:
         posts_and_threads_counts.append([post_object, post_object.responses.count()])
 
+    # Add Pagination
+    paginator = Paginator(posts_and_threads_counts, 15)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     template_name = "posts/posts.html"
-    context = {"object_list": posts_and_threads_counts, "utc_now": datetime.now(timezone.utc)}
+    context = {"page_obj": page_obj, "utc_now": datetime.now(timezone.utc)}
     return render(request, template_name, context)
 
 # @login_required
@@ -84,8 +91,13 @@ def post_detail_view(request, slug):
         for post_object in qs:
             posts_and_threads_counts.append([post_object, post_object.responses.count()])
 
+    # Add Pagination
+    paginator = Paginator(posts_and_threads_counts, 15)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
                 # parent        # responses
-    context = {"object": obj, "object_list": posts_and_threads_counts} #"card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
+    context = {"object": obj, "page_obj": page_obj} #"card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
     return render(request, template_name, context)
 

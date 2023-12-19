@@ -11,7 +11,7 @@
 {% block content %}
     {% if user.is_authenticated %}
 
-        {% include 'posts/../templates/../posts/list.html' with object_list=latest_posts_and_threads %}
+        {% include 'posts/../templates/../posts/list.html' %}
 
     {% else %}
         <p>Welcome to our website!</p>

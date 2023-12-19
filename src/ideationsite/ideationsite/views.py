@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
+from django.core.paginator import Paginator
 
 from .forms import ContactForm
 from posts.models import Post
@@ -21,7 +22,13 @@ def index(request):
     for post_object in qs:
         posts_and_threads_counts.append([post_object, post_object.responses.count()])
 
-    context["latest_posts_and_threads"] = posts_and_threads_counts
+    # Add Pagination
+    paginator = Paginator(posts_and_threads_counts, 15)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+
+    context["page_obj"] = page_obj
 
     context["utc_now" ] = datetime.now(timezone.utc)
     return render(request, "../templates/index.html", context)
