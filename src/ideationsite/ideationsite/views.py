@@ -19,8 +19,7 @@ def index(request):
     # Add to new list with threads (children) counts of each
     posts_and_threads_counts = []
     for post_object in qs:
-        post_and_threads_count = [post_object, post_object.responses.count()]
-        posts_and_threads_counts.append(post_and_threads_count)
+        posts_and_threads_counts.append([post_object, post_object.responses.count()])
 
     context["latest_posts_and_threads"] = posts_and_threads_counts
 
