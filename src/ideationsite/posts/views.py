@@ -36,7 +36,7 @@ def posts_list_view(request):
     # Add to new list with threads (children) counts of each
     posts_and_threads_counts = []
     for post_object in qs:
-        post_and_threads_count = [post_object, Post.objects.filter(parent_post=post_object.pk).count()]
+        post_and_threads_count = [post_object, post_object.responses.count()]
         posts_and_threads_counts.append(post_and_threads_count)
 
     template_name = "posts/posts.html"
@@ -83,7 +83,7 @@ def post_detail_view(request, slug):
     # Add to new list with response posts/threads (i.e. children) counts of each response post
         posts_and_threads_counts = []
         for post_object in qs:
-            post_and_threads_count = [post_object, Post.objects.filter(parent_post=post_object.pk).count()]
+            post_and_threads_count = [post_object, post_object.responses.count()]
             posts_and_threads_counts.append(post_and_threads_count)
 
                 # parent        # responses
