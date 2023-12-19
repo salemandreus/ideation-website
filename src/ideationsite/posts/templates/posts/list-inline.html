@@ -56,14 +56,18 @@
         <!-- "VIEW" LINK-->
                 <p class="card-text" style="clear:both">
 
-                    <a href="{{post.get_absolute_url}}">
+
                     <!-- Todo: if: has response threads -->
                             {% if threads_count > 0 %}
+                                <span class="badge bg-primary rounded-pill">{{threads_count}}</span>
+                                <a href="{{post.get_absolute_url}}">
                                 <img src ="../../static/posts/comments.png">
-                                View Post and {{threads_count}} Response Threads<!--class="text-light">-->
+                                View Post and <strong>{{threads_count}}</strong> Threads<!--class="text-light">-->
                             {% else %}
+                                &nbsp;
                                 <img src ="../../static/posts/comment-purple.png">
-                                View Post
+                                <a href="{{post.get_absolute_url}}">
+                                 View Post
                             {%  endif %}
                    </a>&nbsp;<!--or "Upcoming"-->
                    <!-- Todo: else if no children-->
