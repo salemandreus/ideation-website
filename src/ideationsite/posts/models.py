@@ -69,8 +69,15 @@ class Post(models.Model):
     parent_post = models.ForeignKey("Post", null=True, blank=True, on_delete=models.PROTECT)
     is_deleted = models.BooleanField(default=False)
 
-    def responses(self):
+    def responses(self):    # todo: rename to "get_post_responses" ?
         return Post.objects.filter(parent_post=self.pk)
+
+    def get_parents_to_root_post(self):
+        parent_chain = []
+        while self.parent_post != None:
+            parent_chain.append(self.parent_post)
+            self = self.parent_post
+        return parent_chain
 
     @property
     def updated_to_minute(self):
