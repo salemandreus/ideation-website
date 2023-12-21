@@ -19,7 +19,7 @@ def search_view(request):
 
         # Add to new list with threads (children) counts of each
         for post_object in posts_list:
-            posts_and_threads_counts.append([post_object, post_object.responses.count()])
+            posts_and_threads_counts.append([post_object, post_object.responses().count()])
 
         # Add Pagination
         paginator = Paginator(posts_and_threads_counts, 15)

@@ -20,7 +20,7 @@ def index(request):
     # Add to new list with threads (children) counts of each
     posts_and_threads_counts = []
     for post_object in qs:
-        posts_and_threads_counts.append([post_object, post_object.responses.count()])
+        posts_and_threads_counts.append([post_object, post_object.responses().count()])
 
     # Add Pagination
     paginator = Paginator(posts_and_threads_counts, 15)

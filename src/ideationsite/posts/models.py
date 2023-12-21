@@ -69,7 +69,6 @@ class Post(models.Model):
     parent_post = models.ForeignKey("Post", null=True, blank=True, on_delete=models.PROTECT)
     is_deleted = models.BooleanField(default=False)
 
-    @property
     def responses(self):
         return Post.objects.filter(parent_post=self.pk)
 

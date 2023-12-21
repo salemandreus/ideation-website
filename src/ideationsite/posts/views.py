@@ -38,7 +38,7 @@ def posts_list_view(request):
     # Append to new list with response/thread (children) counts of each
     posts_and_threads_counts = []
     for post_object in qs:
-        posts_and_threads_counts.append([post_object, post_object.responses.count()])
+        posts_and_threads_counts.append([post_object, post_object.responses().count()])
 
     # Add Pagination
     paginator = Paginator(posts_and_threads_counts, 15)
@@ -89,7 +89,7 @@ def post_detail_view(request, slug):
     # Add to new list with response posts/threads (i.e. children) counts of each response post
         posts_and_threads_counts = []
         for post_object in qs:
-            posts_and_threads_counts.append([post_object, post_object.responses.count()])
+            posts_and_threads_counts.append([post_object, post_object.responses().count()])
 
     # Add Pagination
     paginator = Paginator(posts_and_threads_counts, 15)
