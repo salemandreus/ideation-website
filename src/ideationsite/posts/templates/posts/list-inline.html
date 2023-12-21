@@ -1,6 +1,9 @@
 <!-- CARD UI AND STYLE -->
-                             <!--only display parent message and link if has a parent and not on the parent's page already --> <!--todo: apply this recursively when showing nested responses -->
-<div class="card-header">{% if post.parent_post.get_absolute_url and post.parent_post.get_absolute_url|cut:'/post/' !=  request.path|cut:'/post/'|cut:'/'  %} Response post to topic post: <a href="{{post.parent_post.get_absolute_url}}">{{ post.parent_post.title }}</a>{% endif %} <!--also won't show if no parent -->
+                             <!--only display parent message and link if post has a parent (ie is a response) and page is not the parent's detailed page -->
+    {% for next_parent in parent_chain reversed %}
+        <div class="card-header">{% if next_parent.get_absolute_url|cut:'/post/' !=  request.path|cut:'/post/'|cut:'/'  %} Response post to topic post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a></div>
+        {% endif %} <!--also won't show if no parent -->
+    {%  endfor %}
     <div class="card {% if post.is_deleted %} {% elif not post.publish_date %} border card border-light {%  elif post.publish_date <= utc_now %} text-dark {%  else %} border-primary {% endif %}">
         <div class="{% if post.is_deleted %} card text-light fst-italic card-body bg-secondary {% elif not post.publish_date %} card-body text-secondary fst-italic bg-light {% elif post.publish_date <= utc_now %} card-body bg-white {%  else %} card-body bg-white  {% endif %}">
 <!--TITLE-->
@@ -98,4 +101,4 @@
                 </p>
         </div>
     </div>
-</div>
+<br>

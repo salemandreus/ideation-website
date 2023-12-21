@@ -5,7 +5,7 @@
 <!-- PARENT POST -->
 <row>
     <div class="col-12 col-md-12 mb-3 mx-auto" >
-        {% include 'posts/list-inline.html' with post=object detail=True %}
+        {% include 'posts/list-inline.html' with post=object.0 parent_chain=object.1 detail=True %}
     </div>
 
 <!-- RESPONSE POSTS -->                         <!-- padding_left supersedes the card_width_percent width variable: use width if wanting indentation both sides, padding if indented and aligned to right -->

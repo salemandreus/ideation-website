@@ -9,7 +9,15 @@ from datetime import datetime, timezone
 
 
 def index(request):
-    """Main Page, also the redirected to page after login"""
+    """
+    Main Page, also the redirected to page after login
+    Displays welcome text.
+    If logged-in retrieve a list of latest updated posts (truncated). Include links to detailed,
+    including response posts, with a thread count in the link.
+    Post headers contain links to parent posts all the way back to original topic post
+    if not the original topic post.
+    """
+
     #qs = reversed(Post.objects.all()[5:])
     qs = Post.objects.all()[:8]
     if request.user.is_authenticated:
@@ -17,10 +25,12 @@ def index(request):
     else:
         context = {"title": "Welcome!"}
 
-    # Add to new list with threads (children) counts of each
+    # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
     posts_and_threads_counts = []
     for post_object in qs:
-        posts_and_threads_counts.append([post_object, post_object.responses().count()])
+        responses_count = post_object.responses().count()
+        parents_chain = post_object.get_parents_to_root_post()
+        posts_and_threads_counts.append([post_object, responses_count, parents_chain])
 
     # Add Pagination
     paginator = Paginator(posts_and_threads_counts, 15)

@@ -28,7 +28,11 @@ from .models import Post
 
 #and post.created != post.updated
 def posts_list_view(request):
-    """" Return List of Posts. """
+    """
+    Return List of Posts (truncated) which are original topic posts only. Include links to non-visible posts
+    with a thread count.
+    """
+
     # qs = reversed(Post.objects.published())
     qs = Post.objects.all().topic_posts().published()
     if request.user.is_authenticated:
@@ -75,10 +79,17 @@ def post_create_view(request, parent_slug=None):
     return render(request, template_name, context)
 
 def post_detail_view(request, slug):
-    """Retrieve a single post via a slug"""
+    """
+    Retrieve a single post via a slug (detailed) and show first level of response posts (truncated).
+    Include links to non-visible posts with a thread count, and main post's header contains links to parent
+    posts all the way back to original topic post if not the original topic post.
+    """
 
     obj = get_object_or_404(Post, slug=slug)
     template_name = "posts/detail-page.html"
+    # gets a parent chain to root post (if applicable)
+    parents_chain = obj.get_parents_to_root_post()
+    main_post_and_parents_chain = ([obj, parents_chain])
 
     # Get whole discussion for post including drafts
     qs = Post.objects.all().published().filter(parent_post=obj.pk)
@@ -97,7 +108,7 @@ def post_detail_view(request, slug):
     page_obj = paginator.get_page(page_number)
 
                 # parent        # responses
-    context = {"object": obj, "page_obj": page_obj} #"card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
+    context = {"object": main_post_and_parents_chain, "page_obj": page_obj} #"card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
     return render(request, template_name, context)
 
