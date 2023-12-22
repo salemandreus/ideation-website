@@ -20,28 +20,28 @@ class WelcomePage(PostListBase):
     """
     def get(self, request):
 
-        #qs = reversed(Post.objects.all()[5:])
-        qs = Post.objects.all()[:8]
-        if request.user.is_authenticated:
-            context = {"title": "Welcome back, {username}!".format(username=request.user)}
-        else:
+        if not request.user.is_authenticated:
             context = {"title": "Welcome!"}
+        else:
+            context = {"title": "Welcome back, {username}!".format(username=request.user)}
+            qs = Post.objects.all()[:8]
 
-        # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
-        posts_and_threads_counts = []
-        for post_object in qs:
-            responses_count = post_object.responses().count()
-            parents_chain = post_object.get_parents_to_root_post()
-            posts_and_threads_counts.append([post_object, responses_count, parents_chain])
+            # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
+            posts_and_threads_counts = []
+            for post_object in qs:
+                responses_count = post_object.responses().count()
+                parents_chain = post_object.get_parents_to_root_post()
+                posts_and_threads_counts.append([post_object, responses_count, parents_chain])
 
-        # Add Pagination
-        paginator = Paginator(posts_and_threads_counts, 15)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
+            # Add Pagination
+            paginator = Paginator(posts_and_threads_counts, 15)
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
 
-        context["page_obj"] = page_obj
+            context["page_obj"] = page_obj
 
-        context["utc_now" ] = datetime.now(timezone.utc)
+            context["utc_now" ] = datetime.now(timezone.utc)
+
         return render(request, "../templates/index.html", context)
 
 
