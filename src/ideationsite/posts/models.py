@@ -70,6 +70,7 @@ class Post(models.Model):
     is_deleted = models.BooleanField(default=False)
 
     def responses(self):    # todo: rename to "get_post_responses" ?
+        """Get direct responses to the current post"""
         return Post.objects.filter(parent_post=self.pk)
 
     def get_parents_to_root_post(self):
