@@ -35,10 +35,12 @@ class SearchView(PostListBase):
                 parents_chain = post_object.get_parents_to_root_post()
                 posts_and_threads_counts.append([post_object, responses_count, parents_chain])
 
+            context['results_count'] = posts_and_threads_counts.__len__()
+
             # Add Pagination
             context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
-            context['results_count'] = posts_and_threads_counts.__len__()
+
 
             return render(request, 'searches/view.html', context)
 
