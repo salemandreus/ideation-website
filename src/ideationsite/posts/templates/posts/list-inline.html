@@ -150,7 +150,7 @@
                         <div class="collapse" id="collapsedHiddenBelowCard_{{post.slug}}">
                          &emsp;&nbsp;&emsp;↳ Response Thread: <a href="{{next_thread.get_absolute_url}}">{{ next_thread.title }}</a>
                             <!--todo someday-->
-{#                        {% include 'posts/list.html' with padding_left="3%" post=next_thread.0 %} {# card_width_percent=card_parent_width_percent|add:"-1.5" #}
+{#                        {% include 'posts/list.html' with padding_left="3%" post=next_thread %} {# card_width_percent=card_parent_width_percent|add:"-1.5"#}
                         </div>
                 {% endfor %}
             {% endif %}
