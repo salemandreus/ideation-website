@@ -76,7 +76,6 @@ class PostsListPage(PostListBase):
 
         # Append to new list with response/thread (children) counts of each
         posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True)
-
         # Add Pagination
         context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
@@ -131,7 +130,6 @@ class PostDetailPage(PostListBase):
 
         # Add to new list with response posts/threads (i.e. children) counts of each response post
         posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True) # Todo: authentication on responses?
-
         # Add Pagination for responses
         context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
