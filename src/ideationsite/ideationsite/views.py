@@ -34,7 +34,7 @@ class WelcomePage(PostListBase):
             qs = Post.objects.all()[:8]
 
             # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
-            posts_and_threads_counts = self.get_list_posts_responses_count_parents(qs)
+            posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True, True)
 
             # Add Pagination
             context['page_obj'] = self.paginate(posts_and_threads_counts, request)
