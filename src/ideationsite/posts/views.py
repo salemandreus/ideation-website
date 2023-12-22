@@ -120,8 +120,7 @@ class PostDetailPage(PostListBase):
         template_name = "posts/detail-page.html"
 
         # gets a parent chain to root post (if applicable)
-        parents_chain = obj.get_parents_to_root_post()
-        main_post_and_parents_chain = ([obj, parents_chain])
+        [main_post_and_parents_chain] = self.get_listified_posts_with_attributes([obj], False, True)
         context = {"object": main_post_and_parents_chain}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
         # Get whole discussion for post including drafts
