@@ -40,3 +40,21 @@ def search_view(request):
 
 
     return render(request, 'searches/view.html', context)
+
+
+    # queryset = Post.objects.filter(slug=slug)
+    # if queryset.count() == 0:
+    #     raise Http404
+    # else:
+    #     obj = queryset.first()
+
+
+# def posts_search_view(request):
+#     """" Return List of Posts. """
+#
+#     qs = Post.objects.filter(title__icontains='hello')
+#     template_name = "posts_search_results.html"
+#     context = {"object_list" : qs}
+#     return render(request, template_name, context)
+
+#and post.created != post.updated
