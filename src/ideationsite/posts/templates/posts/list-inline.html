@@ -86,10 +86,9 @@
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
 
 
-        <!-- "VIEW" LINK-->
                 <p class="card-text" style="clear:both">
 
-                    <!-- Todo: if: has response threads -->
+        <!-- "VIEW" LINK-->
                             {% if threads_count > 0 %}
                                 <span class="badge bg-primary rounded-pill">{{threads_count}}</span>
                                 <a href="{{post.get_absolute_url}}">
@@ -115,11 +114,11 @@
                {%  else %}
                     {{ post.content_rendered|safe|linebreaks}}
 
-        <!-- "ADD RESPONSE" LINK-->
+<!-- "ADD RESPONSE" LINK-->
                     <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>
                {%  endif %}
 
-        <!-- "EDIT" AND "DELETE" LINKS -->
+<!-- "EDIT" AND "DELETE" LINKS -->
                 {% if request.user.is_authenticated %}
                     {% if not post.is_deleted and request.user.is_staff %}
                     <a href="{{ post.get_edit_url }}"><img src ="../../static/posts/edit-pencil.png">Edit</a>&nbsp;
@@ -129,4 +128,18 @@
                 </p>
         </div>
     </div>
+                {% if not detail %}
+              <!-- "PREVIEW THREADS" EXPANDABLE LINK-->
+                {% for next_thread in threads %}
+                    {% if forloop.counter0 == 0 %}
+                        <span class="d-inline-flex gap-1">&emsp;
+                        <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenBelowCard_{{post.slug}}" aria-expanded="false" aria-controls="collapsedHiddenBelowCard_{{post.slug}}">
+                        Preview Response Threads
+                        </a></span>
+                    {% endif %}
+                        <div class="collapse" id="collapsedHiddenBelowCard_{{post.slug}}">
+                         &emsp;&nbsp;&emsp;↳ Response Thread: <a href="{{next_thread.get_absolute_url}}">{{ next_thread.title }}</a>
+                        </div>
+                {% endfor %}
+            {% endif %}
 <br>
