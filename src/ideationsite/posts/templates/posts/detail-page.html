@@ -2,14 +2,14 @@
 {% block content %}
 <!--A single detailed page reachable by a slug, also displaying the immediate response posts ie the start of threads -->
 
-<!-- PARENT POST -->
+<!-- POST THREAD -->
 <row>
     <div class="col-12 col-md-12 mb-3 mx-auto" >
-        {% include 'posts/list-inline.html' with post=object.0 parent_chain=object.1 detail=True %}
+        {% include 'posts/detail-post.html' %}
     </div>
 
-<!-- RESPONSE POSTS -->                         <!-- padding_left supersedes the card_width_percent width variable: use width if wanting indentation both sides, padding if indented and aligned to right -->
-    {% include 'posts/list.html' with padding_left="1.5%" %} {# card_width_percent=card_parent_width_percent|add:"-1.5" #}
+{#<!-- RESPONSE POSTS -->                         <!-- padding_left supersedes the card_width_percent width variable: use width if wanting indentation both sides, padding if indented and aligned to right -->#}
+{#    {% include 'posts/list.html' with padding_left="1.5%" %} {# card_width_percent=card_parent_width_percent|add:"-1.5" #}
 
 </row>
 {% endblock %}
