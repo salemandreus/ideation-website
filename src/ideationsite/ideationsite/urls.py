@@ -21,7 +21,7 @@ from django.conf import settings
 
 # from posts.views import (post_detail_page)
 
-from searches.views import search_view
+from searches.views import SearchView
 from . import views
 
 from posts.views import (
@@ -30,10 +30,10 @@ from posts.views import (
 
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.WelcomePage.as_view(), name="WelcomePage"),
     path("post-new/", post_create_view, name="post_create_view"),
     path("post/", include("posts.urls")),
-    path("search/", search_view),
+    path("search/", SearchView.as_view()),
     path("about/", views.about, name="about"),
     path("story/", views.story, name="story"),
     # path("contact/", views.contact, name="contact"),

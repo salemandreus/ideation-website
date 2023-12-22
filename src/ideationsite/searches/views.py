@@ -4,8 +4,11 @@ from django.core.paginator import Paginator
 from posts.models import Post
 
 from .models import SearchQuery
-# Create your views here.
-def search_view(request):
+
+from posts.views import PostListBase
+
+
+class SearchView(PostListBase):
     """
     Displays the found posts matching a multi-filter search result (truncated).
     Include links to detailed view including response posts, with a thread count in the link.
@@ -13,33 +16,34 @@ def search_view(request):
     the original topic post.
     """
 
-    query = request.GET.get('q', None)
-    user = None
-    if request.user.is_authenticated:
-        user=request.user
-    context = {"query": query}
+    def get(self, request):
 
-    posts_and_threads_counts = []
-    if query is not None:
-        SearchQuery.objects.create(user=user, query=query)
-        posts_list = Post.objects.search(query=query)
+        query = request.GET.get('q', None)
+        user = None
+        if request.user.is_authenticated:
+            user=request.user
+        context = {"query": query}
 
-        # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)
-        for post_object in posts_list:
-            responses_count = post_object.responses().count()
-            parents_chain = post_object.get_parents_to_root_post()
-            posts_and_threads_counts.append([post_object, responses_count, parents_chain])
+        posts_and_threads_counts = []
+        if query is not None:
+            SearchQuery.objects.create(user=user, query=query)
+            posts_list = Post.objects.search(query=query)
 
-        # Add Pagination
-        paginator = Paginator(posts_and_threads_counts, 15)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
+            # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)
+            for post_object in posts_list:
+                responses_count = post_object.responses().count()
+                parents_chain = post_object.get_parents_to_root_post()
+                posts_and_threads_counts.append([post_object, responses_count, parents_chain])
 
-        context['page_obj'] = page_obj
-        context['results_count'] = posts_and_threads_counts.__len__()
+            # Add Pagination
+            paginator = Paginator(posts_and_threads_counts, 15)
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
 
+            context['page_obj'] = page_obj
+            context['results_count'] = posts_and_threads_counts.__len__()
 
-    return render(request, 'searches/view.html', context)
+            return render(request, 'searches/view.html', context)
 
 
     # queryset = Post.objects.filter(slug=slug)
@@ -49,7 +53,7 @@ def search_view(request):
     #     obj = queryset.first()
 
 
-# def posts_search_view(request):
+# def posts_SearchView(request):
 #     """" Return List of Posts. """
 #
 #     qs = Post.objects.filter(title__icontains='hello')

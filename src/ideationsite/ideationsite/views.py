@@ -7,8 +7,9 @@ from .forms import ContactForm
 from posts.models import Post
 from datetime import datetime, timezone
 
+from posts.views import PostListBase
 
-def index(request):
+class WelcomePage(PostListBase):
     """
     Main Page, also the redirected to page after login
     Displays welcome text.
@@ -17,30 +18,31 @@ def index(request):
     Post headers contain links to parent posts all the way back to original topic post
     if not the original topic post.
     """
+    def get(self, request):
 
-    #qs = reversed(Post.objects.all()[5:])
-    qs = Post.objects.all()[:8]
-    if request.user.is_authenticated:
-        context = {"title": "Welcome back, {username}!".format(username=request.user)}
-    else:
-        context = {"title": "Welcome!"}
+        #qs = reversed(Post.objects.all()[5:])
+        qs = Post.objects.all()[:8]
+        if request.user.is_authenticated:
+            context = {"title": "Welcome back, {username}!".format(username=request.user)}
+        else:
+            context = {"title": "Welcome!"}
 
-    # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
-    posts_and_threads_counts = []
-    for post_object in qs:
-        responses_count = post_object.responses().count()
-        parents_chain = post_object.get_parents_to_root_post()
-        posts_and_threads_counts.append([post_object, responses_count, parents_chain])
+        # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
+        posts_and_threads_counts = []
+        for post_object in qs:
+            responses_count = post_object.responses().count()
+            parents_chain = post_object.get_parents_to_root_post()
+            posts_and_threads_counts.append([post_object, responses_count, parents_chain])
 
-    # Add Pagination
-    paginator = Paginator(posts_and_threads_counts, 15)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+        # Add Pagination
+        paginator = Paginator(posts_and_threads_counts, 15)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
 
-    context["page_obj"] = page_obj
+        context["page_obj"] = page_obj
 
-    context["utc_now" ] = datetime.now(timezone.utc)
-    return render(request, "../templates/index.html", context)
+        context["utc_now" ] = datetime.now(timezone.utc)
+        return render(request, "../templates/index.html", context)
 
 
 def about(request):
