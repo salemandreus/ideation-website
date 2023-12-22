@@ -18,19 +18,6 @@ class WelcomePage(PostListBase):
     Post headers contain links to parent posts all the way back to original topic post
     if not the original topic post.
     """
-    def get_listified_posts_with_attributes(self, qs):
-        """Get attributes of a list of posts passed in.
-           Including: count of responses to the post, parents chain.
-           """
-
-        posts_and_threads_counts = []
-        for post_object in qs:
-            responses_count = post_object.responses().count()
-            parents_chain = post_object.get_parents_to_root_post()
-
-            posts_and_threads_counts.append([post_object, responses_count, parents_chain])
-        return posts_and_threads_counts
-
 
     def get(self, request):
 
@@ -47,7 +34,7 @@ class WelcomePage(PostListBase):
             qs = Post.objects.all()[:8]
 
             # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
-            posts_and_threads_counts = self.get_listified_posts_with_attributes(qs)
+            posts_and_threads_counts = self.get_list_posts_responses_count_parents(qs)
 
             # Add Pagination
             context['page_obj'] = self.paginate(posts_and_threads_counts, request)
