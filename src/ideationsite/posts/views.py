@@ -91,9 +91,9 @@ def post_create_view(request, parent_slug=None):
         #form = PostModelForm()  # If not redirecting but posting multiple in succession
 
         if parent_slug:
-            return redirect(PostDetailPage, parent_slug)
+            return redirect("post_detail_page", parent_slug)
         else:
-            return redirect(PostDetailPage, obj.slug)
+            return redirect("post_detail_page", obj.slug)
 
     template_name = "posts/post-form.html"
     context = {"title": "Create A New Post", "form": form}
@@ -136,12 +136,12 @@ class PostDetailPage(PostListBase):
 def post_update_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)
     if obj.is_deleted:
-        return redirect(PostDetailPage, obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted already
+        return redirect("post_detail_page", obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted already
     form = PostModelForm(request.POST or None, request.FILES or None, instance=obj)
     if form.is_valid():
         form.save()
-        #return redirect(reverse(PostsListPage)) return redirect(PostDetailPage, obj.slug)
-        return redirect(PostDetailPage,obj.slug )#args=form.fields.slug))
+        #return redirect(reverse("posts_index")) return redirect("post_detail_page", obj.slug)
+        return redirect("post_detail_page",obj.slug )#args=form.fields.slug))
     template_name = "posts/post-form.html"
     context = {"title": f"Update {obj.title}", "form": form}
     return render(request, template_name, context)
@@ -152,7 +152,7 @@ def post_delete_view(request, slug):
     template_name = "posts/delete.html"
     if obj.is_deleted:
         # try:
-        return redirect(PostDetailPage, obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted alreadys
+        return redirect("post_detail_page", obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted alreadys
         # except:
     elif request.method == "POST":      # Only delete the post's contents, and keep "[Deleted post]" if it has any child posts
     #children = Post.objects.filter(parent_post=obj.pk)
@@ -165,6 +165,6 @@ def post_delete_view(request, slug):
         obj.image = None
         obj.save()
         # obj.delete()
-        return redirect(reverse(PostsListPage))
+        return redirect(reverse("posts_index"))
     context = {"object": obj}
     return render(request, template_name, context)
