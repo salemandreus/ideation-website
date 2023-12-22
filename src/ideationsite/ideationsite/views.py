@@ -18,6 +18,7 @@ class WelcomePage(PostListBase):
     Post headers contain links to parent posts all the way back to original topic post
     if not the original topic post.
     """
+
     def get(self, request):
 
         if not request.user.is_authenticated:
@@ -34,11 +35,7 @@ class WelcomePage(PostListBase):
                 posts_and_threads_counts.append([post_object, responses_count, parents_chain])
 
             # Add Pagination
-            paginator = Paginator(posts_and_threads_counts, 15)
-            page_number = request.GET.get("page")
-            page_obj = paginator.get_page(page_number)
-
-            context["page_obj"] = page_obj
+            context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
             context["utc_now" ] = datetime.now(timezone.utc)
 

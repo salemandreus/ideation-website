@@ -15,7 +15,14 @@ from django.views import View
 class PostListBase(View):
     """Will be inherited and overridden by other views that list posts."""
 
-    pass
+    def paginate(self, post_list, request):
+        """paginate a list of posts"""
+
+        paginator = Paginator(post_list, 15)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        return page_obj
 
 
 class PostsListPage(PostListBase):
@@ -25,7 +32,11 @@ class PostsListPage(PostListBase):
     """
 
     def get(self, request):
+
         # qs = reversed(Post.objects.published())
+        template_name = "posts/posts.html"
+        context = {"utc_now": datetime.now(timezone.utc)}
+
         qs = Post.objects.all().topic_posts().published()
         if request.user.is_authenticated:
             my_qs = Post.objects.filter(user=request.user).topic_posts()
@@ -37,12 +48,7 @@ class PostsListPage(PostListBase):
             posts_and_threads_counts.append([post_object, post_object.responses().count()])
 
         # Add Pagination
-        paginator = Paginator(posts_and_threads_counts, 15)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-
-        template_name = "posts/posts.html"
-        context = {"page_obj": page_obj, "utc_now": datetime.now(timezone.utc)}
+        context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
         return render(request, template_name, context)
 
@@ -79,11 +85,13 @@ class PostDetailPage(PostListBase):
     """
 
     def get(self, request, slug):
+
         obj = get_object_or_404(Post, slug=slug)
         template_name = "posts/detail-page.html"
         # gets a parent chain to root post (if applicable)
         parents_chain = obj.get_parents_to_root_post()
         main_post_and_parents_chain = ([obj, parents_chain])
+        context = {"object": main_post_and_parents_chain}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
         # Get whole discussion for post including drafts
         qs = Post.objects.all().published().filter(parent_post=obj.pk)
@@ -92,19 +100,15 @@ class PostDetailPage(PostListBase):
             qs = (qs | my_qs).distinct()
 
         # Add to new list with response posts/threads (i.e. children) counts of each response post
-            posts_and_threads_counts = []
-            for post_object in qs:
-                posts_and_threads_counts.append([post_object, post_object.responses().count()])
+        posts_and_threads_counts = []   # Todo: authentication on responses?
+        for post_object in qs:
+            posts_and_threads_counts.append([post_object, post_object.responses().count()])
 
-        # Add Pagination
-        paginator = Paginator(posts_and_threads_counts, 15)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-
-                    # parent        # responses
-        context = {"object": main_post_and_parents_chain, "page_obj": page_obj} #"card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
+        # Add Pagination for responses
+        context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
         return render(request, template_name, context)
+
 
 @staff_member_required
 def post_update_view(request, slug):

@@ -36,11 +36,8 @@ class SearchView(PostListBase):
                 posts_and_threads_counts.append([post_object, responses_count, parents_chain])
 
             # Add Pagination
-            paginator = Paginator(posts_and_threads_counts, 15)
-            page_number = request.GET.get("page")
-            page_obj = paginator.get_page(page_number)
+            context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
-            context['page_obj'] = page_obj
             context['results_count'] = posts_and_threads_counts.__len__()
 
             return render(request, 'searches/view.html', context)
