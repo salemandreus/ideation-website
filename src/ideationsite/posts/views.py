@@ -24,17 +24,25 @@ class PostListBase(View):
 
         return page_obj
 
-    def get_listified_posts_with_attributes(self, qs):
+    def get_listified_posts_with_attributes(self, qs, get_parent_chain=False):
         """Get attributes of a list of posts passed in.
          Including: count of responses to the post.
          """
 
-        posts_and_threads_counts = []
+        attr_obj_list = []
         for post_object in qs:
+            attr_obj = [post_object]
             responses_count = post_object.responses().count()
-            posts_and_threads_counts.append([post_object, responses_count])
+            attr_obj.append(responses_count)
 
-        return posts_and_threads_counts
+            # if get_parent_chain
+            if get_parent_chain:
+                parents_chain = post_object.get_parents_to_root_post()
+                attr_obj.append(parents_chain)
+
+            attr_obj_list.append(attr_obj)
+
+        return attr_obj_list
 
     def get_list_posts_responses_count_parents(self, qs):
         """Get attributes of a list of posts passed in.
