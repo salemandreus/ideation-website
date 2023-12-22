@@ -36,6 +36,20 @@ class PostListBase(View):
 
         return posts_and_threads_counts
 
+    def get(self, request):
+        """Base Get Functionality for a PostList class to be overridden."""
+
+        template_name = ""
+        context = {}
+
+        # Append to new list with response/thread (children) counts of each
+        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs)
+
+        # Add Pagination
+        context['page_obj'] = self.paginate(posts_and_threads_counts, request)
+
+        return render(request, template_name, context)
+
 
 class PostsListPage(PostListBase):
     """
@@ -97,6 +111,7 @@ class PostDetailPage(PostListBase):
 
         obj = get_object_or_404(Post, slug=slug)
         template_name = "posts/detail-page.html"
+
         # gets a parent chain to root post (if applicable)
         parents_chain = obj.get_parents_to_root_post()
         main_post_and_parents_chain = ([obj, parents_chain])

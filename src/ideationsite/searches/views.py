@@ -32,6 +32,8 @@ class SearchView(PostListBase):
 
     def get(self, request):
 
+        template_name = 'searches/view.html'
+
         query = request.GET.get('q', None)
         user = None
         if request.user.is_authenticated:
@@ -42,15 +44,15 @@ class SearchView(PostListBase):
             SearchQuery.objects.create(user=user, query=query)
             posts_list = Post.objects.search(query=query)
 
+            context['results_count'] = posts_list.__len__()
+
             # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)
             posts_and_threads_counts = self.get_listified_posts_with_attributes(posts_list)
-
-            context['results_count'] = posts_and_threads_counts.__len__()
 
             # Add Pagination
             context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
-            return render(request, 'searches/view.html', context)
+            return render(request, template_name, context)
 
 
     # queryset = Post.objects.filter(slug=slug)

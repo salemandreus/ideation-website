@@ -34,10 +34,16 @@ class WelcomePage(PostListBase):
 
     def get(self, request):
 
+        template_name = "../templates/index.html"
+
         if not request.user.is_authenticated:
             context = {"title": "Welcome!"}
         else:
-            context = {"title": "Welcome back, {username}!".format(username=request.user)}
+            context = {
+                        "title": "Welcome back, {username}!".format(username=request.user),
+                        "utc_now": datetime.now(timezone.utc)
+                       }
+
             qs = Post.objects.all()[:8]
 
             # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
@@ -46,9 +52,7 @@ class WelcomePage(PostListBase):
             # Add Pagination
             context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
-            context["utc_now" ] = datetime.now(timezone.utc)
-
-        return render(request, "../templates/index.html", context)
+        return render(request, template_name, context)
 
 
 def about(request):
