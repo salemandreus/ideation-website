@@ -11,18 +11,14 @@ from posts.views import PostListBase
 
 class WelcomePage(PostListBase):
     """
-    Main Page, also the redirected to page after login
-    Displays welcome text.
-    If logged-in retrieve a list of latest updated posts (truncated). Include links to detailed,
-    including response posts, with a thread count in the link.
-    Post headers contain links to parent posts all the way back to original topic post
-    if not the original topic post.
+    Main Page, also the redirected to page after login. Displays welcome text.
+    If logged-in get latest updated posts (truncated). Include links to detailed view including response posts,
+    with a thread count in the link.
+    Post header shows links to parent posts all the way back to original topic post (collapsible if parent chain > 3).
     """
-
     def get(self, request):
-
+        """Get the Welcome Page. If Logged in, get a list of most recent of all posts."""
         template_name = "../templates/index.html"
-
         if not request.user.is_authenticated:
             context = {"title": "Welcome!"}
         else:
@@ -30,13 +26,12 @@ class WelcomePage(PostListBase):
                         "title": "Welcome back, {username}!".format(username=request.user),
                         "utc_now": datetime.now(timezone.utc)
                        }
-
             qs = Post.objects.all()[:8]
 
-            # Add to new list with threads (children) counts of each and a parent chain to root post (if applicable)
-            posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True, True)
+            # Append list with posts, their thread counts and parent chain to root post
+            posts_threadcounts_parentchain = self.get_listified_posts_with_attributes(qs, True, True)
             # Add Pagination
-            context['page_obj'] = self.paginate(posts_and_threads_counts, request)
+            context['page_obj'] = self.paginate(posts_threadcounts_parentchain, request)
 
         return render(request, template_name, context)
 

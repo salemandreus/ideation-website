@@ -12,14 +12,10 @@ class SearchView(PostListBase):
     """
     Displays the found posts matching a multi-filter search result (truncated).
     Include links to detailed view including response posts, with a thread count in the link.
-    Post headers contain links to parent posts all the way back to original topic post if not
-    the original topic post.
+    Post header shows links to parent posts all the way back to original topic post (collapsible if parent chain > 3).
     """
-
     def get(self, request):
-
         template_name = 'searches/view.html'
-
         query = request.GET.get('q', None)
         user = None
         if request.user.is_authenticated:
@@ -29,7 +25,6 @@ class SearchView(PostListBase):
         if query is not None:
             SearchQuery.objects.create(user=user, query=query)
             posts_list = Post.objects.search(query=query)
-
             context['results_count'] = posts_list.__len__()
 
             # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)
