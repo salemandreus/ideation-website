@@ -24,7 +24,7 @@ class PostListBase(View):
 
         return page_obj
 
-    def get_listified_posts_with_attributes(self, qs, get_parent_chain=False):
+    def get_listified_posts_with_attributes(self, qs, get_responses_count=False, get_parent_chain=False):
         """Get attributes of a list of posts passed in.
          Including: count of responses to the post.
          """
@@ -32,8 +32,11 @@ class PostListBase(View):
         attr_obj_list = []
         for post_object in qs:
             attr_obj = [post_object]
-            responses_count = post_object.responses().count()
-            attr_obj.append(responses_count)
+
+            # if get_responses_count
+            if get_responses_count:
+                responses_count = post_object.responses().count()
+                attr_obj.append(responses_count)
 
             # if get_parent_chain
             if get_parent_chain:
@@ -65,12 +68,6 @@ class PostListBase(View):
         template_name = ""
         context = {}
 
-        # Append to new list with response/thread (children) counts of each
-        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs)
-
-        # Add Pagination
-        context['page_obj'] = self.paginate(posts_and_threads_counts, request)
-
         return render(request, template_name, context)
 
 
@@ -91,7 +88,7 @@ class PostsListPage(PostListBase):
             qs = (qs | my_qs).distinct()
 
         # Append to new list with response/thread (children) counts of each
-        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs)
+        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True)
 
         # Add Pagination
         context['page_obj'] = self.paginate(posts_and_threads_counts, request)
@@ -147,7 +144,7 @@ class PostDetailPage(PostListBase):
             qs = (qs | my_qs).distinct()
 
         # Add to new list with response posts/threads (i.e. children) counts of each response post
-        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs) # Todo: authentication on responses?
+        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True) # Todo: authentication on responses?
 
         # Add Pagination for responses
         context['page_obj'] = self.paginate(posts_and_threads_counts, request)
