@@ -24,6 +24,18 @@ class PostListBase(View):
 
         return page_obj
 
+    def get_listified_posts_with_attributes(self, qs):
+        """Get attributes of a list of posts passed in.
+         Including: count of responses to the post.
+         """
+
+        posts_and_threads_counts = []
+        for post_object in qs:
+            responses_count = post_object.responses().count()
+            posts_and_threads_counts.append([post_object, responses_count])
+
+        return posts_and_threads_counts
+
 
 class PostsListPage(PostListBase):
     """
@@ -33,7 +45,6 @@ class PostsListPage(PostListBase):
 
     def get(self, request):
 
-        # qs = reversed(Post.objects.published())
         template_name = "posts/posts.html"
         context = {"utc_now": datetime.now(timezone.utc)}
 
@@ -43,9 +54,7 @@ class PostsListPage(PostListBase):
             qs = (qs | my_qs).distinct()
 
         # Append to new list with response/thread (children) counts of each
-        posts_and_threads_counts = []
-        for post_object in qs:
-            posts_and_threads_counts.append([post_object, post_object.responses().count()])
+        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs)
 
         # Add Pagination
         context['page_obj'] = self.paginate(posts_and_threads_counts, request)
@@ -100,9 +109,7 @@ class PostDetailPage(PostListBase):
             qs = (qs | my_qs).distinct()
 
         # Add to new list with response posts/threads (i.e. children) counts of each response post
-        posts_and_threads_counts = []   # Todo: authentication on responses?
-        for post_object in qs:
-            posts_and_threads_counts.append([post_object, post_object.responses().count()])
+        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs) # Todo: authentication on responses?
 
         # Add Pagination for responses
         context['page_obj'] = self.paginate(posts_and_threads_counts, request)

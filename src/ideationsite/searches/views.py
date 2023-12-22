@@ -16,6 +16,20 @@ class SearchView(PostListBase):
     the original topic post.
     """
 
+    def get_listified_posts_with_attributes(self, qs):
+        """Get attributes of a list of posts passed in.
+           Including: count of responses to the post, parents chain.
+           """
+
+        posts_and_threads_counts = []
+        for post_object in qs:
+            responses_count = post_object.responses().count()
+            parents_chain = post_object.get_parents_to_root_post()
+
+            posts_and_threads_counts.append([post_object, responses_count, parents_chain])
+        return posts_and_threads_counts
+
+
     def get(self, request):
 
         query = request.GET.get('q', None)
@@ -24,23 +38,17 @@ class SearchView(PostListBase):
             user=request.user
         context = {"query": query}
 
-        posts_and_threads_counts = []
         if query is not None:
             SearchQuery.objects.create(user=user, query=query)
             posts_list = Post.objects.search(query=query)
 
             # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)
-            for post_object in posts_list:
-                responses_count = post_object.responses().count()
-                parents_chain = post_object.get_parents_to_root_post()
-                posts_and_threads_counts.append([post_object, responses_count, parents_chain])
+            posts_and_threads_counts = self.get_listified_posts_with_attributes(posts_list)
 
             context['results_count'] = posts_and_threads_counts.__len__()
 
             # Add Pagination
             context['page_obj'] = self.paginate(posts_and_threads_counts, request)
-
-
 
             return render(request, 'searches/view.html', context)
 
