@@ -123,9 +123,10 @@ class PostDetailPage(PostListBase):
         context = {"object": main_post_and_parents_chain}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
         # Get whole discussion for post including drafts
-        qs = Post.objects.all().published().filter(parent_post=obj.pk)
+
+        qs = obj.responses().published()
         if request.user.is_authenticated:
-            my_qs = Post.objects.filter(user=request.user, parent_post=obj.pk)
+            my_qs = obj.responses().filter(user=request.user)
             qs = (qs | my_qs).distinct()
 
         # Add to new list with response posts/threads (i.e. children) counts of each response post
