@@ -81,30 +81,6 @@ class PostsListPage(PostListBase):
 
         return render(request, template_name, context)
 
-# @login_required
-@staff_member_required
-def post_create_view(request, parent_slug=None):
-    """ Create Post via a form. """
-    form = PostModelForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        obj = form.save(commit=False)
-        obj.user = request.user
-        if parent_slug:
-            parent_post = Post.objects.all().filter(slug=parent_slug)
-            [obj.parent_post] = parent_post
-        #obj.title= form.cleaned_data.get("title") + "0"
-        obj.save()
-        #form = PostModelForm()  # If not redirecting but posting multiple in succession
-
-        if parent_slug:
-            return redirect("post_detail_page", parent_slug)
-        else:
-            return redirect("post_detail_page", obj.slug)
-
-    template_name = "posts/post-form.html"
-    context = {"title": "Create A New Post", "form": form}
-
-    return render(request, template_name, context)
 
 class PostDetailPage(PostListBase):
     """
@@ -135,6 +111,32 @@ class PostDetailPage(PostListBase):
         context['page_obj'] = self.paginate(posts_and_threads_counts, request)
 
         return render(request, template_name, context)
+
+
+# @login_required
+@staff_member_required
+def post_create_view(request, parent_slug=None):
+    """ Create Post via a form. """
+    form = PostModelForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.user = request.user
+        if parent_slug:
+            parent_post = Post.objects.all().filter(slug=parent_slug)
+            [obj.parent_post] = parent_post
+        #obj.title= form.cleaned_data.get("title") + "0"
+        obj.save()
+        #form = PostModelForm()  # If not redirecting but posting multiple in succession
+
+        if parent_slug:
+            return redirect("post_detail_page", parent_slug)
+        else:
+            return redirect("post_detail_page", obj.slug)
+
+    template_name = "posts/post-form.html"
+    context = {"title": "Create A New Post", "form": form}
+
+    return render(request, template_name, context)
 
 
 @staff_member_required
