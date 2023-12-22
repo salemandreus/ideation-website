@@ -28,7 +28,7 @@ class SearchView(PostListBase):
             context['results_count'] = posts_list.__len__()
 
             # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)
-            posts_attributes = self.get_listified_posts_with_attributes(posts_list, True, True)
+            posts_attributes = self.get_listified_posts_with_attributes(posts_list, True)
             # Add Pagination
             context['page_obj'] = self.paginate(posts_attributes, request)
 

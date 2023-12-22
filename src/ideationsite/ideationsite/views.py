@@ -29,7 +29,7 @@ class WelcomePage(PostListBase):
             qs = Post.objects.all()[:8]
 
             # Append list with posts, their thread counts and parent chain to root post
-            posts_attributes = self.get_listified_posts_with_attributes(qs, True, True)
+            posts_attributes = self.get_listified_posts_with_attributes(qs, True)
             # Add Pagination
             context['page_obj'] = self.paginate(posts_attributes, request)
 
