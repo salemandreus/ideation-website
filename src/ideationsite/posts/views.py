@@ -21,7 +21,7 @@ class PostListBase(View):
         page_obj = paginator.get_page(page_number)
         return page_obj
 
-    def get_listified_posts_with_attributes(self, qs, get_responses_count=False, get_parent_chain=False):
+    def get_listified_posts_with_attributes(self, qs, get_responses=False, get_parent_chain=False):
         """
         Get attributes of a list of posts passed in if elected for. Includes options:
         count of responses/threads to the current post and parents chain to original (root) topic post.
@@ -29,10 +29,10 @@ class PostListBase(View):
         attr_obj_list = []
         for post_object in qs:
             attr_obj = [post_object]
-            # if getting response count
-            if get_responses_count:
-                responses_count = post_object.responses().count()
-                attr_obj.append(responses_count)
+            # if getting responses
+            if get_responses:
+                responses= post_object.responses()
+                attr_obj.append(responses)
             # if getting the parent chain
             if get_parent_chain:
                 parents_chain = post_object.get_parents_to_root_post()
@@ -62,9 +62,9 @@ class PostsListPage(PostListBase):
             qs = (qs | my_qs).distinct()
 
         # Append to new list with response/thread (children) counts of each
-        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True)
+        posts_attributes = self.get_listified_posts_with_attributes(qs, True)
         # Add Pagination
-        context['page_obj'] = self.paginate(posts_and_threads_counts, request)
+        context['page_obj'] = self.paginate(posts_attributes, request)
 
         return render(request, template_name, context)
 
@@ -80,8 +80,8 @@ class PostDetailPage(PostListBase):
         template_name = "posts/detail-page.html"
 
         # gets a parent chain to root post (if applicable)
-        [main_post_and_parents_chain] = self.get_listified_posts_with_attributes([obj], False, True)
-        context = {"object": main_post_and_parents_chain}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
+        [posts_attributes] = self.get_listified_posts_with_attributes([obj], False, True)
+        context = {"object": posts_attributes}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
         # Get whole discussion for post including drafts
         qs = obj.responses().published()
@@ -90,9 +90,9 @@ class PostDetailPage(PostListBase):
             qs = (qs | my_qs).distinct()
 
         # Add to new list with response posts/threads (i.e. children) counts of each response post
-        posts_and_threads_counts = self.get_listified_posts_with_attributes(qs, True) # Todo: authentication on responses?
+        posts_attributes = self.get_listified_posts_with_attributes(qs, True) # Todo: authentication on responses?
         # Add Pagination for responses
-        context['page_obj'] = self.paginate(posts_and_threads_counts, request)
+        context['page_obj'] = self.paginate(posts_attributes, request)
 
         return render(request, template_name, context)
 
