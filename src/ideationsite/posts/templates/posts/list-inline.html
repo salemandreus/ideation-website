@@ -111,6 +111,6 @@
     </div>
 <!-- COLLAPSIBLE RESPONSE THREADS ie "PREVIEW THREADS" (ie next response level) -->
     {% if not detail %}
-       {% include 'posts/collapsible-list.html' with preview_posts=threads is_preview=True %}
+       {% include 'posts/collapsible-list.html' with preview_posts=threads %}
     {% endif %}
 </div>
