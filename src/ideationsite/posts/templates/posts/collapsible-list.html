@@ -1,13 +1,13 @@
 <!--AN UNPAGINATED COLLAPSIBLE LIST PREVIEW-->
-{% for next_thread in threads %}
+{% for preview_post in preview_posts %}
         {% if forloop.counter0 == 0 %}
             <span class="d-inline-flex gap-1">&emsp;
-            <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenBelowCard_{{post.slug}}" aria-expanded="false" aria-controls="collapsedHiddenBelowCard_{{post.slug}}">
+            <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenBelowCard_{{post.slug}}" aria-expanded="false" aria-controls="collapsedHiddenBelowCard_{{preview_post.slug}}">
             Preview Response Threads
             </a></span>
         {% endif %}
-            <div class="collapse" id="collapsedHiddenBelowCard_{{next_thread.parent_post.slug}}" style="padding-left:1.5%;">
-                {% include 'posts/list-inline.html' with post=next_thread is_preview=True detail=False %} <!--card_width_percent=card_parent_width_percent|add:"-1.5"-->
+            <div class="collapse" id="collapsedHiddenBelowCard_{{preview_post.parent_post.slug}}" style="padding-left:1.5%;">
+                {% include 'posts/list-inline.html' with post=preview_post threads=preview_post.responses threads_count=preview_post.responses|length is_preview=True detail=False %} <!--  --> <!--card_width_percent=card_parent_width_percent|add:"-1.5"-->
             </div>
 {% endfor %}
 

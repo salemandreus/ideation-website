@@ -38,7 +38,6 @@
     <!--TITLE-->
             <h5 class="card-title">{{post.title}}</h5>
 
-{% if not is_preview %}
     <!-- DATES:-->
         <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
                     <!-- Deleted date -->
@@ -88,7 +87,7 @@
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
 
 
-                <p class="card-text" style="clear:both">
+                    <p class="card-text" style="clear:both">
      <!--WIP -->
     {#        <!-- "EXPAND TRUNCATED POST -->#}                 <!-- the expander component part works. Might add this as a feature -->
     {#                    <span class="d-inline-flex gap-1">&emsp;#}
@@ -99,20 +98,19 @@
     {#                             Some Text: <a href="{{threads.0.get_absolute_url}}">{{ threads.0.title }}</a>#}
     {#                            </div>#}
 
-
         <!-- "VIEW" LINK-->
-                            {% if threads_count > 0 %}
-                                <span class="badge bg-primary rounded-pill">{{threads_count}}</span>
-                                <a href="{{post.get_absolute_url}}">
-                                <img src ="../../static/posts/comments.png">
-                                View Post and <strong>{{threads_count}}</strong> Threads<!--class="text-light">-->
-                            {% else %}
-                                &nbsp;
-                                <img src ="../../static/posts/comment-purple.png">
-                                <a href="{{post.get_absolute_url}}">
-                                 View Post
-                            {%  endif %}
-                   </a>&nbsp;<!--or "Upcoming"-->
+                        {% if threads_count > 0 %}
+                            <span class="badge bg-primary rounded-pill">{{threads_count}}</span>
+                            <a href="{{post.get_absolute_url}}">
+                            <img src ="../../static/posts/comments.png">
+                            View Post and <strong>{{threads_count}}</strong> Threads<!--class="text-light">-->
+                        {% else %}
+                            &nbsp;
+                            <img src ="../../static/posts/comment-purple.png">
+                            <a href="{{post.get_absolute_url}}">
+                             View Post
+                        {%  endif %}
+                        </a>&nbsp;<!--or "Upcoming"-->
                    <!-- Todo: else if no children-->
     {#                       {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
     {#                       {% elif not post.publish_date %}View Draft#}
@@ -123,9 +121,8 @@
                    <!-- Todo: else if is response post  -->
 
     <!--TEXT/LINKS - (DETAILED VIEW)-->
-               {%  else %}
+               {%  elif not is_preview %}   <!--not sure this check is needed, could just be "else"-->
                     {{ post.content_rendered|safe|linebreaks}}
-
     <!-- "ADD RESPONSE" LINK-->
                     <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>
                {%  endif %}
@@ -138,14 +135,12 @@
                     {% endif %}
                 {% endif %}
                 </p>
-{% endif %}
         </div>
     </div>
 
-
 <!-- COLLAPSIBLE RESPONSE THREADS ie "PREVIEW THREADS" (ie next response level) -->
     {% if not is_preview and not detail %}
-       {% include 'posts/collapsible-list.html' with padding_left="3%" is_preview=True %}
+       {% include 'posts/collapsible-list.html' with preview_posts=threads padding_left="3%" is_preview=True %}
     {% endif %}
 
 <br>
