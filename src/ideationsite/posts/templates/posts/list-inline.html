@@ -138,12 +138,14 @@
                     {% endif %}
                 {% endif %}
                 </p>
+{% endif %}
+        </div>
+    </div>
+
 
 <!-- COLLAPSIBLE RESPONSE THREADS ie "PREVIEW THREADS" (ie next response level) -->
-    {% if not detail %}
+    {% if not is_preview and not detail %}
        {% include 'posts/collapsible-list.html' with padding_left="3%" is_preview=True %}
     {% endif %}
-{% endif %}
-    </div>
-</div>
+
 <br>
