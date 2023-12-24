@@ -13,15 +13,15 @@
         <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
                     <!-- Deleted date -->
                 {%  if post.is_deleted %}
-                    <small class="text-light"><strong>Deleted </strong>{{post.updated}}&emsp;&emsp;</small>
+                    <small class="text-light">Deleted <strong>{{post.updated}}</strong>&emsp;&emsp;</small>
                     <!-- Published date -->
                 {%  elif post.publish_date %}
                         <!-- show published date-->
                     {%  if post.publish_date <= utc_now %}
-                        <small class="text-muted"><strong>Published </strong>{{post.publish_date}}&emsp;&emsp;</small>
+                        <small class="text-muted">Published <strong>{{post.publish_date}}</strong>&emsp;&emsp;</small>
                     {% else %}
                         <!-- show scheduled to publish date -->
-                        <small class="text-primary"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>
+                        <small class="text-primary">Scheduled To Publish <strong>{{post.publish_date}}</strong>&emsp;&emsp;</small>
                         <!-- show countdown and optionally title or a custom teaser title-->
                         <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>-->
                     {%  endif %}
@@ -34,7 +34,7 @@
                     <!--Updated (Optional - only if different to other dates) -->
                  {% if not post.is_deleted and post.created_to_minute != post.updated_to_minute %}
                      {% if not post.publish_date or post.published_to_minute != post.updated_to_minute %}
-                         <small class="text-muted"><strong>Updated </strong>{{post.updated}}&emsp;&emsp;</small>
+                         <small class="text-muted">Updated <strong>{{post.updated}}</strong>&emsp;&emsp;</small>
                      {%  endif %}
                 {% endif %}
                                 <!--WIP FEATURE -   SHOW COUNTDOWN TO UPCOMING POST-->
@@ -44,7 +44,7 @@
 
                 <!--Created -->
                  {%  if not post.is_deleted %}
-                    <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>
+                     <small class="text-muted">Created <strong>{{post.created}}</strong>&emsp;&emsp;</small>
                 {% endif %}
 
     <!-- CONTENT: -->
