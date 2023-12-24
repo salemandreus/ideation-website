@@ -6,7 +6,7 @@
             Preview Response Threads
             </a></span>
         {% endif %}
-            <div class="collapse" id="collapsedHiddenBelowCard_{{preview_post.parent_post.slug}}" style="padding-left:3%; padding-bottom: 1rem">
+            <div class="collapse" id="collapsedHiddenBelowCard_{{preview_post.parent_post.slug}}" style="padding-left:3%;">
                 {% include 'posts/list-inline.html' with post=preview_post threads=preview_post.responses threads_count=preview_post.responses|length is_preview=True detail=False %} <!--  --> <!--card_width_percent=card_parent_width_percent|add:"-1.5"-->
             </div>
 {% endfor %}
