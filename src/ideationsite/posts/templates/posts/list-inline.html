@@ -1,3 +1,4 @@
+<div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percent}}%; padding-left:{{padding_left}}; padding-bottom: 1rem"> <!-- defaults to 100% if empty -->
 <!-- PARENT CHAIN LINKS (SEMI COLLAPSIBLE) if those posts aren't visible on page -->
 {% if not is_preview %}
     {% include "posts/parent-chain-header.html" %}
@@ -108,10 +109,8 @@
                 </p>
         </div>
     </div>
-
 <!-- COLLAPSIBLE RESPONSE THREADS ie "PREVIEW THREADS" (ie next response level) -->
     {% if not detail %}
-       {% include 'posts/collapsible-list.html' with preview_posts=threads padding_left="3%" is_preview=True %}
+       {% include 'posts/collapsible-list.html' with preview_posts=threads is_preview=True %}
     {% endif %}
-
-<br>
+</div>

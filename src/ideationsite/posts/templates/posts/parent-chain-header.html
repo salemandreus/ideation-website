@@ -3,11 +3,11 @@
     <div class="card-header">
         {% if next_parent.get_absolute_url|cut:'/post/' !=  request.path|cut:'/post/'|cut:'/'  %}
             {% if forloop.first %}
-                Original topic post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a></div>
+                Original topic post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a>
             {%  elif forloop.last %}
-                ↳ Direct response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a></div>
+                ↳ Direct response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a>
             {% elif forloop.counter0 == 1 and forloop.revcounter0 == 1 %}   <!-- if only 3 elements show the middle one -->
-                ↳ Response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a></div>
+                ↳ Response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a>
            {%  else %} <!-- if more than 3 elements hide all but the first and last in an expandable link -->
                 {% if forloop.counter0 == 1 %}  <!-- create containing element for expandable link -->
                     <span class="d-inline-flex gap-1">&emsp;
@@ -28,4 +28,5 @@
                 {% endif %}
             {%  endif %}
         {% endif%}
+    </div>
 {%  endfor %}
