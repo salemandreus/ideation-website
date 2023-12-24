@@ -59,15 +59,6 @@
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
 
                     <p class="card-text" style="clear:both">
-     <!--WIP -->
-    {#        <!-- "EXPAND TRUNCATED POST -->#}                 <!-- the expander component part works. Might add this as a feature -->
-    {#                    <span class="d-inline-flex gap-1">&emsp;#}
-    {#                            <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenOnCard" aria-expanded="false" aria-controls="collapsedHiddenOnCard">#}
-    {#                                Expand Post#}
-    {#                            </a></span>#}
-    {#                            <div class="collapse" id="collapsedHiddenOnCard">#}
-    {#                             Some Text: <a href="{{threads.0.get_absolute_url}}">{{ threads.0.title }}</a>#}
-    {#                            </div>#}
 
         <!-- "VIEW" LINK-->
                         {% if threads_count > 0 %}
