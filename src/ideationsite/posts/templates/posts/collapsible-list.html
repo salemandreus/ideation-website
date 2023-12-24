@@ -1,0 +1,27 @@
+<!--AN UNPAGINATED COLLAPSIBLE LIST PREVIEW-->
+{% for next_thread in threads %}
+        {% if forloop.counter0 == 0 %}
+            <span class="d-inline-flex gap-1">&emsp;
+            <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenBelowCard_{{post.slug}}" aria-expanded="false" aria-controls="collapsedHiddenBelowCard_{{post.slug}}">
+            Preview Response Threads
+            </a></span>
+        {% endif %}
+            <div class="collapse" id="collapsedHiddenBelowCard_{{next_thread.parent_post.slug}}">
+                {% include 'posts/list-inline.html' with post=next_thread is_preview=True padding_left="3%" detail=False %} <!--card_width_percent=card_parent_width_percent|add:"-1.5"-->
+            </div>
+{% endfor %}
+
+
+
+{#    {% for object in page_obj %}#}
+{#        {% if is_preview %}#}
+{#            {% if post.slug == "a-published-non-draft-on-a-draft" %}#}
+{#                {% debug %}#}
+{#            {% endif %}#}
+{#        {% else %}#}
+{#            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percent}}%;"> <!-- defaults to 100% if empty -->#}
+{#                {% include 'posts/list-inline.html' with post=object.0 threads_count=object.1|length parent_chain=object.2 threads=object.1 detail=False %}#}
+{#            </div>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+{#</div>#}

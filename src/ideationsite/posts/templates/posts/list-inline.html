@@ -1,5 +1,6 @@
-<!-- CARD UI AND STYLE -->
+<!-- POST'S PARENTS LINKS CHAIN (If any parents exist, and they aren't already displayed above on same page such as a detailed page's responses) -->
                              <!--only display parent message and link if post has a parent (ie is a response) and page is not the parent's detailed page -->
+{% if not is_preview %}
     {% for next_parent in parent_chain reversed %}
         <div class="card-header
             {% if next_parent.get_absolute_url|cut:'/post/' !=  request.path|cut:'/post/'|cut:'/'  %}
@@ -29,15 +30,16 @@
                     {% endif %}
                 {%  endif %}
             {% endif%}
-
-{#            {% endif %} <!--also won't show if no parent -->#}
-   {%  endfor %}
+    {%  endfor %}
+{%  endif %}
+<!-- CARD PROPERTIES AND STYLE -->
     <div class="card {% if post.is_deleted %} {% elif not post.publish_date %} border card border-light {%  elif post.publish_date <= utc_now %} text-dark {%  else %} border-primary {% endif %}">
         <div class="{% if post.is_deleted %} card text-light fst-italic card-body bg-secondary {% elif not post.publish_date %} card-body text-secondary fst-italic bg-light {% elif post.publish_date <= utc_now %} card-body bg-white {%  else %} card-body bg-white  {% endif %}">
-<!--TITLE-->
+    <!--TITLE-->
             <h5 class="card-title">{{post.title}}</h5>
 
-<!-- DATES:-->
+{% if not is_preview %}
+    <!-- DATES:-->
         <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
                     <!-- Deleted date -->
                 {%  if post.is_deleted %}
@@ -74,28 +76,28 @@
                     <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>
                 {% endif %}
 
-<!-- CONTENT: -->
+    <!-- CONTENT: -->
         <!--IMAGE (THUMBNAIL OR FULL-SIZED)-->
                 {%  if post.image %}
                             <img src="{{ post.image.url }}" class="img-fluid mt-{% if not detail %}5 rounded" style="max-width:20em; {%  else %}4 rounded" style="{%  endif %} float:right; margin: 0 0 2% 2%" />
                 {%  endif %}
                 <p class="card-text" style="clear:left">
 
-<!--TEXT/LINKS (TRUNCATED LIST)-->
+    <!--TEXT/LINKS (TRUNCATED LIST)-->
                {% if not detail %}
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
 
 
                 <p class="card-text" style="clear:both">
-{##}
-{#        <!-- "EXPAND TRUNCATED POST -->#}                 <!-- the expander component part works. Might add this as a feature -->
-{#                    <span class="d-inline-flex gap-1">&emsp;#}
-{#                            <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenOnCard" aria-expanded="false" aria-controls="collapsedHiddenOnCard">#}
-{#                                Expand Post#}
-{#                            </a></span>#}
-{#                            <div class="collapse" id="collapsedHiddenOnCard">#}
-{#                             Some Text: <a href="{{threads.0.get_absolute_url}}">{{ threads.0.title }}</a>#}
-{#                            </div>#}
+     <!--WIP -->
+    {#        <!-- "EXPAND TRUNCATED POST -->#}                 <!-- the expander component part works. Might add this as a feature -->
+    {#                    <span class="d-inline-flex gap-1">&emsp;#}
+    {#                            <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenOnCard" aria-expanded="false" aria-controls="collapsedHiddenOnCard">#}
+    {#                                Expand Post#}
+    {#                            </a></span>#}
+    {#                            <div class="collapse" id="collapsedHiddenOnCard">#}
+    {#                             Some Text: <a href="{{threads.0.get_absolute_url}}">{{ threads.0.title }}</a>#}
+    {#                            </div>#}
 
 
         <!-- "VIEW" LINK-->
@@ -112,23 +114,23 @@
                             {%  endif %}
                    </a>&nbsp;<!--or "Upcoming"-->
                    <!-- Todo: else if no children-->
-{#                       {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
-{#                       {% elif not post.publish_date %}View Draft#}
-{#                       {% elif post.publish_date <= utc_now %}View Post#}
-{#                       {% else %} View Scheduled<!--class="text-info" -->#}
-{#                       {% endif %}#}
+    {#                       {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
+    {#                       {% elif not post.publish_date %}View Draft#}
+    {#                       {% elif post.publish_date <= utc_now %}View Post#}
+    {#                       {% else %} View Scheduled<!--class="text-info" -->#}
+    {#                       {% endif %}#}
 
                    <!-- Todo: else if is response post  -->
 
-<!--TEXT/LINKS - (DETAILED VIEW)-->
+    <!--TEXT/LINKS - (DETAILED VIEW)-->
                {%  else %}
                     {{ post.content_rendered|safe|linebreaks}}
 
-<!-- "ADD RESPONSE" LINK-->
+    <!-- "ADD RESPONSE" LINK-->
                     <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>
                {%  endif %}
 
-<!-- "EDIT" AND "DELETE" LINKS -->
+    <!-- "EDIT" AND "DELETE" LINKS -->
                 {% if request.user.is_authenticated %}
                     {% if not post.is_deleted and request.user.is_staff %}
                     <a href="{{ post.get_edit_url }}"><img src ="../../static/posts/edit-pencil.png">Edit</a>&nbsp;
@@ -136,22 +138,12 @@
                     {% endif %}
                 {% endif %}
                 </p>
-        </div>
+
+<!-- COLLAPSIBLE RESPONSE THREADS ie "PREVIEW THREADS" (ie next response level) -->
+    {% if not detail %}
+       {% include 'posts/collapsible-list.html' with padding_left="3%" is_preview=True %}
+    {% endif %}
+{% endif %}
     </div>
-                {% if not detail %}
-              <!-- "PREVIEW THREADS" EXPANDABLE LINK-->
-                {% for next_thread in threads %}
-                    {% if forloop.counter0 == 0 %}
-                        <span class="d-inline-flex gap-1">&emsp;
-                        <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#collapsedHiddenBelowCard_{{post.slug}}" aria-expanded="false" aria-controls="collapsedHiddenBelowCard_{{post.slug}}">
-                        Preview Response Threads
-                        </a></span>
-                    {% endif %}
-                        <div class="collapse" id="collapsedHiddenBelowCard_{{post.slug}}">
-                         &emsp;&nbsp;&emsp;↳ Response Thread: <a href="{{next_thread.get_absolute_url}}">{{ next_thread.title }}</a>
-                            <!--todo someday-->
-{#                        {% include 'posts/list.html' with padding_left="3%" post=next_thread %} {# card_width_percent=card_parent_width_percent|add:"-1.5"#}
-                        </div>
-                {% endfor %}
-            {% endif %}
+</div>
 <br>
