@@ -139,7 +139,7 @@
     </div>
 
 <!-- COLLAPSIBLE RESPONSE THREADS ie "PREVIEW THREADS" (ie next response level) -->
-    {% if not is_preview and not detail %}
+    {% if not detail %}
        {% include 'posts/collapsible-list.html' with preview_posts=threads padding_left="3%" is_preview=True %}
     {% endif %}
 
