@@ -37,10 +37,6 @@
                          <small class="text-muted">Updated <strong>{{post.updated}}</strong>&emsp;&emsp;</small>
                      {%  endif %}
                 {% endif %}
-                                <!--WIP FEATURE -   SHOW COUNTDOWN TO UPCOMING POST-->
-                        <!--Scheduled/Countdown-->
-                    <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date -->
-                    <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>-->
 
                 <!--Created -->
                  {%  if not post.is_deleted %}
@@ -72,14 +68,7 @@
                             <a href="{{post.get_absolute_url}}">
                              View Post
                         {%  endif %}
-                        </a>&nbsp;<!--or "Upcoming"-->
-                   <!-- WIP: MORE SPECIFIC MESSAGES if no children-->
-    {#                      {% else %}#}
-    {#                          {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
-    {#                           {% elif not post.publish_date %}View Draft#}
-    {#                        {% elif post.publish_date <= utc_now %}View Post#}
-    {#                         {% else %} View Scheduled<!--class="text-info" -->#}
-    {#                        {% endif %}#}
+                        </a>&nbsp;
 
                    <!-- Todo: else if is response post  -->
 
