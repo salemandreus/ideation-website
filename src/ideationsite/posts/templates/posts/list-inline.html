@@ -1,3 +1,4 @@
+<!-- PARENT CHAIN LINKS (SEMI COLLAPSIBLE) if those posts aren't visible on page -->
 {% if not is_preview %}
     {% include "posts/parent-chain-header.html" %}
 {%  endif %}
@@ -35,12 +36,13 @@
                          <small class="text-muted"><strong>Updated </strong>{{post.updated}}&emsp;&emsp;</small>
                      {%  endif %}
                 {% endif %}
+                                <!--WIP FEATURE -   SHOW COUNTDOWN TO UPCOMING POST-->
+                        <!--Scheduled/Countdown-->
+                    <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date -->
+                    <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>-->
 
-                    <!--Scheduled/Countdown-->
-                <!--#{\% elif post not in published %} --> <!--if future-dated ie scheduled publish date -->
-                <!--<small class="text-muted"><strong>Scheduled To Publish: </strong>{{post.publish_date}}&emsp;&emsp;</small>-->
-
-                 {%  if not post.is_deleted %}   <!--Created -->
+                <!--Created -->
+                 {%  if not post.is_deleted %}
                     <small class="text-muted"><strong>Created </strong>{{post.created}}&emsp;&emsp;</small>
                 {% endif %}
 
@@ -54,7 +56,6 @@
     <!--TEXT/LINKS (TRUNCATED LIST)-->
                {% if not detail %}
                     {{post.content_rendered|safe|linebreaks|truncatewords:150}}
-
 
                     <p class="card-text" style="clear:both">
      <!--WIP -->
@@ -80,12 +81,13 @@
                              View Post
                         {%  endif %}
                         </a>&nbsp;<!--or "Upcoming"-->
-                   <!-- Todo: else if no children-->
-    {#                       {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
-    {#                       {% elif not post.publish_date %}View Draft#}
-    {#                       {% elif post.publish_date <= utc_now %}View Post#}
-    {#                       {% else %} View Scheduled<!--class="text-info" -->#}
-    {#                       {% endif %}#}
+                   <!-- WIP: MORE SPECIFIC MESSAGES if no children-->
+    {#                      {% else %}#}
+    {#                          {% if post.is_deleted %} View <!--class="text-light">-->#} <!--todo: don't show deleted-->
+    {#                           {% elif not post.publish_date %}View Draft#}
+    {#                        {% elif post.publish_date <= utc_now %}View Post#}
+    {#                         {% else %} View Scheduled<!--class="text-info" -->#}
+    {#                        {% endif %}#}
 
                    <!-- Todo: else if is response post  -->
 
