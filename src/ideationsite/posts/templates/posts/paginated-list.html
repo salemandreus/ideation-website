@@ -1,10 +1,10 @@
-    <div class="row" style="padding-left:{{padding_left}};">
-        {% for object in page_obj %}
+<div class="row" style="padding-left:{{padding_left}};">
+    {% for object in page_obj %}
             <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percent}}%;"> <!-- defaults to 100% if empty -->
                 {% include 'posts/list-inline.html' with post=object.0 threads_count=object.1|length parent_chain=object.2 threads=object.1 detail=False %}
             </div>
-        {% endfor %}
-    </div>
+    {% endfor %}
+</div>
 
 {% if page_obj.paginator.num_pages > 1 %}
 <div class="pagination">
