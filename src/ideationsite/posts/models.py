@@ -95,7 +95,7 @@ class Post(models.Model):
     objects=PostManager()
 
     class Meta:
-        ordering = ['-publish_date','-updated','-created']
+        ordering = ['-updated', '-publish_date','-created']
     def get_absolute_url(self):
         return f"{reverse('posts_index')}{self.slug}"
 
