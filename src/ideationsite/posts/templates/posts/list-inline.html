@@ -1,36 +1,5 @@
-<!-- POST'S PARENTS LINKS CHAIN (If any parents exist, and they aren't already displayed above on same page such as a detailed page's responses) -->
-                             <!--only display parent message and link if post has a parent (ie is a response) and page is not the parent's detailed page -->
 {% if not is_preview %}
-    {% for next_parent in parent_chain reversed %}
-        <div class="card-header">
-            {% if next_parent.get_absolute_url|cut:'/post/' !=  request.path|cut:'/post/'|cut:'/'  %}
-                {% if forloop.first %}
-                    Original topic post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a></div>
-                {%  elif forloop.last %}
-                    ↳ Direct response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a></div>
-                {% elif forloop.counter0 == 1 and forloop.revcounter0 == 1 %}   <!-- if only 3 elements show the middle one -->
-                    ↳ Response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a></div>
-               {%  else %} <!-- if more than 3 elements hide all but the first and last in an expandable link -->
-                    {% if forloop.counter0 == 1 %}  <!-- create containing element for expandable link -->
-                        <span class="d-inline-flex gap-1">&emsp;
-                            <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#hiddenByCollapse" aria-expanded="false" aria-controls="hiddenByCollapse">
-                                see other response topics
-                            </a></span>
-                            <div class="collapse" id="hiddenByCollapse">
-                            ↳ Response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a>
-                            </div>
-                    {%  elif forloop.revcounter0 == 1 %} <!-- close off containing element for expandable link -->
-                            <div class="collapse" id="hiddenByCollapse">
-                            ↳ Response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a>
-                            </div>
-                    {% else %}
-                            <div class="collapse" id="hiddenByCollapse">
-                            ↳Response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a>
-                            </div>
-                    {% endif %}
-                {%  endif %}
-            {% endif%}
-    {%  endfor %}
+    {% include "posts/parent-chain-header.html" %}
 {%  endif %}
 <!-- CARD PROPERTIES AND STYLE -->
     <div class="card {% if post.is_deleted %} {% elif not post.publish_date %} border card border-light {%  elif post.publish_date <= utc_now %} text-dark {%  else %} border-primary {% endif %}">
