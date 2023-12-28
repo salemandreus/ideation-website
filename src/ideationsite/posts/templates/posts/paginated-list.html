@@ -1,5 +1,5 @@
 {% for object in page_obj %}
-            {% include 'posts/list-inline.html' with post=object.0 threads_count=object.1|length parent_chain=object.2 threads=object.1 detail=False %}
+            {% include 'posts/post.html' with post=object.0 threads_count=object.1|length parent_chain=object.2 threads=object.1 detail=False %}
 {% endfor %}
 
 {% if page_obj.paginator.num_pages > 1 %}

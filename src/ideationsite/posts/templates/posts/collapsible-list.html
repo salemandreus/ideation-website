@@ -7,7 +7,7 @@
             </a></span>
         {% endif %}
             <div class="collapse" id="collapsedHiddenBelowCard_{{preview_post.parent_post.slug}}" style="padding-left:3%;">
-                {% include 'posts/list-inline.html' with post=preview_post threads=preview_post.responses threads_count=preview_post.responses|length is_preview=True detail=False %} <!--  --> <!--card_width_percent=card_parent_width_percent|add:"-1.5"-->
+                {% include 'posts/post.html' with post=preview_post threads=preview_post.responses threads_count=preview_post.responses|length is_preview=True detail=False %} <!--  --> <!--card_width_percent=card_parent_width_percent|add:"-1.5"-->
             </div>
 {% endfor %}
 
@@ -19,7 +19,7 @@
 {#            {% endif %}#}
 {#        {% else %}#}
 {#            <div class="col-12 col-md-12 mb-3 mx-auto" style="width:{{card_width_percent}}%;"> <!-- defaults to 100% if empty -->#}
-{#                {% include 'posts/list-inline.html' with post=object.0 threads_count=object.1|length parent_chain=object.2 threads=object.1 detail=False %}#}
+{#                {% include 'posts/post.html' with post=object.0 threads_count=object.1|length parent_chain=object.2 threads=object.1 detail=False %}#}
 {#            </div>#}
 {#        {% endif %}#}
 {#    {% endfor %}#}
