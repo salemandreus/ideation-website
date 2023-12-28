@@ -128,10 +128,10 @@ def post_create_view(request, parent_slug=None):
 def post_update_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)
     if obj.is_deleted:
-        return redirect("post_detail_page", obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted already
+        return redirect("post_detail_page", obj.slug)  #todo: redirect to referring/current url     # if already marked deleted just redirect to same deleted page to show it is deleted
     # GET PARENT POST TO SHOW IF WRITING A RESPONSE
     if obj.parent_post:
-            parent_post = obj.parent_post
+        parent_post = obj.parent_post
     else:
         parent_post = None
     context = {"title": f"Update {obj.title}", "parent_post": parent_post}
@@ -149,23 +149,33 @@ def post_update_view(request, slug):
 
 @staff_member_required
 def post_delete_view(request, slug):
+    """Mark post as deleted, replace content with blank and title with "[Deleted Post]".
+    Keep url and response posts. """
+
     obj = get_object_or_404(Post, slug=slug)
     template_name = "posts/delete.html"
     if obj.is_deleted:
         # try:
-        return redirect("post_detail_page", obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted alreadys
+        return redirect("post_detail_page", obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted already - this will only happen if calling from Delete URL as buttons and links aren't available
         # except:
     elif request.method == "POST":      # Only delete the post's contents, and keep "[Deleted post]" if it has any child posts
     #children = Post.objects.filter(parent_post=obj.pk)
         #if children.count() > 0:
             # Since we can't delete the entire post if it has children just delete contents,
+        redirect_url = request.POST.get('redirect_url', '/')
         obj.is_deleted = True
         obj.title = "[Deleted Post]"
-        obj.slug = f"deleted-post-{str(obj.pk)}"
+        # obj.slug = f"deleted-post-{str(obj.pk)}"
         obj.content = ""
         obj.image = None
         obj.save()
         # obj.delete()
-        return redirect(reverse("posts_index"))
+        if "/" + obj.slug + "/" not in redirect_url:
+            return redirect(redirect_url)
+        elif obj.parent_post:
+            return redirect("post_detail_page", obj.parent_post.slug)
+        else:
+            return redirect(reverse("posts_index"))
     context = {"object": obj}
+
     return render(request, template_name, context)

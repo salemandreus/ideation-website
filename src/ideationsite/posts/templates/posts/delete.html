@@ -6,6 +6,7 @@
 
     <form method="POST">{% csrf_token %}
 
+        <input type="hidden" name="redirect_url" value="{{ request.META.HTTP_REFERER }}">
         <button class="btn btn-danger">Yes, delete</button>
 
     </form>
