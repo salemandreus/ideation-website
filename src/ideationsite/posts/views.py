@@ -100,14 +100,18 @@ class PostDetailPage(PostListBase):
 def post_create_view(request, parent_slug=None):
     """ Create Post via a form. """
     template_name = "posts/post-form.html"
-    context = {"title": "Create A New Post"}
+    # GET PARENT POST IF WRITING A RESPONSE
+    if parent_slug:
+        [parent_post] = Post.objects.all().filter(slug=parent_slug)
+    else:
+        parent_post = None
+    context = {"title": "Create A New Post", "parent_post": parent_post}
     form = PostModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
-        if parent_slug:
-            parent_post = Post.objects.all().filter(slug=parent_slug)
-            [obj.parent_post] = parent_post
+        if parent_post:
+            obj.parent_post = parent_post
         #obj.title= form.cleaned_data.get("title") + "0"
         obj.save()
         #form = PostModelForm()  # If not redirecting but posting multiple in succession
@@ -125,13 +129,20 @@ def post_update_view(request, slug):
     obj = get_object_or_404(Post, slug=slug)
     if obj.is_deleted:
         return redirect("post_detail_page", obj.slug)       # if already marked deleted just redirect to same deleted page to show it is deleted already
+    # GET PARENT POST TO SHOW IF WRITING A RESPONSE
+    if obj.parent_post:
+            parent_post = obj.parent_post
+    else:
+        parent_post = None
+    context = {"title": f"Update {obj.title}", "parent_post": parent_post}
+    # GET EXISTING FORM
     form = PostModelForm(request.POST or None, request.FILES or None, instance=obj)
     if form.is_valid():
         form.save()
         #return redirect(reverse("posts_index")) return redirect("post_detail_page", obj.slug)
         return redirect("post_detail_page",obj.slug )#args=form.fields.slug))
     template_name = "posts/post-form.html"
-    context = {"title": f"Update {obj.title}", "form": form}
+    context["form"] = form
 
     return render(request, template_name, context)
 

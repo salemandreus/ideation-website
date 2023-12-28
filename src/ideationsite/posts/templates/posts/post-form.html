@@ -14,6 +14,18 @@
 
 {% block content %}
 
+<!-- SHOW PARENT POST IF A RESPONSE -->
+{% if parent_post %}
+    <hr>
+    <h2><i>Responding to: </i></h2>
+    <br>
+    <H1 style="color:grey">{{ parent_post.title }}</H1>
+    <br>
+    <span style="color:grey"><p>{{ parent_post.content_rendered|safe|linebreaks }}</p></span>
+    <p></p>
+    <hr>
+    <br>
+{% endif %}
 
 <form method='POST' action='' enctype="multipart/form-data"> {% csrf_token %}
     {{ form.as_p }}
