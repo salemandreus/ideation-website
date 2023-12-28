@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44da5b5d-d05f-44ef-b3e0-e22c4d935280" name="Changes" comment="" />
+    <list default="true" id="44da5b5d-d05f-44ef-b3e0-e22c4d935280" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/ideationsite/posts/templates/posts/list-inline.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/ideationsite/posts/templates/posts/list-inline.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -36,23 +38,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/REDACTED/ideation-website/src/ideationsite/posts/templates/posts",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/REDACTED/Coding/Websites/ideation-website/src/ideationsite/posts/templates/posts&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/ideationsite/posts/templates/posts" />
@@ -184,7 +186,7 @@
       <option name="port" value="8000" />
       <option name="host" value="127.0.0.1" />
       <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="http://127.0.0.1:8000/post/upcoming/" />
+      <option name="browserUrl" value="http://127.0.0.1:8000/" />
       <option name="runTestServer" value="false" />
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
@@ -313,7 +315,12 @@
       <workItem from="1703153345872" duration="12386000" />
       <workItem from="1703170235044" duration="15246000" />
       <workItem from="1703191644002" duration="9917000" />
-      <workItem from="1703233067845" duration="51224000" />
+      <workItem from="1703233067845" duration="54680000" />
+      <workItem from="1703419266949" duration="17639000" />
+      <workItem from="1703443891320" duration="13674000" />
+      <workItem from="1703509180006" duration="5220000" />
+      <workItem from="1703533409109" duration="641000" />
+      <workItem from="1703770093827" duration="40000" />
     </task>
     <servers />
   </component>
@@ -321,14 +328,14 @@
     <envs>
       <env key="ALLOWED_HOSTS" value="www.domain.com,domain.com,localhost,127.0.0.1&#13;" />
       <env key="DATABASE_HOST" value="127.0.0.1&#13;" />
-      <env key="DATABASE_NAME" value="REDACTED&#13;" />
-      <env key="DATABASE_PASSWORD" value="REDACTED&#13;" />
-      <env key="DATABASE_USER" value="REDACTED&#13;" />
+      <env key="DATABASE_NAME" value="REDACTED" />
+      <env key="DATABASE_PASSWORD" value="REDACTED" />
+      <env key="DATABASE_USER" value="REDACTED" />
       <env key="DEBUG" value="True&#13;" />
       <env key="DJANGO_SETTINGS_MODULE" value="ideationsite.settings&#13;" />
       <env key="PYDEVD_USE_CYTHON" value="NO&#13;" />
       <env key="PYDEVD_USE_FRAME_EVAL" value="NO" />
-      <env key="SECRET_KEY" value="REDACTED&#13;" />
+      <env key="SECRET_KEY" value="REDACTED" />
       <env key="SHOW_TOOLBAR_CALLBACK" value="False&#13;" />
     </envs>
   </component>
@@ -408,29 +415,9 @@
           <option name="timeStamp" value="176" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="django-line">
-          <url>file://$PROJECT_DIR$/src/ideationsite/posts/templates/posts/list-inline.html</url>
-          <line>29</line>
-          <option name="timeStamp" value="210" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="django-line">
-          <url>file://$PROJECT_DIR$/src/ideationsite/posts/templates/posts/list-inline.html</url>
-          <line>9</line>
-          <option name="timeStamp" value="212" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="django-line">
-          <url>file://$PROJECT_DIR$/src/ideationsite/posts/templates/posts/list-inline.html</url>
-          <line>7</line>
-          <option name="timeStamp" value="213" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="django-line">
-          <url>file://$PROJECT_DIR$/src/ideationsite/posts/templates/posts/list-inline.html</url>
-          <line>11</line>
-          <option name="timeStamp" value="214" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="django-line">
-          <url>file://$PROJECT_DIR$/src/ideationsite/posts/templates/posts/list-inline.html</url>
-          <line>152</line>
-          <option name="timeStamp" value="242" />
+          <url>file://$PROJECT_DIR$/src/ideationsite/posts/templates/posts/collapsible-list.html</url>
+          <line>18</line>
+          <option name="timeStamp" value="247" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$USER_HOME$/.local/lib/python3.10/site-packages/psycopg/connection.py</url>
@@ -466,8 +453,8 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ideation_website$python3_manage_py_collectstatic.coverage" NAME="python3 manage.py collectstatic Coverage Results" MODIFIED="1703018507208" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ideationsite" />
-    <SUITE FILE_PATH="coverage/ideation_website$python3_manage_py_migrate.coverage" NAME="python3 manage.py migrate Coverage Results" MODIFIED="1703162930453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ideationsite" />
+    <SUITE FILE_PATH="coverage/ideation_website$python3_manage_py_migrate.coverage" NAME="python3 manage.py migrate Coverage Results" MODIFIED="1703456746646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ideationsite" />
     <SUITE FILE_PATH="coverage/ideation_website$python3_manage_py_runserver.coverage" NAME="python3 manage.py runserver Coverage Results" MODIFIED="1701633365537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ideationsite" />
-    <SUITE FILE_PATH="coverage/ideation_website$python3_manage_py_makemigrations.coverage" NAME="python3 manage.py makemigrations Coverage Results" MODIFIED="1703162920336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ideationsite" />
+    <SUITE FILE_PATH="coverage/ideation_website$python3_manage_py_makemigrations.coverage" NAME="python3 manage.py makemigrations Coverage Results" MODIFIED="1703456739948" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ideationsite" />
   </component>
 </project>
