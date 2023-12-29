@@ -13,15 +13,24 @@ class SearchView(PostListBase):
     """
     def get(self, request):
         template_name = 'searches/view.html'
+
+        # Assemble Query
         query = request.GET.get('q', None)
         user = None
         if request.user.is_authenticated:
             user=request.user
         context = {"query": query, "utc_now": datetime.now(timezone.utc)}
 
+        # Save Query to DB
         if query is not None:
             SearchQuery.objects.create(user=user, query=query)
-            posts_list = Post.objects.search(query=query)
+
+            # Run Search Query against DB for published, and for user if logged in
+            posts_list = Post.objects.search_published(query=query)
+            if request.user.is_authenticated:
+                my_posts_list = Post.objects.search_user(user=user, query=query)
+                posts_list = (posts_list|my_posts_list).distinct()
+
             context['results_count'] = posts_list.__len__()
 
             # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)

@@ -45,10 +45,15 @@ class PostManager(models.Manager):
     def published(self):
         return self.get_queryset().published()
 
-    def search(self, query=None):
+    def search_published(self, query=None):
         if query is None:
             return self.get_queryset().none()
-        return self.get_queryset().published().search(query)    #only search published
+        return self.get_queryset().published().search(query)
+
+    def search_user(self, user, query=None):
+        if query is None:
+            return self.get_queryset().none()
+        return self.get_queryset().search(query).filter(user=user)
 
     def topic_posts(self):
         return self.get_queryset()
