@@ -1,12 +1,9 @@
+from datetime import datetime, timezone
 from django.shortcuts import render
 from django.core.paginator import Paginator
-
 from posts.models import Post
-
-from .models import SearchQuery
-
 from posts.views import PostListBase
-
+from .models import SearchQuery
 
 class SearchView(PostListBase):
     """
@@ -20,7 +17,7 @@ class SearchView(PostListBase):
         user = None
         if request.user.is_authenticated:
             user=request.user
-        context = {"query": query}
+        context = {"query": query, "utc_now": datetime.now(timezone.utc)}
 
         if query is not None:
             SearchQuery.objects.create(user=user, query=query)

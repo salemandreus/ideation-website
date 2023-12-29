@@ -79,7 +79,7 @@ class PostDetailPage(PostListBase):
 
         # gets a parent chain to root post (if applicable)
         [main_post_attributes] = self.get_listified_posts_with_attributes([obj],True)
-        context = {"object": main_post_attributes}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
+        context = {"object": main_post_attributes, "utc_now": datetime.now(timezone.utc)}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
         # Get whole discussion for post including drafts
         qs = obj.responses().published()
