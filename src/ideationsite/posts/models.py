@@ -61,6 +61,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='image/', blank=True, null=True)
     title = models.CharField()
     slug = models.SlugField(unique=True, max_length=255) #AutoSlugField(populate_from='title', editable=True, unique=True, max_length=255)#default=create_slug(self.title)) # default=slugify(title)
+    slug_alias = models.SlugField(unique=True, max_length=255, blank=True, null=True)  #Todo: validation requirements for this (and slug) field itself against each other and admin portal: https://docs.djangoproject.com/en/5.0/howto/custom-model-fields/#converting-values-to-python-objects
     content = MarkdownField(rendered_field='content_rendered', validator=VALIDATOR_CLASSY, use_editor=True, use_admin_editor=True, null=True, blank=True)
     content_rendered = RenderedMarkdownField()
     publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now, null=True, blank=True)

@@ -31,6 +31,9 @@ class PostModelForm(forms.ModelForm):
         print(instance)
         slug = self.cleaned_data.get('slug')
         qs = Post.objects.filter(slug__iexact=slug) # backwards compatibility in slugs with uppercase exist since Django allows them by default without our validator
+        alias_qs = Post.objects.filter(slug_alias__iexact=slug) # also checks test slug_aliases
+        qs = (qs | alias_qs).distinct()
+
         if instance is not None:
             qs = qs.exclude(pk=instance.pk)
         if qs.exists():
