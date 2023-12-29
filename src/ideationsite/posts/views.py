@@ -140,7 +140,10 @@ def post_update_view(request, slug):
     if form.is_valid():
         form.save()
         #return redirect(reverse("posts_index")) return redirect("post_detail_page", obj.slug)
-        return redirect("post_detail_page",obj.slug )#args=form.fields.slug))
+        if parent_post:
+            return redirect("post_detail_page", parent_post.slug)
+        else:
+            return redirect("post_detail_page", obj.slug)#args=form.fields.slug))
     template_name = "posts/post-form.html"
     context["form"] = form
 
