@@ -4,8 +4,18 @@
     {% include "posts/parent-chain-header.html" %}
 {%  endif %}
 <!-- CARD PROPERTIES AND STYLE -->
-    <div class="card{% if post.is_deleted %} {% elif not post.publish_date %} border-light {%  elif post.publish_date <= utc_now %} {%  else %} border-primary {% endif %}">
-        <div class="card-body{% if post.is_deleted %} bg-secondary card text-light fst-italic {% elif not post.publish_date %} bg-light text-secondary fst-italic {% elif post.publish_date <= utc_now %} bg-white text-dark {%  else %} bg-white {% endif %}">
+    <div class="card card-body
+        {% if post.is_deleted %}
+            bg-secondary text-light fst-italic
+        {% elif not post.publish_date %}
+            bg-light text-secondary fst-italic border-light
+        {%  elif post.publish_date <= utc_now %}
+            bg-white text-dark
+        {%  else %}
+            bg-white border-primary
+        {% endif %}
+        ">
+        <div>
     <!--TITLE-->
             <h5 class="card-title">{{post.title}}</h5>
 
