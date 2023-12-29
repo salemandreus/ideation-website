@@ -21,6 +21,7 @@ User = settings.AUTH_USER_MODEL
 
 class PostQuerySet(models.QuerySet):
     def published(self):
+        """Only get items already published."""
         now=timezone.now()
         return self.filter(publish_date__lte=now)
 
@@ -43,14 +44,23 @@ class PostManager(models.Manager):
         return PostQuerySet(self.model, using=self._db)
 
     def published(self):
+        """Filter for published items."""
         return self.get_queryset().published()
 
     def search_published(self, query=None):
+        """
+        Take a query and user run a multi-filter search against it on every post by that user,
+        including drafts and unpublished items.
+         """
         if query is None:
             return self.get_queryset().none()
         return self.get_queryset().published().search(query)
 
     def search_user(self, user, query=None):
+        """
+        Take a query and user run a multi-filter search against it on every post by that user,
+        including drafts and unpublished items.
+         """
         if query is None:
             return self.get_queryset().none()
         return self.get_queryset().search(query).filter(user=user)
