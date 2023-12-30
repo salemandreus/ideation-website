@@ -3,6 +3,9 @@
 <br>
 {% if not is_preview %}
     {% include "posts/parent-chain-header.html" %}
+    {% if post.is_deleted %}
+        <h6 class="text-muted" ><i> {% if detail %}The Original{% else %}This{% endif %} Post Has Been Deleted </i></h6>
+    {% endif %}
 {%  endif %}
 <!-- CARD PROPERTIES AND STYLE -->
     <div class="card card-body
@@ -72,12 +75,12 @@
                             <span class="badge bg-primary rounded-pill">{{threads_count}}</span>
                             <a href="{{post.get_absolute_url}}">
                             <img src ="../../static/posts/comments.png">
-                            View Post and <strong>{{threads_count}}</strong> Threads<!--class="text-light">-->
-                        {% else %}
-                            &nbsp;
-                            <img src ="../../static/posts/comment-purple.png">
-                            <a href="{{post.get_absolute_url}}">
-                             View Post
+                            View {% if not post.is_deleted %}Post and {% endif %}<strong>{{threads_count}}</strong> Threads<!--class="text-light">-->
+                        {% elif not post.is_deleted %} <!-- Don't link to to view any deleted posts that don't already have threads --> <!--Todo show only if none are deleted but these should be filtered out from some views anyway?-->
+                                &nbsp;
+                                <img src ="../../static/posts/comment-purple.png">
+                                <a href="{{post.get_absolute_url}}">
+                                View Post
                         {%  endif %}
                         </a>&nbsp;
 
@@ -85,7 +88,9 @@
                {%  elif not is_preview %}   <!--not sure this check is needed, could just be "else"-->
                     {{ post.content_rendered|safe|linebreaks}}
     <!-- "ADD RESPONSE" LINK-->
-                    <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>
+                   {% if not post.is_deleted %} <!-- or post.responses?-->
+                        <a href="{{ post.get_post_response_create_url }}"><img src ="../../static/posts/add.png">Add Response</a>
+                    {% endif %}
                {%  endif %}
 
     <!-- "EDIT" AND "DELETE" LINKS -->
