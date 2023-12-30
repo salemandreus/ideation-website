@@ -56,7 +56,7 @@
     <!-- CONTENT: -->
         <!--IMAGE (THUMBNAIL OR FULL-SIZED)-->
                 {%  if post.image %}
-                            <img src="{{ post.image.url }}" class="img-fluid mt-{% if not detail %}5 rounded" style="max-width:20em; {%  else %}4 rounded" style="{%  endif %} float:right; margin: 0 0 2% 2%" />
+                    <img src="{{ post.image.url }}" class="img-fluid mt-{% if not detail %}5 rounded" style="max-width:20em; {%  else %}4 rounded" style="{%  endif %} float:right; margin: 0 0 2% 2%" />
                 {%  endif %}
                 <p class="card-text" style="clear:left">
 
