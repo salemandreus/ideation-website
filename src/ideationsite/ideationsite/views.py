@@ -26,7 +26,12 @@ class WelcomePage(PostListBase):
                         "title": "Welcome back, {username}!".format(username=request.user),
                         "utc_now": datetime.now(timezone.utc)
                        }
-            qs = Post.objects.filter(user=request.user)[:8]
+
+            def query_posts():
+                qs = Post.objects.filter(user=request.user)[:8]
+                return qs
+
+            qs = query_posts()
 
             # Append list with posts, their thread counts and parent chain to root post
             posts_attributes = self.get_listified_posts_with_attributes(qs, True)

@@ -25,16 +25,20 @@ class SearchView(PostListBase):
         if query is not None:
             SearchQuery.objects.create(user=user, query=query)
 
-            # Run Search Query against DB for published, and for user if logged in
-            posts_list = Post.objects.search_published(query=query)
-            if request.user.is_authenticated:
-                my_posts_list = Post.objects.search_user(user=user, query=query)
-                posts_list = (posts_list|my_posts_list).distinct()
+            def query_posts():
+                # Run Search Query against DB for published, and for user if logged in
+                qs = Post.objects.search_published(query=query)
+                if request.user.is_authenticated:
+                    my_qs = Post.objects.search_user(user=user, query=query)
+                    qs = (qs|my_qs).distinct()
+                return qs
 
-            context['results_count'] = posts_list.__len__()
+            qs = query_posts()
+
+            context['results_count'] = qs.__len__()
 
             # Add to new list with threads (children) counts of each, and a parent chain to root post (if applicable)
-            posts_attributes = self.get_listified_posts_with_attributes(posts_list, True)
+            posts_attributes = self.get_listified_posts_with_attributes(qs, True)
             # Add Pagination
             context['page_obj'] = self.paginate(posts_attributes, request)
 

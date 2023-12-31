@@ -38,7 +38,6 @@ class PostListBase(View):
             attr_obj_list.append(attr_obj)
         return attr_obj_list
 
-
     def get(self, request):
         """Base Get Functionality for a PostList class to be overridden."""
         template_name = ""
@@ -54,11 +53,15 @@ class PostsListPage(PostListBase):
     def get(self, request):
         template_name = "posts/posts.html"
         context = {"utc_now": datetime.now(timezone.utc)}
-        qs = Post.objects.all().topic_posts().published()
-        if request.user.is_authenticated:
-            my_qs = Post.objects.filter(user=request.user).topic_posts()
-            qs = (qs | my_qs).distinct()
 
+        def query_posts():
+            qs = Post.objects.all().topic_posts().published()
+            if request.user.is_authenticated:
+                my_qs = Post.objects.filter(user=request.user).topic_posts()
+                qs = (qs | my_qs).distinct()
+            return qs
+
+        qs = query_posts()
         # Append to new list with response/thread (children) counts of each
         posts_attributes = self.get_listified_posts_with_attributes(qs)
         # Add Pagination
@@ -81,12 +84,15 @@ class PostDetailPage(PostListBase):
         [main_post_attributes] = self.get_listified_posts_with_attributes([obj],True)
         context = {"object": main_post_attributes, "utc_now": datetime.now(timezone.utc)}  # "card_parent_width_percent": 100}  # widest card will be the "parent" card of the page (the one most "original" to the response hierarchy) - might not be the OP if the OP is not on the page
 
-        # Get whole discussion for post including drafts
-        qs = obj.responses().published()
-        if request.user.is_authenticated:
-            my_qs = obj.responses().filter(user=request.user)
-            qs = (qs | my_qs).distinct()
+        def query_posts():
+            # Get whole discussion for post including published and user's unpublished posts
+            qs = obj.responses().published()
+            if request.user.is_authenticated:
+                my_qs = obj.responses().filter(user=request.user)
+                qs = (qs | my_qs).distinct()
+            return qs
 
+        qs = query_posts()
         # Add to new list with response posts/threads (i.e. children) counts of each response post
         response_posts_attributes = self.get_listified_posts_with_attributes(qs) # Todo: authentication on responses?
         # Add Pagination for responses
