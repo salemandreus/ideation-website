@@ -89,6 +89,15 @@ class Post(models.Model):
         """Get direct responses to the current post"""
         return Post.objects.filter(parent_post=self.pk)
 
+    def get_all_children(self, responses_recursive=[]):    # todo: rename to "get_post_responses" ?
+        """Get all children (responses and responses to responses) recursively from the current post"""
+
+        # while self.responses() != None
+        for response in self.responses():
+            responses_recursive.append(response)
+            response.get_all_children(responses_recursive)
+        return responses_recursive
+
     def get_parents_to_root_post(self):
         parent_chain = []
         while self.parent_post != None:
