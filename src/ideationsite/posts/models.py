@@ -25,6 +25,12 @@ class PostQuerySet(models.QuerySet):
         now=timezone.now()
         return self.filter(publish_date__lte=now)
 
+
+    def has_parents(self):    # todo: rename to "get_post_responses" ?
+        """Get posts which are a response (ie have a parent post)"""
+        return self.exclude(parent_post=None)
+
+
     def search(self, query):
         lookup = (
                     Q(title__icontains=query) |
