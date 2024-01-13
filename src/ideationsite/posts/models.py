@@ -48,13 +48,14 @@ class PostQuerySet(models.QuerySet):
 
 class PostManager(models.Manager):
     def get_queryset(self):
+        # Get all posts that are not deleted
         qs = PostQuerySet(self.model, using=self._db).exclude(is_deleted=True)
 
-        # Get only the deleted posts with undeleted children
+        # Get deleted posts only if they have undeleted responses
            # Get undeleted children with parents
         posts_with_parents_qs = PostQuerySet(self.model, using=self._db).exclude(parent_post=None).exclude(is_deleted=True)
            # Deleted Posts: Get list of ids of parent posts
-        set_of_parent_ids = set(posts_with_parents_qs.values_list("parent_post"))                                                          # has_parents = has_parents.filter(parent_post=self)  # .distinct() #Entry.objects.filter(blog_id=4)
+        set_of_parent_ids = set(posts_with_parents_qs.values_list("parent_post"))
         cleaned_parent_ids_str = re.sub(r'[(),]', r'', str(set_of_parent_ids)[1:-1])
         parent_ids_list = list(map(int, cleaned_parent_ids_str.split()))
            # returns deleted posts only if they have undeleted children
