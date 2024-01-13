@@ -8,6 +8,7 @@ from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_CLASSY
 #from autoslug import AutoSlugField
 #from django.utils.text import slugify
+import re
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -47,7 +48,20 @@ class PostQuerySet(models.QuerySet):
 
 class PostManager(models.Manager):
     def get_queryset(self):
-        return PostQuerySet(self.model, using=self._db)
+        qs = PostQuerySet(self.model, using=self._db).exclude(is_deleted=True)
+
+        # Get only the deleted posts with undeleted children
+           # Get undeleted children with parents
+        posts_with_parents_qs = PostQuerySet(self.model, using=self._db).exclude(parent_post=None).exclude(is_deleted=True)
+           # Deleted Posts: Get list of ids of parent posts
+        set_of_parent_ids = set(posts_with_parents_qs.values_list("parent_post"))                                                          # has_parents = has_parents.filter(parent_post=self)  # .distinct() #Entry.objects.filter(blog_id=4)
+        cleaned_parent_ids_str = re.sub(r'[(),]', r'', str(set_of_parent_ids)[1:-1])
+        parent_ids_list = list(map(int, cleaned_parent_ids_str.split()))
+           # returns deleted posts only if they have undeleted children
+        qs_deleted_parents = PostQuerySet(self.model, using=self._db).filter(is_deleted=True).filter(pk__in=parent_ids_list)#.has_responses()
+
+        return qs | qs_deleted_parents
+
 
     def published(self):
         """Filter for published items."""
