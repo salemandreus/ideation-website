@@ -118,6 +118,8 @@ def post_create_view(request, parent_slug=None):
         obj.user = request.user
         if parent_post:
             obj.parent_post = parent_post
+        obj.is_public_parent = not bool(parent_post)
+
         #obj.title= form.cleaned_data.get("title") + "0"
         obj.save()
         #form = PostModelForm()  # If not redirecting but posting multiple in succession

@@ -52,7 +52,7 @@ class PostQuerySet(models.QuerySet):
 
 # Topic (Root) posts only
     def topic_posts(self):
-        return self.filter(parent_post=None)
+        return self.filter(is_public_parent=True)
 
 class PostManager(models.Manager):
     def get_queryset(self):
@@ -109,6 +109,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     parent_post = models.ForeignKey("Post", null=True, blank=True, on_delete=models.PROTECT)
+    is_public_parent = models.BooleanField()#(default=not bool(parent_post))#default is not assigning on existing so disabled
     is_deleted = models.BooleanField(default=False)
 
     def responses(self):    # todo: rename to "get_post_responses" ?
