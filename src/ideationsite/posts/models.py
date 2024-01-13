@@ -27,9 +27,17 @@ class PostQuerySet(models.QuerySet):
         return self.filter(publish_date__lte=now)
 
 
-    def has_parents(self):    # todo: rename to "get_post_responses" ?
-        """Get posts which are a response (ie have a parent post)"""
-        return self.exclude(parent_post=None)
+    # def has_parents(self):    # todo: rename to "get_post_responses" ?
+    #     """Get posts which are a response (ie have a parent post)"""
+    #     return self.exclude(parent_post=None)
+    #
+    #
+    # def has_responses(self):    # todo: rename to "get_post_responses" ?
+    #     """Get direct responses to the current post"""
+    #     for parent in self:
+    #         if parent.responses() == False:
+    #             self.exclude(parent)
+    #     return self
 
 
     def search(self, query):
@@ -111,14 +119,15 @@ class Post(models.Model):
         #return Post.objects.filter(parent_post=self.pk)
         return Post.objects.get(id=self.pk).post_set.all()
 
-    def get_all_children(self, responses_recursive=[]):    # todo: rename to "get_post_responses" ?
-        """Get all children (responses and responses to responses) recursively from the current post"""
-
-        # while self.responses() != None
-        for response in self.responses():
-            responses_recursive.append(response)
-            response.get_all_children(responses_recursive)
-        return responses_recursive
+    # not in use so far
+    # def get_all_children(self, responses_recursive=[]):    # todo: rename to "get_post_responses" ?
+    #     """Get all children (responses and responses to responses) recursively from the current post"""
+    #
+    #     # while self.responses() != None
+    #     for response in self.responses():
+    #         responses_recursive.append(response)
+    #         response.get_all_children(responses_recursive)
+    #     return responses_recursive
 
     def get_parents_to_root_post(self):
         parent_chain = []
