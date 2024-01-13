@@ -94,9 +94,6 @@ class PostManager(models.Manager):
             return self.get_queryset().none()
         return self.get_queryset().search(query).filter(user=user)
 
-    def topic_posts(self):
-        return self.get_queryset()
-
 
 # Todo: get children for topic post and count
 
