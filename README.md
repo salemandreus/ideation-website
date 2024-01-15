@@ -1,85 +1,17 @@
 # Ideation Website
 
-A website where people can contribute ideas and critique each other's ideas.
+A discussion-building site where people contribute posts and build on/critique each other's posts.
 
-Icon Attributions
-https://www.flaticon.com/
-<a href="https://www.flaticon.com/free-icons/new" title="new icons">New icons created by Freepik - Flaticon</a>
+Responses can also become new topic threads.
 
-<a href="https://www.flaticon.com/free-icons/new-message" title="new message icons">New message icons created by Pop Vectors - Flaticon</a>
+**Markdown**: Posts support Markdown with a pretty markdown widget for easy formatting.
 
-<a href="https://www.flaticon.com/free-icons/comment" title="comment icons">Comment icons created by Freepik - Flaticon</a>
 
-<a href="https://www.flaticon.com/free-icons/quote" title="quote icons">Quote icons created by Freepik - Flaticon</a>
+## Post Navigation and Previewing
+**Expandable Threads**: _All_ response threads can be recursively previewed on the same page as the current post to avoid clicking back and forth.
 
-<a href="https://www.flaticon.com/free-icons/message" title="message icons">Message icons created by Freepik - Flaticon</a>
+**Expandable Breadcrumbs**: Similarly, _all_ higher level posts that spawned a post can are visible in expandable breadcrumbs.
 
-<a href="https://www.flaticon.com/free-icons/add-post" title="add post icons">Add post icons created by Icon Hubs - Flaticon</a>
 
-<a href="https://www.flaticon.com/free-icons/files-and-folders" title="files and folders icons">Files and folders icons created by Ehtisham Abid - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/new-message" title="new message icons">New message icons created by Anggara - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/comment" title="comment icons">Comment icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/recycle-bin" title="recycle bin icons">Recycle bin icons created by Uniconlabs - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/quote" title="quote icons">Quote icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/trash-can" title="trash can icons">Trash can icons created by kliwir art - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Pixel perfect - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/document" title="document icons">Document icons created by gungyoga04 - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Kiranshastry - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/upcoming" title="upcoming icons">Upcoming icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/sms" title="sms icons">Sms icons created by Azland Studio - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/task" title="task icons">Task icons created by juicy_fish - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/sms" title="sms icons">Sms icons created by Azland Studio - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/time-and-date" title="time and date icons">Time and date icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/sms" title="sms icons">Sms icons created by Azland Studio - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/time-and-date" title="time and date icons">Time and date icons created by afif fudin - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/time-and-date" title="time and date icons">Time and date icons created by afif fudin - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/time-and-date" title="time and date icons">Time and date icons created by afif fudin - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/time" title="time icons">Time icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/long-time" title="long time icons">Long time icons created by lutfix - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/timer" title="timer icons">Timer icons created by Flat Icons - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/sand-clock" title="sand clock icons">Sand clock icons created by mavadee - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/clock-in" title="clock in icons">Clock in icons created by itim2101 - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/pin" title="pin icons">Pin icons created by Pixel perfect - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/planner" title="planner icons">Planner icons created by juicy_fish - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/share-post" title="share post icons">Share post icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/phone" title="phone icons">Phone icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/post" title="post icons">Post icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/post" title="post icons">Post icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/save-instagram" title="save instagram icons">Save instagram icons created by Muhammad Atif - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/share-post" title="share post icons">Share post icons created by Pixel perfect - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/caption" title="caption icons">Caption icons created by Yogi Aprelliyanto - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/comment" title="comment icons">Comment icons created by Freepik - Flaticon</a>
+## Attributions:
+See <a href="attributions.md">attributions.txt</a> for icon attributions.
