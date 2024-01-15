@@ -21,7 +21,7 @@
         ">
         <div>
     <!--TITLE-->
-            <h5 class="card-title">{{post.title}}</h5>
+            <h2 class="card-title">{{post.title}}</h2>
 
     <!-- DATES:-->
         <!-- PUBLISHED STATUS: PUBLISHED, DRAFT OR DELETED-->
@@ -40,8 +40,8 @@
                         <!--<small class="text-muted"><strong>Countdown: </strong>{{post.time_delta_to_publish}}&emsp;&emsp;</small>-->
                     {%  endif %}
                     <!-- Draft -->
-                {% else %}
-                    <h6><i> ─ Draft date: </i></h6>
+<!--                {/% else %}
+                    <h6><i> ─ Draft date: </i></h6> -->
                 {%  endif %}
 
                 <!-- CREATED AND (OPTIONAL) UPDATED -->
@@ -66,7 +66,7 @@
 
     <!--TEXT/LINKS (TRUNCATED LIST)-->
                {% if not detail %}
-                    {{post.content_rendered|safe|linebreaks|truncatewords:150}}
+                    {{post.content_rendered|safe|linebreaks|truncatewords:15}}
 
                     <p class="card-text" style="clear:both">
 

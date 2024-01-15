@@ -12,7 +12,7 @@
                 {% if forloop.counter0 == 1 %}  <!-- create containing element for expandable link -->
                     <span class="d-inline-flex gap-1">&emsp;
                         <a class="link-secondary link-underline-opacity-25 link-underline-opacity-75-hover"  data-bs-toggle="collapse" role="button" href="#hiddenByCollapse" aria-expanded="false" aria-controls="hiddenByCollapse">
-                            see other response topics
+                            expand all response topics
                         </a></span>
                         <div class="collapse" id="hiddenByCollapse">
                         ↳ Response to post: <a href="{{next_parent.get_absolute_url}}">{{ next_parent.title }}</a>
